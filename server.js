@@ -27,11 +27,16 @@ const client = new MongoClient(uri, {
   },
 });
 
-// Haha no system scanning for you!
-app.disable("x-powered-by");
+app.use(function (req, res, next) {
+  res.setHeader('X-Powered-By', process.env.FLAG_POWERED_BY)
+  next()
+})
 
 // Anything in this folder is being served
 app.use(express.static(path.join(__dirname, "public")));
+
+
+
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
