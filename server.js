@@ -1,10 +1,15 @@
+// Used for hosting
 const express = require("express");
 const app = express();
+
+// General Utility
 const path = require("path");
+
+// Authentication and Security
 const sanitize = require("mongo-sanitize");
-const crypto = require("crypto");
+const {createHash} = require("crypto");
 
-
+// Configurate the database connection
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const uri =
   "mongodb+srv://" +
@@ -22,6 +27,10 @@ const client = new MongoClient(uri, {
   },
 });
 
+// Haha no system scanning for you!
+app.disable("x-powered-by");
+
+// Anything in this folder is being served
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
@@ -34,8 +43,8 @@ app.get("/login", async (req, res) => {
 
     const database = client.db("auth");
     const collection = database.collection("users");
-    const username = sanitize(req.query.username);
-    const password = sanitize(req.query.password);
+    const username = createHash('sha256').update(sanitize(req.query.username)).digest('base64');
+    const password = createHash('sha256').update(sanitize(req.query.password)).digest('base64');
 
     const user = await collection.findOne({
       username: username,

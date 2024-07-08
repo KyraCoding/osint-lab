@@ -1,3 +1,4 @@
+/*
 document.getElementById("loginBtn").addEventListener("click", () => {
     document.getElementById("main").style.visibility = "visible";
 });
@@ -17,3 +18,4 @@ const observer = new IntersectionObserver((entries) => {
 hiddenSections.forEach((el) => {
     observer.observe(el);
 });
+*/
