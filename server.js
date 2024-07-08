@@ -7,11 +7,11 @@ app.get('/', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-  console.log(`Username: ${req.params.username} Password: ${req.params.password}`)
-  if (req.params.username === "admin" && req.params.password === "test1234") {
-    req.send("Hello admin!")
+  console.log(`Username: ${req.query.username} Password: ${req.query.password}`)
+  if (req.query.username === "admin" && req.query.password === "test1234") {
+    res.send("Hello admin!")
   } else {
-    req.send("WRONG PASSWORD HAHAHA")
+    res.send("WRONG PASSWORD HAHAHA")
   }
 });
 app.listen(process.env.PORT, () => {
