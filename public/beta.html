@@ -6,34 +6,19 @@
       rel="icon"
       href="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/favicon.ico?v=1720468815926"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     <title>Beta - OSINT Monkey</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.tailwindcss.com?plugins=aspect-ratio">
-      <link rel="stylesheet" href="style.css" />
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet"
-      />
-      <script>
-        tailwind.config = {
-          theme: {
-            extend: {
-              fontFamily: {
-                barlow: ['"barlow"', "sans-serif"],
-              },
-            },
-          },
-        };
-    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=aspect-ratio"></script>
+    <link rel="stylesheet" href="style.css" />
     <script defer src="script.js"></script>
   </head>
   <body>
     <!-- Navbar -->
-    <div
-      class="flex flex-row w-full h-14 bg-slate-200 p-2 px-16 gap-16 shadow-md fixed top-0 left-0 right-0 z-50"
-    >
+    <div class="navbar flex flex-row w-full h-14 bg-[#00E7E1] p-2 px-4 gap-16 shadow-md fixed top-0 left-0 right-0 z-50">
       <!-- Icon -->
       <a href="/" class="flex h-full items-center aspect-square">
         <img
@@ -43,47 +28,136 @@
       </a>
 
       <!-- Links -->
-      <div class="flex flex-row items-center space-x-10 ml-auto">
-        <a
-          href="/"
-          class="tracking-wide text-slate-600 transition duration-300 border-b-2 border-transparent hover:border-[#00A7E1]"
-          >Home</a
-        >
-        <a
-          href="/learn"
-          class="tracking-wide text-slate-600 transition duration-300 border-b-2 border-transparent hover:border-[#00A7E1]"
-          >Learn</a
-        >
-        <a
-          href="/practice"
-          class="tracking-wide text-slate-600 transition duration-300 border-b-2 border-transparent hover:border-[#00A7E1]"
-          >Practice</a
-        >
-        <a
-          href="/compete"
-          class="tracking-wide text-slate-600 transition duration-300 border-b-2 border-transparent hover:border-[#00A7E1]"
-          >Compete</a
-        >
-        <a
-          href="/about"
-          class="tracking-wide text-slate-600 transition duration-300 border-b-2 border-transparent hover:border-[#00A7E1]"
-          >About</a
-        >
+      <div class="flex flex-row items-center space-x-6 ml-auto text-xl">
+        <a href="/" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Home</a>
+        <a href="/learn" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Learn</a>
+        <a href="/practice" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Practice</a>
+        <a href="/compete" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Compete</a>
+        <a href="/about" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">About</a>
       </div>
 
       <!-- Auth -->
-      <div class="flex flex-row items-center space-x-6 ml-auto">
-        <a
-          href="/register"
-          class="tracking-wide text-slate-600 transition duration-300 border-b-2 border-transparent hover:border-[#00A7E1]"
-          >Register</a
-        >
-        <a
-          href="/login"
-          class="tracking-wide text-slate-600 transition duration-300 border-b-2 border-transparent hover:border-[#00A7E1]"
-          >Login</a
-        >
+      <div class="flex flex-row items-center space-x-6 ml-auto text-xl">
+        <a href="/register" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Sign Up</a>
+        <a href="/login" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Login</a>
       </div>
     </div>
+
+    <!-- Splash -->
+    <div class="flex flex-row p-4 m-40 mt-20 mb-10 justify-center">
+      <div class="w-1/2 p-4">
+        <h2 class="text-4xl font-bold text-[#003459]">High-quality OSINT practice</h2>
+        <p class="text-xl mt-4">
+          Expose yourself to a variety of OSINT (open-source intelligence) techniques through fun challenges! In a capture-the-flag format, players will 
+          learn about a variety of intelligences, including:
+          <ul class="list-disc ml-10 text-lg mt-2">
+            <li class="secondary-font">🌎 Geospatial Intelligence</li>
+            <li class="secondary-font">📞 Social Media Intelligence</li>
+            <li class="secondary-font">🖥️ Signals Intelligence</li>
+            <li class="secondary-font">...and more!</li>
+          </ul>
+        </p>
+      </div>
+      <div class="w-1/2 p-4 flex justify-center items-center">
+        <img src="assets/osint.jpg" class="w-240 h-240 rounded-xl object-contain">
+      </div>
+    </div>
+
+  <!-- Values -->
+  <div class="py-12 mb-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h3 class="mt-2 text-3xl leading-8 font-bold tracking-tight text-gray-900 sm:text-4xl">Helping you learn open-source intelligence</h3>
+        <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+          OSINT Monkey exists thanks to a group of dedicated, enthusiastic students who hope to inspire growing talent to pursue a career in cybersecurity.
+        </p>
+      </div>
+      <div class="grid gap-8 lg:grid-cols-2">
+        <div class="p-6 bg-white rounded-lg shadow-lg">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <img class="h-12 w-12" src="assets/icon1.png" alt="Icon">
+            </div>
+            <div class="ml-4">
+              <h4 class="text-lg leading-6 font-medium text-gray-900">Lorem Ipsum</h4>
+              <p class="mt-2 text-base text-gray-700">
+                I really wanted to write something here, but the Euros are on and I have low attention span, so I'll do it later. I hope Mbappe wins! 
+                At this point, I don't know what to say, but I need filler text. This is still more filler text. And more filler text.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6 bg-white rounded-lg shadow-lg">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <img class="h-12 w-12" src="assets/icon2.png" alt="Icon">
+            </div>
+            <div class="ml-4">
+              <h4 class="text-lg leading-6 font-medium text-gray-900">Lorem Ipsum</h4>
+              <p class="mt-2 text-base text-gray-700">
+                I really wanted to write something here, but the Euros are on and I have low attention span, so I'll do it later. I hope Mbappe wins! 
+                At this point, I don't know what to say, but I need filler text. This is still more filler text. And more filler text.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6 bg-white rounded-lg shadow-lg">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <img class="h-12 w-12" src="assets/icon3.png" alt=Icon">
+            </div>
+            <div class="ml-4">
+              <h4 class="text-lg leading-6 font-medium text-gray-900">Lorem Ipsum</h4>
+              <p class="mt-2 text-base text-gray-700">
+                I really wanted to write something here, but the Euros are on and I have low attention span, so I'll do it later. I hope Mbappe wins! 
+                At this point, I don't know what to say, but I need filler text. This is still more filler text. And more filler text.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6 bg-white rounded-lg shadow-lg">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <img class="h-12 w-12" src="assets/icon4.png" alt="Icon">
+            </div>
+            <div class="ml-4">
+              <h4 class="text-lg leading-6 font-medium text-gray-900">Lorem Ipsum</h4>
+              <p class="mt-2 text-base text-gray-700">
+                I really wanted to write something here, but the Euros are on and I have low attention span, so I'll do it later. I hope Mbappe wins! 
+                At this point, I don't know what to say, but I need filler text. This is still more filler text. And more filler text.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="flex justify-around py-8 mb-5">
+    <div class="text-center">
+      <div class="text-5xl font-bold">600k+</div>
+      <div class="text-lg mt-2">Page Views</div>
+    </div>
+    <div class="text-center">
+      <div class="text-5xl font-bold">30k+</div>
+      <div class="text-lg mt-2">Registered Users</div>
+    </div>
+    <div class="text-center">
+      <div class="text-5xl font-bold">50+</div>
+      <div class="text-lg mt-2">Practice Challenges</div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="bg-[#00E7E1] py-3">
+    <div class="mx-auto px-4">
+      <div class="flex justify-between items-center text-lg">
+        <span>Contact Us</span>
+        <span class="ml-auto">© OSINT Monkey 2024</span>
+      </div>
+    </div>
+  </footer>
+
   </body>
 </html>
