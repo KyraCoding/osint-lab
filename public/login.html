@@ -6,7 +6,7 @@
       rel="icon"
       href="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/favicon.ico?v=1720468815926"
     />
-    <title>Home - OSINT Monkey</title>
+    <title>Login - OSINT Monkey</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,5 +17,18 @@
     />
   </head>
   <body>
+    <div class="flex justify-center items-center h-full w-full">
+      <div class="h-fit w-fit flex flex-col rounded-xl bg-slate-200 p-6">
+        <h1 class="flex text-5xl text-slate-800 font-bold" >Welcome back!</h1>
+        <p class="flex text-3xl text-slate-800">Please login to continue</p>
+        <form action="/auth" class="flex flex-col gap-2">
+          <label>Username: </label>
+          <input type="text" name="username" class="rounded bg-slate-400 p-2">
+          <label>Password:</label>
+          <input type="password" name="password" class="rounded bg-slate-400 p-2">
+          <input type="submit" class="place-self-center	p-3 rounded bg-slate-400 rounded w-fit">
+        </form>
+      </div>
+    </div>
   </body>
 </html>
