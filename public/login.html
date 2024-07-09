@@ -16,18 +16,35 @@
       rel="stylesheet"
     />
   </head>
-  <body class="bg-teal-50 ">
+  <body class="bg-[#E7F7FC]">
     <div class="flex justify-center items-center h-full w-full">
-      <div class="h-fit w-fit flex flex-col rounded-xl bg-slate-200 p-6">
-        <h1 class="flex text-5xl text-slate-800 font-bold" >Welcome back!</h1>
-        <p class="flex text-3xl text-slate-800">It's good to see you again!</p>
-        <form action="/login" method="POST" class="flex flex-col gap-3">
-          <label>Username: </label>
-          <input type="text" name="username" class="rounded bg-slate-400 p-2">
-          <label>Password:</label>
-          <input type="password" name="password" class="rounded bg-slate-400 p-2">
-          <input type="submit" class="place-self-center	p-3 rounded bg-slate-400 rounded w-fit mt-3">
-        </form>
+      <div
+        class="h-fit w-fit flex flex-col rounded-xl bg-[#80D3F0] p-6 shadow-2xl"
+      >
+        <h1 class="flex text-5xl text-slate-800 font-bold">Welcome back!</h1>
+        <p class="flex text-3xl text-slate-800 mt-3">It's good to see you again!</p>
+        <div class="gap-3 flex flex-col mt-6">
+          <a
+            href="/login/email"
+            class="items-center flex w-full h-fit bg-[#007EA7] shadow-xl transition duration-300 hover:bg-[#00A7E1] rounded-md p-3 justify-start text-lg text-slate-800"
+          >
+            <img
+              src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/mail-svgrepo-com.svg?v=1720554308748"
+              class="flex aspect-square h-6 mr-6"
+            />
+            Login with Email</a
+          >
+          <a
+            href="/login/google"
+            class="items-center flex w-full h-fit bg-[#007EA7] shadow-xl transition duration-300 hover:bg-[#00A7E1] rounded-md p-3 justify-start text-lg text-slate-800"
+          >
+            <img
+              src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/google-color-svgrepo-com.svg?v=1720553907949"
+              class="flex aspect-square h-6 mr-6"
+            />
+            Login with Google</a
+          >
+        </div>
       </div>
     </div>
   </body>

@@ -63,8 +63,14 @@ app.get("/register", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "register.html"));
 });
 
+app.get("/register/email", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "register_email.html"));
+})
+
+
+
 // Post request handling for registering a user
-app.post("/register", async (req, res, next) => {
+app.post("/register_email", async (req, res, next) => {
   
   // If any parameters are missing:
   if (
@@ -72,7 +78,7 @@ app.post("/register", async (req, res, next) => {
   ) {
     
     // Back to registration you go!
-    res.redirect("/register");
+    res.redirect("/register/register_email");
     
     // Goodbye!
     return;
@@ -137,13 +143,17 @@ app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
 
-app.post("/login", async (req, res, next) => {
+app.get("/login/email", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "login_email.html"));
+})
+
+app.post("/login_email", async (req, res, next) => {
   // User did not supply username and/or password
   if (!(req.body.username && req.body.password)) {
     console.log("username/password missing");
 
     // Send them back to login!
-    res.redirect("/login");
+    res.redirect("/login/login_email");
 
     // Goodbye!
     return;
