@@ -42,10 +42,17 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.get("/login", async (req, res) => {
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "login.html"))
+})
+
+app.get("/auth", async (req, res) => {
+  if (!req.query.username || !req.query.password) {
+    res.redirect("/login")
+  }
   try {
     await client.connect();
-
+    
     const database = client.db("auth");
     const collection = database.collection("users");
     const username = createHash('sha256').update(sanitize(req.query.username)).digest('base64');
