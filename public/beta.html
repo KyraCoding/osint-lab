@@ -13,10 +13,24 @@
     <title>Beta - OSINT Monkey</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=aspect-ratio"></script>
-    <link rel="stylesheet" href="style.css" />
+     <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              // font_name: ['"official font family name"': "font-name"]
+              barlow: ['"barlow"', "sans-serif"],
+              roboto: ['"roboto mono"', "sans-serif"]
+            },
+          },
+        },
+      };
+    </script>
     <script defer src="script.js"></script>
   </head>
-  <body>
+  
+  <!-- Note to aryan: switch to font-barlow if you want barlow font-->
+  <body class="font-roboto">
     <!-- Navbar -->
     <div class="navbar flex flex-row w-full h-14 bg-[#00E7E1] p-2 px-4 gap-16 shadow-md fixed top-0 left-0 right-0 z-50">
       <!-- Icon -->
@@ -104,7 +118,8 @@
         <div class="p-6 bg-white rounded-lg shadow-lg">
           <div class="flex items-center">
             <div class="flex-shrink-0">
-              <img class="h-12 w-12" src="assets/icon3.png" alt=Icon">
+              <img class="h-12 w-12" src="assets/icon3.png" alt="Icon">
+
             </div>
             <div class="ml-4">
               <h4 class="text-lg leading-6 font-medium text-gray-900">Lorem Ipsum</h4>
@@ -153,7 +168,8 @@
   <footer class="bg-[#00E7E1] py-3">
     <div class="mx-auto px-4">
       <div class="flex justify-between items-center text-lg">
-        <span>Contact Us</span>
+        <a href="/contact">Contact Us</a>
+
         <span class="ml-auto">© OSINT Monkey 2024</span>
       </div>
     </div>
