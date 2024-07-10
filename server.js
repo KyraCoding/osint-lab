@@ -52,6 +52,9 @@ app.use(
   })
 );
 
+// Set up rendering
+app.set('view engine', 'ejs')
+
 // Anything in this folder is being served
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -61,13 +64,20 @@ app.use(express.urlencoded({ extended: true }));
 
 // Host root
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.render('pages/home', {
+    page: {
+      title: "Home",
+      loggedIn: req.session.loggedIn
+    }
+  })
 });
 
 // Host beta site
+/*
 app.get("/beta", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "beta.html"));
 });
+*/
 
 // Host register page
 app.get("/register", (req, res) => {
@@ -129,7 +139,7 @@ app.post("/register_email", async (req, res, next) => {
     req.session.loggedIn = true;
 
     // User added!
-    res.redirect("/profile");
+    res.redirect("/");
   } catch (e) {
     // ono :<
     console.log(e);
@@ -194,7 +204,7 @@ app.post("/login_email", async (req, res, next) => {
     } else {
       // Add session token
       req.session.loggedIn = true;
-      req.redirect("/prifle");
+      res.redirect("/");
     }
   } catch (e) {
     // 500 handling
@@ -214,6 +224,10 @@ app.get("/profile", (req, res) => {
   }
 });
 
+app.get("/logout", (req, res) => {
+  req.session.destroy()
+  res.redirect("/")
+})
 // Handle 404
 app.use((req, res, next) => {
   next(404);
