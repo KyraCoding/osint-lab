@@ -9,6 +9,7 @@ var bodyParser = require("body-parser");
 // Authentication and Security
 const sanitize = require("mongo-sanitize");
 const { createHash } = require("crypto");
+const session = require("express-session");
 
 // Hash Function
 function hash(input) {
@@ -41,6 +42,16 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Set up sessions
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    name: "session token",
+    saveUninitialized: false,
+    resave: true
+  })
+);
+
 // Anything in this folder is being served
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -56,7 +67,7 @@ app.get("/", (req, res) => {
 // Host beta site
 app.get("/beta", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "beta.html"));
-})
+});
 
 // Host register page
 app.get("/register", (req, res) => {
@@ -65,54 +76,47 @@ app.get("/register", (req, res) => {
 
 app.get("/register/email", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "register_email.html"));
-})
-
-
+});
 
 // Post request handling for registering a user
 app.post("/register_email", async (req, res, next) => {
-  
   // If any parameters are missing:
   if (
     !(req.body.username && req.body.password && req.body.name && req.body.email)
   ) {
-    
     // Back to registration you go!
     res.redirect("/register/register_email");
-    
+
     // Goodbye!
     return;
   }
-  
+
   // We use try catch in case something breaks
   try {
-    
     // Connect to database
     await client.connect();
 
     // Database connection
     const database = client.db("auth");
     const collection = database.collection("users");
-    
+
     // Hash parameters for security. This will use a secret so it can be reversed
     const username = hash(req.body.username);
     const password = hash(req.body.password);
     const email = hash(req.body.email);
     const name = hash(req.body.name);
 
-    
     // Check if username or email already exists in database
     const exists = await collection.findOne({
       $or: [{ username }, { email }],
     });
 
-    
     // Send error and end
     if (exists) {
       res.send("Username or Email already exists!");
       return;
     }
-    
+
     // Otherwise add the user
     await collection.insertOne({
       username: username,
@@ -120,16 +124,16 @@ app.post("/register_email", async (req, res, next) => {
       email: email,
       name: name,
     });
-    
-    // User added! 
-    res.send("User added!");
-    
-    // TODO: Add cookie/session handling
+
+    // Add session token
+    req.session.loggedIn = true;
+
+    // User added!
+    res.redirect("/profile");
   } catch (e) {
-    
     // ono :<
     console.log(e);
-    
+
     // Send 500
     next(500);
     res.send(e);
@@ -145,7 +149,7 @@ app.get("/login", (req, res) => {
 
 app.get("/login/email", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login_email.html"));
-})
+});
 
 app.post("/login_email", async (req, res, next) => {
   // User did not supply username and/or password
@@ -173,7 +177,7 @@ app.post("/login_email", async (req, res, next) => {
 
     const database = client.db("auth");
     const collection = database.collection("users");
-    
+
     // Hash for security, also uses a secret
     const username = hash(req.body.username);
     const password = hash(req.body.password);
@@ -183,22 +187,30 @@ app.post("/login_email", async (req, res, next) => {
       username: username,
       password: password,
     });
-    
+
     // Doesn't exist: go to register
     if (!user) {
       res.redirect("/register");
     } else {
-      // Exists, send friendly message
-      res.send("Hey, welcome back!");
+      // Add session token
+      req.session.loggedIn = true;
+      req.redirect("/prifle");
     }
   } catch (e) {
-    
     // 500 handling
     console.log(e);
     next(500);
     res.send(e);
   } finally {
     await client.close();
+  }
+});
+
+app.get("/profile", (req, res) => {
+  if (!req.session.loggedIn) {
+    res.redirect("/login");
+  } else {
+    res.sendFile(path.join(__dirname, "public", "profile.html"));
   }
 });
 
@@ -229,6 +241,7 @@ app.use((err, req, res, next) => {
   res.status(status);
   res.send(page);
 });
+
 
 
 // Go Go Go!
