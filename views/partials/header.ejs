@@ -1,0 +1,31 @@
+<div class="navbar flex flex-row w-full h-14 bg-[#00E7E1] p-2 px-4 gap-16 shadow-md fixed top-0 left-0 right-0 z-50">
+      <!-- Icon -->
+      <a href="/" class="flex h-full items-center aspect-square">
+        <img
+          class="flex h-full aspect-square"
+          src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880"
+        />
+      </a>
+
+      <!-- Links -->
+      <div class="flex flex-row items-center space-x-6 ml-auto text-xl">
+        <a href="/" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Home</a>
+        <a href="/learn" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Learn</a>
+        <a href="/practice" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Practice</a>
+        <a href="/compete" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Compete</a>
+        <a href="/about" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">About</a>
+      </div>
+
+      <!-- Auth -->
+      <% if (!page.loggedIn) { %>
+      <div class="flex flex-row items-center space-x-6 ml-auto text-xl">
+        <a href="/register" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Sign Up</a>
+        <a href="/login" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Login</a>
+      </div>
+      <% } else { %>
+        <div class="flex flex-row items-center space-x-6 ml-auto text-xl">
+        <a href="/profile" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Profile</a>
+        <a href="/logout" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Logout</a>
+      </div>
+      <% } %>
+    </div>
