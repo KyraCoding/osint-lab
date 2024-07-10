@@ -5,11 +5,13 @@ const app = express();
 // General Utility
 const path = require("path");
 var bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 // Authentication and Security
 const sanitize = require("mongo-sanitize");
 const { createHash } = require("crypto");
 const session = require("express-session");
+const { query } = require("express-validator");
 
 // Hash Function
 function hash(input) {
@@ -18,22 +20,21 @@ function hash(input) {
     .digest("base64");
 }
 
-// Configurate the database connection
-const { MongoClient, ServerApiVersion } = require("mongodb");
-const uri =
+// Use mongoose
+mongoose.connect(
   "mongodb+srv://" +
-  process.env.DATABASE_USERNAME +
-  ":" +
-  process.env.DATABASE_PASSWORD +
-  "@radiata.0g6mder.mongodb.net/?retryWrites=true&w=majority&appName=radiata";
+    process.env.DATABASE_USERNAME +
+    ":" +
+    process.env.DATABASE_PASSWORD +
+    "@radiata.0g6mder.mongodb.net/?retryWrites=true&w=majority&appName=radiata"
+);
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
+// Define basic user schema, note that this is for authentication, not profiles
+const UserModel = new mongoose.model("user", {
+  email: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
+  password: { type: String, required: true },
 });
 
 // Wonder what this could be 🤔
@@ -48,12 +49,12 @@ app.use(
     secret: process.env.SESSION_SECRET,
     name: "session token",
     saveUninitialized: false,
-    resave: true
+    resave: true,
   })
 );
 
 // Set up rendering
-app.set('view engine', 'ejs')
+app.set("view engine", "ejs");
 
 // Anything in this folder is being served
 app.use(express.static(path.join(__dirname, "public")));
@@ -64,12 +65,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // Host root
 app.get("/", (req, res) => {
-  res.render('pages/home', {
+  res.render("pages/home", {
     page: {
       title: "Home",
-      loggedIn: req.session.loggedIn
-    }
-  })
+      loggedIn: req.session.loggedIn,
+    },
+  });
 });
 
 // Host beta site
@@ -225,9 +226,13 @@ app.get("/profile", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-  req.session.destroy()
-  res.redirect("/")
-})
+  req.session.destroy();
+  res.redirect("/");
+});
+
+app.get("practice", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "challenges.html"));
+});
 // Handle 404
 app.use((req, res, next) => {
   next(404);
@@ -255,8 +260,6 @@ app.use((err, req, res, next) => {
   res.status(status);
   res.send(page);
 });
-
-
 
 // Go Go Go!
 app.listen(process.env.PORT, () => {
