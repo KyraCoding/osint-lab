@@ -11,19 +11,32 @@
           <% } else { %>
             <label>Email:</label>
           <% } %>
-          <input type="text" name="email" class="rounded  p-2 bg-[#007EA7]">
+          <input required type="text" name="email" class="rounded  p-2 bg-[#007EA7]" id="email"
+          <% if (prev_values.email) { %>
+            value="<%= prev_values.email %>"
+          <% } %>>
+            
           <% if (errors.username ) { %>
             <label class="text-rose-600"><%= errors.username %></label>
           <% } else { %>
             <label>Username:</label>
           <% } %>
-          <input type="text" name="username" class="rounded  p-2 bg-[#007EA7]">
+          <input required type="text" name="username" class="rounded  p-2 bg-[#007EA7]" id="username"
+          <% if (prev_values.username) { %>
+            value="<%= prev_values.username %>"
+          <% } %>>
+            
+            
           <% if (errors.password ) { %>
             <label class="text-rose-600"><%= errors.password %></label>
           <% } else { %>
             <label>Password:</label>
           <% } %>
-          <input type="password" name="password" class="rounded  p-2 bg-[#007EA7]">
+          <input required type="password" name="password" class="rounded  p-2 bg-[#007EA7]" id="password"
+          <% if (prev_values.password) { %>
+            value="<%= prev_values.password %>"
+          <% } %>>  
+            
           <input type="submit" class="place-self-center	p-3 rounded rounded w-fit mt-3 bg-[#007EA7] duration-300 hover:bg-[#00A7E1]">
         </form>
       </div>
