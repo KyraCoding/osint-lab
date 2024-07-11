@@ -111,7 +111,7 @@ app.post(
           return Promise.reject("Username already in use");
         }
       }),
-    body("name").not().isEmpty().withMessage("Name is required"),
+    body("preferred_name").not().isEmpty().withMessage("Name is required"),
     body("password")
       .isLength({ min: 5 })
       .withMessage("Password must be at least 5 characters long"),
@@ -126,15 +126,15 @@ app.post(
     // We use try catch in case something breaks
     try {
       // Hash parameters for security. This will use a secret so it can be reversed
-      const username = sanitize(req.body.password);
+      const username = sanitize(req.body.username);
       const password = sanitize(req.body.password);
       const email = sanitize(req.body.email);
-      const name = sanitize(req.body.name);
+      const preferred_name = sanitize(req.body.preferred_name);
 
       // Create auth_user schema
-      const newUser = new auth_user({ email, username, name, password });
+      const newUser = new auth_user({ email, username, preferred_name, password });
       await newUser.save();
-      
+
       // Add session token
       req.session.loggedIn = true;
 
@@ -146,7 +146,6 @@ app.post(
 
       // Send 500
       next(500);
-      res.send(e);
     }
   }
 );
@@ -155,64 +154,49 @@ app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
 
-app.get("/login/email", (req, res) => {
+app.get("/login/email", [], (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login_email.html"));
 });
 
-app.post("/login_email", async (req, res, next) => {
-  // User did not supply username and/or password
-  if (!(req.body.username && req.body.password)) {
-    console.log("username/password missing");
-
-    // Send them back to login!
-    res.redirect("/login/login_email");
-
-    // Goodbye!
-    return;
-  }
-
-  // We use a try and catch loop in case anything fails, that way it doesn't crash the server
-  try {
-    // Connect to database
-    await client.connect();
-
-    // This is the database
-    // The way mongodb works, you have a cluster, then inside that cluster, multiple databases,
-    // then in a database, multiple collections which is where you store data.
-    // Cluster -> Database -> Collection -> Data
-    // This was written by MrMe, not chatgpt btw
-    // you can tell by the way i capitalize sentences
-
-    const database = client.db("auth");
-    const collection = database.collection("users");
-
-    // Hash for security, also uses a secret
-    const username = hash(req.body.username);
-    const password = hash(req.body.password);
-
-    // Try to find user
-    const user = await collection.findOne({
-      username: username,
-      password: password,
-    });
-
-    // Doesn't exist: go to register
-    if (!user) {
-      res.redirect("/register");
-    } else {
-      // Add session token
-      req.session.loggedIn = true;
-      res.redirect("/");
+app.post(
+  "/login_email",
+  [
+    body("username").isLength({ min: 1 }).withMessage("Username is required"),
+    body("password").isLength({ min: 1 }).withMessage("Password is required"),
+  ],
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      next(400)
     }
-  } catch (e) {
-    // 500 handling
-    console.log(e);
-    next(500);
-    res.send(e);
-  } finally {
-    await client.close();
+    const { username, password } = req.body;
+
+    // We use a try and catch loop in case anything fails, that way it doesn't crash the server
+    try {
+      
+
+      // Hash for security, also uses a secret
+      const username = sanitize(req.body.username);
+      const password = sanitize(req.body.password)
+
+      // Try to find user
+      const user = await auth_user.findOne({username, password})
+
+      // Doesn't exist: go to register
+      if (!user) {
+        res.redirect("/register");
+      } else {
+        // Add session token
+        req.session.loggedIn = true;
+        res.redirect("/");
+      }
+    } catch (e) {
+      // 500 handling
+      console.log(e);
+      next(500);
+    }
   }
-});
+);
 
 app.get("/profile", (req, res) => {
   if (!req.session.loggedIn) {
