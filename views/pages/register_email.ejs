@@ -5,7 +5,7 @@
       <div class="h-fit w-fit flex flex-col rounded-xl bg-[#80D3F0] p-6 shadow-2xl">
         <h1 class="flex text-5xl text-slate-800 font-bold" >Hey there!</h1>
         <p class="flex text-3xl text-slate-800">Let's get set up!</p>
-        <form action="/register_email" method="POST" class="flex flex-col gap-3 mt-3">
+        <form action="/register/email" method="POST" class="flex flex-col gap-3 mt-3">
           <% if (errors.email ) { %>
             <label class="text-rose-600"><%= errors.email %></label>
           <% } else { %>
