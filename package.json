@@ -12,7 +12,9 @@
     "express-session": "^1.18.0",
     "ejs": "^3.1.10",
     "express-validator": "^7.1.0",
-    "mongoose": "^8.5.0"
+    "mongoose": "^8.5.0",
+    "bcrypt": "^5.1.1",
+    "connect-mongodb-session": "^5.0.0"
   },
   "type": "module",
   "engines": {
@@ -26,5 +28,4 @@
     "node",
     "glitch"
   ]
-  
 }

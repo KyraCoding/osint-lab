@@ -5,7 +5,6 @@ const app = express();
 // General Utility
 import { fileURLToPath } from "url";
 import path from "path";
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -16,9 +15,13 @@ import mongoose from "mongoose";
 import auth_user from "./model/auth_user.js";
 
 // Authentication and Security
-import sanitize from "mongo-sanitize";
 import { createHash } from "crypto";
 import session from "express-session";
+import MongoDBStore from "connect-mongodb-session";
+const MongoStore = MongoDBStore(session);
+
+// Sanitizing and Validation
+import sanitize from "mongo-sanitize";
 import { body, validationResult } from "express-validator";
 
 // Hash Function
@@ -34,8 +37,22 @@ mongoose.connect(
     process.env.DATABASE_USERNAME +
     ":" +
     process.env.DATABASE_PASSWORD +
-    "@radiata.0g6mder.mongodb.net/?retryWrites=true&w=majority&appName=radiata"
+    "@radiata.0g6mder.mongodb.net/tanuki/?retryWrites=true&w=majority&appName=radiata"
 );
+
+// Connect to database for storing sessions
+const store = new MongoStore({
+  uri:
+    "mongodb+srv://" +
+    process.env.DATABASE_USERNAME +
+    ":" +
+    process.env.DATABASE_PASSWORD +
+    "@radiata.0g6mder.mongodb.net/tanuki/?retryWrites=true&w=majority&appName=radiata",
+  collection: "sessions",
+
+  // Currently set to 14 days
+  expires: 1000 * 60 * 60 * 24 * 14,
+});
 
 // Wonder what this could be 🤔
 app.use(function (req, res, next) {
@@ -46,10 +63,14 @@ app.use(function (req, res, next) {
 // Set up sessions
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
-    name: "session token",
-    saveUninitialized: false,
-    resave: true,
+    secret: process.env.SESSION_SECRET, // SHHHH KEEP IT SECRET
+    name: "session token", // I MEAN IN CASE YOU COULDNT READ
+    saveUninitialized: false, // SAVE EVEN IF NOTHING CHANGED (I THINK)
+    resave: true, // THEY TOLD ME TO TURN THIS ON
+    httpOnly: true, // NO CLIENT COOKIE READING?
+    secure: true, // NO HTTP HAHA
+    sameSite: "strict", // NO CSRF HAHAHA
+    store: store // SAVE TO DATABASE WOOOOO
   })
 );
 
@@ -132,7 +153,12 @@ app.post(
       const preferred_name = sanitize(req.body.preferred_name);
 
       // Create auth_user schema
-      const newUser = new auth_user({ email, username, preferred_name, password });
+      const newUser = new auth_user({
+        email,
+        username,
+        preferred_name,
+        password,
+      });
       await newUser.save();
 
       // Add session token
@@ -167,28 +193,26 @@ app.post(
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      next(400)
+      next(400);
     }
     const { username, password } = req.body;
 
     // We use a try and catch loop in case anything fails, that way it doesn't crash the server
     try {
-      
-
       // Hash for security, also uses a secret
       const username = sanitize(req.body.username);
-      const password = sanitize(req.body.password)
+      const password = sanitize(req.body.password);
 
       // Try to find user
-      const user = await auth_user.findOne({username, password})
+      const user = await auth_user.findOne({ username });
 
-      // Doesn't exist: go to register
-      if (!user) {
-        res.redirect("/register");
-      } else {
+      // Make sure password is correct and user exists
+      if (user && (await user.comparePassword(password))) {
         // Add session token
         req.session.loggedIn = true;
         res.redirect("/");
+      } else {
+        res.redirect("/login");
       }
     } catch (e) {
       // 500 handling
