@@ -288,7 +288,7 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-app.get("practice", (req, res) => {
+app.get("/practice", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "challenges.html"));
 });
 // Handle 404
