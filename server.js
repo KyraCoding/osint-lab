@@ -117,7 +117,7 @@ app.get("/register/email", (req, res) => {
 
 // Post request handling for registering a user
 app.post(
-  "/register_email",
+  "/register/email",
   [
     body("email")
       .isEmail()
@@ -153,14 +153,13 @@ app.post(
         acc[error.path] = error.msg;
         return acc;
       }, {});
-      res.render("pages/register_email", {
+      return res.render("pages/register_email", {
         page: {
           title: "Register",
         },
         errors: formattedErrors,
         prev_values: req.body,
       });
-      return;
     }
 
     // We use try catch in case something breaks
@@ -198,11 +197,16 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/login/email", [], (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login_email.html"));
+  res.render("pages/login_email", {
+    page: {
+      title: "Login",
+    },
+    errors: {},
+  });
 });
 
 app.post(
-  "/login_email",
+  "/login/email",
   [
     body("username").isLength({ min: 1 }).withMessage("Username is required!"),
     body("password").isLength({ min: 1 }).withMessage("Password is required!"),
@@ -210,7 +214,16 @@ app.post(
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      next(400);
+      const formattedErrors = errors.array().reduce((acc, error) => {
+        acc[error.path] = error.msg;
+        return acc;
+      }, {});
+      return res.render("pages/login_email", {
+        page: {
+          title: "Login",
+        },
+        errors: formattedErrors,
+      });
     }
     const { username, password } = req.body;
 
@@ -229,7 +242,12 @@ app.post(
         req.session.loggedIn = true;
         res.redirect("/");
       } else {
-        res.redirect("/login");
+        return res.render("pages/login_email", {
+          page: {
+            title: "Login",
+          },
+          errors: { invalid: "Invalid username or password!" },
+        });
       }
     } catch (e) {
       // 500 handling

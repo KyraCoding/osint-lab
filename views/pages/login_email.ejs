@@ -5,11 +5,25 @@
       <div class="h-fit w-fit flex flex-col rounded-xl bg-[#80D3F0]  shadow-2xl p-6">
         <h1 class="flex text-5xl text-slate-800 font-bold">Welcome back!</h1>
         <p class="flex text-3xl text-slate-800">Let's get your username!</p>
-        <form action="/login_email" method="POST" class="flex flex-col gap-3 mt-3">
-          <label>Username: </label>
-          <input type="text" name="username" class="rounded bg-[#007EA7] p-2" />
-          <label>Password:</label>
+        <form action="/login/email" method="POST" class="flex flex-col gap-3 mt-3">
+          <% if (errors.invalid ) { %>
+            <label class="text-rose-600"><%= errors.invalid %></label>
+          <% } %>
+            
+          <% if (errors.username ) { %>
+            <label class="text-rose-600"><%= errors.username %></label>
+          <% } else { %>
+            <label>Username: </label>
+          <% } %>
+          <input required type="text" name="username" class="rounded bg-[#007EA7] p-2" />
+            
+          <% if (errors.password ) { %>
+            <label class="text-rose-600"><%= errors.password %></label>
+          <% } else { %>
+            <label>Password: </label>
+          <% } %>
           <input
+            required
             type="password"
             name="password"
             class="rounded bg-[#007EA7] p-2"
