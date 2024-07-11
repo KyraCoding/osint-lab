@@ -9,13 +9,14 @@
   "dependencies": {
     "express": "^4.19.2",
     "mongo-sanitize": "^1.1.0",
-    "mongodb": "^5.9.0",
-    "body-parser": "^1.20.2",
     "express-session": "^1.18.0",
-    "ejs": "^3.1.10"
+    "ejs": "^3.1.10",
+    "express-validator": "^7.1.0",
+    "mongoose": "^8.5.0"
   },
+  "type": "module",
   "engines": {
-    "node": "14.x"
+    "node": "16.20.1"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/glitch-hello-node"
@@ -25,4 +26,5 @@
     "node",
     "glitch"
   ]
+  
 }

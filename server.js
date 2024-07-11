@@ -1,15 +1,25 @@
 // Used for hosting
-const express = require("express");
+import express from "express";
 const app = express();
 
 // General Utility
-const path = require("path");
-var bodyParser = require("body-parser");
+import { fileURLToPath } from "url";
+import path from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Database Access
+import mongoose from "mongoose";
+
+// Mongoose schema models
+import auth_user from "./model/auth_user.js";
 
 // Authentication and Security
-const sanitize = require("mongo-sanitize");
-const { createHash } = require("crypto");
-const session = require("express-session");
+import sanitize from "mongo-sanitize";
+import { createHash } from "crypto";
+import session from "express-session";
+import { body, validationResult } from "express-validator";
 
 // Hash Function
 function hash(input) {
@@ -18,23 +28,14 @@ function hash(input) {
     .digest("base64");
 }
 
-// Configurate the database connection
-const { MongoClient, ServerApiVersion } = require("mongodb");
-const uri =
+// Use mongoose
+mongoose.connect(
   "mongodb+srv://" +
-  process.env.DATABASE_USERNAME +
-  ":" +
-  process.env.DATABASE_PASSWORD +
-  "@radiata.0g6mder.mongodb.net/?retryWrites=true&w=majority&appName=radiata";
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
+    process.env.DATABASE_USERNAME +
+    ":" +
+    process.env.DATABASE_PASSWORD +
+    "@radiata.0g6mder.mongodb.net/?retryWrites=true&w=majority&appName=radiata"
+);
 
 // Wonder what this could be 🤔
 app.use(function (req, res, next) {
@@ -48,28 +49,28 @@ app.use(
     secret: process.env.SESSION_SECRET,
     name: "session token",
     saveUninitialized: false,
-    resave: true
+    resave: true,
   })
 );
 
 // Set up rendering
-app.set('view engine', 'ejs')
+app.set("view engine", "ejs");
 
 // Anything in this folder is being served
 app.use(express.static(path.join(__dirname, "public")));
 
 // Parse request body
-app.use(bodyParser.json()); // support json encoded bodies
+app.use(express.json()); // support json encoded bodies
 app.use(express.urlencoded({ extended: true }));
 
 // Host root
 app.get("/", (req, res) => {
-  res.render('pages/home', {
+  res.render("pages/home", {
     page: {
       title: "Home",
-      loggedIn: req.session.loggedIn
-    }
-  })
+      loggedIn: req.session.loggedIn,
+    },
+  });
 });
 
 // Host beta site
@@ -89,69 +90,66 @@ app.get("/register/email", (req, res) => {
 });
 
 // Post request handling for registering a user
-app.post("/register_email", async (req, res, next) => {
-  // If any parameters are missing:
-  if (
-    !(req.body.username && req.body.password && req.body.name && req.body.email)
-  ) {
-    // Back to registration you go!
-    res.redirect("/register/register_email");
-
-    // Goodbye!
-    return;
-  }
-
-  // We use try catch in case something breaks
-  try {
-    // Connect to database
-    await client.connect();
-
-    // Database connection
-    const database = client.db("auth");
-    const collection = database.collection("users");
-
-    // Hash parameters for security. This will use a secret so it can be reversed
-    const username = hash(req.body.username);
-    const password = hash(req.body.password);
-    const email = hash(req.body.email);
-    const name = hash(req.body.name);
-
-    // Check if username or email already exists in database
-    const exists = await collection.findOne({
-      $or: [{ username }, { email }],
-    });
-
-    // Send error and end
-    if (exists) {
-      res.send("Username or Email already exists!");
-      return;
+app.post(
+  "/register_email",
+  [
+    body("email")
+      .isEmail()
+      .withMessage("Invalid email address!")
+      .custom(async (value) => {
+        const user = await auth_user.findOne({ email: value });
+        if (user) {
+          return Promise.reject("Email is taken!");
+        }
+      }),
+    body("username")
+      .isLength({ min: 1 })
+      .withMessage("Username is required")
+      .custom(async (value) => {
+        const user = await auth_user.findOne({ username: value });
+        if (user) {
+          return Promise.reject("Username already in use");
+        }
+      }),
+    body("name").not().isEmpty().withMessage("Name is required"),
+    body("password")
+      .isLength({ min: 5 })
+      .withMessage("Password must be at least 5 characters long"),
+  ],
+  async (req, res, next) => {
+    // Let's hope this was empty
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      next(400);
     }
 
-    // Otherwise add the user
-    await collection.insertOne({
-      username: username,
-      password: password,
-      email: email,
-      name: name,
-    });
+    // We use try catch in case something breaks
+    try {
+      // Hash parameters for security. This will use a secret so it can be reversed
+      const username = sanitize(req.body.password);
+      const password = sanitize(req.body.password);
+      const email = sanitize(req.body.email);
+      const name = sanitize(req.body.name);
 
-    // Add session token
-    req.session.loggedIn = true;
+      // Create auth_user schema
+      const newUser = new auth_user({ email, username, name, password });
+      await newUser.save();
+      
+      // Add session token
+      req.session.loggedIn = true;
 
-    // User added!
-    res.redirect("/");
-  } catch (e) {
-    // ono :<
-    console.log(e);
+      // User added!
+      res.redirect("/");
+    } catch (e) {
+      // ono :<
+      console.log(e);
 
-    // Send 500
-    next(500);
-    res.send(e);
-  } finally {
-    // Close the connection
-    await client.close();
+      // Send 500
+      next(500);
+      res.send(e);
+    }
   }
-});
+);
 
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
@@ -225,9 +223,13 @@ app.get("/profile", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-  req.session.destroy()
-  res.redirect("/")
-})
+  req.session.destroy();
+  res.redirect("/");
+});
+
+app.get("practice", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "challenges.html"));
+});
 // Handle 404
 app.use((req, res, next) => {
   next(404);
@@ -255,8 +257,6 @@ app.use((err, req, res, next) => {
   res.status(status);
   res.send(page);
 });
-
-
 
 // Go Go Go!
 app.listen(process.env.PORT, () => {
