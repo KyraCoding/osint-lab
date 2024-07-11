@@ -78,7 +78,7 @@ app.use(
 app.set("view engine", "ejs");
 
 // Anything in this folder is being served
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "views/assets")));
 
 // Parse request body
 app.use(express.json()); // support json encoded bodies
@@ -110,6 +110,7 @@ app.get("/register/email", (req, res) => {
     page: {
       title: "Register",
     },
+    prev_values: {},
     errors: {},
   });
 });
@@ -130,6 +131,10 @@ app.post(
     body("username")
       .isLength({ min: 1 })
       .withMessage("Username is required!")
+      .matches(/^[a-z_]+$/)
+      .withMessage(
+        "Username can only contain lowercase letters and underscores!"
+      )
       .custom(async (value) => {
         const user = await auth_user.findOne({ username: value });
         if (user) {
@@ -153,6 +158,7 @@ app.post(
           title: "Register",
         },
         errors: formattedErrors,
+        prev_values: req.body,
       });
       return;
     }
@@ -198,8 +204,8 @@ app.get("/login/email", [], (req, res) => {
 app.post(
   "/login_email",
   [
-    body("username").isLength({ min: 1 }).withMessage("Username is required"),
-    body("password").isLength({ min: 1 }).withMessage("Password is required"),
+    body("username").isLength({ min: 1 }).withMessage("Username is required!"),
+    body("password").isLength({ min: 1 }).withMessage("Password is required!"),
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
