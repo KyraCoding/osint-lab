@@ -77,6 +77,12 @@ app.use(
 // Set up rendering
 app.set("view engine", "ejs");
 
+// Set up login state
+app.use(function (req, res, next) {
+  res.locals.loggedIn = req.session.loggedIn || false
+  next()
+})
+
 // Anything in this folder is being served
 app.use(express.static(path.join(__dirname, "views/assets")));
 
@@ -88,7 +94,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.render("pages/home", {
     page: {
-      title: "Home",
+      title: "Home"
     },
   });
 });
@@ -291,6 +297,13 @@ app.get("/logout", (req, res) => {
 app.get("/practice", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "challenges.html"));
 });
+app.get("/practice_beta", (req,res) => {
+  res.render("pages/practice", {
+    page: {
+      title: "Practice"
+    },
+  });
+})
 // Handle 404
 app.use((req, res, next) => {
   next(404);
