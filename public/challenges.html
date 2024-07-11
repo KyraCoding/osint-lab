@@ -13,8 +13,21 @@
         <title>Challenges - OSINT Monkey</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdn.tailwindcss.com?plugins=aspect-ratio"></script>
+      <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              // font_name: ['"official font family name"': "font-name"]
+              barlow: ['"barlow"', "sans-serif"],
+              roboto: ['"roboto mono"', "sans-serif"]
+            },
+          },
+        },
+      };
+    </script>
     </head>
-    <body>
+    <body class="font-roboto">
     <!-- Navbar -->
     <div class="navbar flex flex-row w-full h-14 bg-[#00E7E1] p-2 px-4 gap-16 shadow-md fixed top-0 left-0 right-0 z-50">
         <!-- Icon -->
