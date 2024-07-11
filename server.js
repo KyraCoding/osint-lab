@@ -102,7 +102,11 @@ app.get("/beta", (req, res) => {
 
 // Host register page
 app.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "register.html"));
+  res.render("pages/register", {
+    page: {
+      title: "Register",
+    }
+  });
 });
 
 app.get("/register/email", (req, res) => {
@@ -187,13 +191,22 @@ app.post(
       console.log(e);
 
       // Send 500
-      next(500);
+      return res.render("pages/register_email", {
+        page: {
+          title: "Regster",
+        },
+        errors: { server_error: "An unknown error occurred!" },
+      });
     }
   }
 );
 
 app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
+  res.render("pages/login", {
+    page: {
+      title: "Login",
+    }
+  });
 });
 
 app.get("/login/email", [], (req, res) => {
@@ -252,7 +265,12 @@ app.post(
     } catch (e) {
       // 500 handling
       console.log(e);
-      next(500);
+      return res.render("pages/login_email", {
+        page: {
+          title: "Login",
+        },
+        errors: { server_error: "An unknown error occurred!" },
+      });
     }
   }
 );

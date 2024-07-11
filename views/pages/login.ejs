@@ -1,0 +1,37 @@
+<html>
+  <%- include('../partials/head') %>
+<body class="bg-[#E7F7FC] font-roboto">
+    <div class="flex justify-center items-center h-full w-full">
+      <div
+        class="h-fit w-fit flex flex-col rounded-xl bg-[#80D3F0] p-6 shadow-2xl"
+      >
+        <h1 class="flex text-5xl text-slate-800 font-bold">Welcome back!</h1>
+        <p class="flex text-3xl text-slate-800 mt-3">It's good to see you again!</p>
+        <div class="gap-3 flex flex-col mt-6">
+          <a
+            href="/login/email"
+            class="items-center flex w-full h-fit bg-[#007EA7] shadow-xl transition duration-300 hover:bg-[#00A7E1] rounded-md p-3 justify-start text-lg text-slate-800"
+          >
+            <img
+              src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/mail-svgrepo-com.svg?v=1720554308748"
+              class="flex aspect-square h-6 mr-6"
+            />
+            Login with Email</a
+          >
+          <a
+            href="/login/google"
+            class="items-center flex w-full h-fit bg-[#007EA7] shadow-xl transition duration-300 hover:bg-[#00A7E1] rounded-md p-3 justify-start text-lg text-slate-800"
+          >
+            <img
+              src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/google-color-svgrepo-com.svg?v=1720553907949"
+              class="flex aspect-square h-6 mr-6"
+            />
+            Login with Google</a
+          >
+          <a href="/register" class="tracking-wide text-slate-800 transition duration-300 border-b-2 border-slate-800 hover:border-[#00A7E1] w-fit">Don't have an account? Register here!</a>
+        </div>
+        
+      </div>
+    </div>
+  </body>
+</html>
