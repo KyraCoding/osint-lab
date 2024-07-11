@@ -1,0 +1,32 @@
+<html>
+  <%- include('../partials/head') %>
+    <body class="bg-[#E7F7FC] font-roboto">
+    <div class="flex justify-center items-center h-full w-full">
+      <div class="h-fit w-fit flex flex-col rounded-xl bg-[#80D3F0] p-6 shadow-2xl">
+        <h1 class="flex text-5xl text-slate-800 font-bold" >Hey there!</h1>
+        <p class="flex text-3xl text-slate-800">Let's get set up!</p>
+        <form action="/register_email" method="POST" class="flex flex-col gap-3 mt-3">
+          <% if (errors.email ) { %>
+            <label class="text-rose-600"><%= errors.email %></label>
+          <% } else { %>
+            <label>Email:</label>
+          <% } %>
+          <input type="text" name="email" class="rounded  p-2 bg-[#007EA7]">
+          <% if (errors.username ) { %>
+            <label class="text-rose-600"><%= errors.username %></label>
+          <% } else { %>
+            <label>Username:</label>
+          <% } %>
+          <input type="text" name="username" class="rounded  p-2 bg-[#007EA7]">
+          <% if (errors.password ) { %>
+            <label class="text-rose-600"><%= errors.password %></label>
+          <% } else { %>
+            <label>Password:</label>
+          <% } %>
+          <input type="password" name="password" class="rounded  p-2 bg-[#007EA7]">
+          <input type="submit" class="place-self-center	p-3 rounded rounded w-fit mt-3 bg-[#007EA7] duration-300 hover:bg-[#00A7E1]">
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

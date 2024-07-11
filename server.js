@@ -37,7 +37,7 @@ mongoose.connect(
     process.env.DATABASE_USERNAME +
     ":" +
     process.env.DATABASE_PASSWORD +
-    "@radiata.0g6mder.mongodb.net/tanuki/?retryWrites=true&w=majority&appName=radiata"
+    "@radiata.0g6mder.mongodb.net/tanuki?retryWrites=true&w=majority&appName=radiata"
 );
 
 // Connect to database for storing sessions
@@ -47,7 +47,7 @@ const store = new MongoStore({
     process.env.DATABASE_USERNAME +
     ":" +
     process.env.DATABASE_PASSWORD +
-    "@radiata.0g6mder.mongodb.net/tanuki/?retryWrites=true&w=majority&appName=radiata",
+    "@radiata.0g6mder.mongodb.net/tanuki?retryWrites=true&w=majority&appName=radiata",
   collection: "sessions",
 
   // Currently set to 14 days
@@ -70,7 +70,7 @@ app.use(
     httpOnly: true, // NO CLIENT COOKIE READING?
     secure: true, // NO HTTP HAHA
     sameSite: "strict", // NO CSRF HAHAHA
-    store: store // SAVE TO DATABASE WOOOOO
+    store: store, // SAVE TO DATABASE WOOOOO
   })
 );
 
@@ -89,7 +89,6 @@ app.get("/", (req, res) => {
   res.render("pages/home", {
     page: {
       title: "Home",
-      loggedIn: req.session.loggedIn,
     },
   });
 });
@@ -107,7 +106,12 @@ app.get("/register", (req, res) => {
 });
 
 app.get("/register/email", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "register_email.html"));
+  res.render("pages/register_email", {
+    page: {
+      title: "Register",
+    },
+    errors: {},
+  });
 });
 
 // Post request handling for registering a user
@@ -125,23 +129,32 @@ app.post(
       }),
     body("username")
       .isLength({ min: 1 })
-      .withMessage("Username is required")
+      .withMessage("Username is required!")
       .custom(async (value) => {
         const user = await auth_user.findOne({ username: value });
         if (user) {
-          return Promise.reject("Username already in use");
+          return Promise.reject("Username is taken!");
         }
       }),
-    body("preferred_name").not().isEmpty().withMessage("Name is required"),
     body("password")
       .isLength({ min: 5 })
-      .withMessage("Password must be at least 5 characters long"),
+      .withMessage("Password must be at least 5 characters long!"),
   ],
   async (req, res, next) => {
     // Let's hope this was empty
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      next(400);
+      const formattedErrors = errors.array().reduce((acc, error) => {
+        acc[error.path] = error.msg;
+        return acc;
+      }, {});
+      res.render("pages/register_email", {
+        page: {
+          title: "Register",
+        },
+        errors: formattedErrors,
+      });
+      return;
     }
 
     // We use try catch in case something breaks
@@ -150,13 +163,11 @@ app.post(
       const username = sanitize(req.body.username);
       const password = sanitize(req.body.password);
       const email = sanitize(req.body.email);
-      const preferred_name = sanitize(req.body.preferred_name);
 
       // Create auth_user schema
       const newUser = new auth_user({
         email,
         username,
-        preferred_name,
         password,
       });
       await newUser.save();
