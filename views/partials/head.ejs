@@ -11,6 +11,7 @@
     <title><%= title %> - OSINT Monkey</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.tailwindcss.com?plugins=aspect-ratio"></script>
+    <script src="https://kit.fontawesome.com/aa00b5a664.js" crossorigin="anonymous"></script>
      <script>
       tailwind.config = {
         theme: {
@@ -19,6 +20,15 @@
               // font_name: ['"official font family name"': "font-name"]
               roboto: ['"roboto mono"', "sans-serif"]
             },
+            animation: {
+              fadein: 'fadein 0.2s ease-in-out',
+            },
+            keyframes: theme => ({
+              fadein: {
+                '0%': { opacity: 0 },
+                '100%': { opacity: 1 },
+              },
+            }),
           },
         },
       };
