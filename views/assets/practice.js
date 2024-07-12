@@ -5,6 +5,7 @@ function overlay(element) {
   document.getElementById("challenge_div").scrollTop = 0;
 
   const data = JSON.parse(element.dataset.raw_data);
+  console.log(data)
   Object.keys(data).forEach((attr) => {
     if (document.getElementById("challenge_div_" + attr)) {
       if (attr == "author") {
@@ -12,6 +13,7 @@ function overlay(element) {
       }
       document.getElementById("challenge_div_" + attr).innerHTML = data[attr];
     }
+    document.getElementById("challenge_div_submit").dataset.challenge_id = data["_id"];
     var color = "bg-[#37E100]";
     switch (data.difficulty) {
       case "beginner":

@@ -284,12 +284,10 @@ app.get("/practice", async (req, res, next) => {
         category: categories[i].toUpperCase(),
       })
         .sort({ difficulty: 1, score: 1 })
-        .select(
-          "title solvedBy description score solveCount difficulty author"
-        )
+        .select("title solvedBy description score solveCount difficulty author")
         .lean();
       challenge_group.forEach((obj) => {
-        obj.difficulty = difficulties[obj.difficulty]
+        obj.difficulty = difficulties[obj.difficulty];
       });
       challenges[categories[i]] = challenge_group;
     }
@@ -303,14 +301,64 @@ app.get("/practice", async (req, res, next) => {
   }
 });
 
-app.post("/verify/flag",[
-    body("id").isLength({ min: 1 }).withMessage("?"),
-    body("flag").isLength({ min: 1 }).withMessage("Did you misclick the submit button?"),
-    body("flag").matches("flag\{.*?\}").withMessage("Flag must be in format flag{}!")
-  
-  ], (req, res) => {
-  
-})
+app.post(
+  "/verify/flag",
+  [
+    body("id")
+      .isLength({ min: 1 })
+      .withMessage("Someone forgot their challenge id..."),
+    body("flag")
+      .isLength({ min: 1 })
+      .withMessage("Were you just testing the submit button?"),
+    body("flag")
+      .matches("^flag{.*?}$")
+      .withMessage("Flag must be in format flag{}!"),
+  ],
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.send(
+        JSON.stringify({
+          msg: Object.values(errors.errors)[0].msg,
+          success: false,
+        })
+      );
+    }
+    try {
+      const _id = sanitize(req.body.id);
+      const flag = sanitize(req.body.flag).trim();
+      const challenge = await Challenge.findOne({ _id });
+      if (!challenge) {
+        return res.send(
+          JSON.stringify({
+            msg: "No such challenge found...",
+            success: false,
+          })
+        );
+      }
+      if (flag === challenge.flag) {
+        return res.send(
+          JSON.stringify({
+            msg: "Flag correct!",
+            success: true,
+          })
+        );
+      } else {
+        return res.send(
+          JSON.stringify({
+            msg: "Flag incorrect...",
+            success: false,
+          })
+        );
+      }
+    } catch (err) {
+      console.log(err);
+      next(500);
+    }
+
+    res.send(JSON.stringify({ success: true }));
+  }
+);
 
 app.get("/learn", (req, res, next) => {
   next(501);
