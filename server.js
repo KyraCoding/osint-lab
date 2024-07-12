@@ -7,6 +7,12 @@ import { fileURLToPath } from "url";
 import path from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+function toTitleCase(str) {
+  return str.replace(
+    /\w\S*/g,
+    text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+  );
+}
 
 // Database Access
 import mongoose from "mongoose";
@@ -80,6 +86,10 @@ app.set("view engine", "ejs");
 // Set up login state
 app.use(function (req, res, next) {
   res.locals.loggedIn = req.session.loggedIn || false;
+  res.locals.title =
+    req.path.split("/")[1] != ""
+      ? toTitleCase(req.path.split("/")[1].replace(/-/g, ' '))
+      : "Home";
   next();
 });
 
@@ -92,11 +102,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Host root
 app.get("/", (req, res) => {
-  res.render("pages/home", {
-    page: {
-      title: "Home",
-    },
-  });
+  res.render("pages/home", {});
 });
 
 // Host beta site
@@ -108,18 +114,11 @@ app.get("/beta", (req, res) => {
 
 // Host register page
 app.get("/register", (req, res) => {
-  res.render("pages/register", {
-    page: {
-      title: "Register",
-    },
-  });
+  res.render("pages/register", {});
 });
 
 app.get("/register/email", (req, res) => {
   res.render("pages/register_email", {
-    page: {
-      title: "Register",
-    },
     prev_values: {},
     errors: {},
   });
@@ -164,9 +163,6 @@ app.post(
         return acc;
       }, {});
       return res.render("pages/register_email", {
-        page: {
-          title: "Register",
-        },
         errors: formattedErrors,
         prev_values: req.body,
       });
@@ -175,9 +171,9 @@ app.post(
     // We use try catch in case something breaks
     try {
       // Hash parameters for security. This will use a secret so it can be reversed
-      const username = sanitize(req.body.username);
+      const username = sanitize(req.body.username).trim();
       const password = sanitize(req.body.password);
-      const email = sanitize(req.body.email);
+      const email = sanitize(req.body.email).trim();
 
       // Create auth_user schema
       const newUser = new Auth_user({
@@ -198,9 +194,6 @@ app.post(
 
       // Send 500
       return res.render("pages/register_email", {
-        page: {
-          title: "Regster",
-        },
         errors: { server_error: "An unknown error occurred!" },
       });
     }
@@ -208,18 +201,11 @@ app.post(
 );
 
 app.get("/login", (req, res) => {
-  res.render("pages/login", {
-    page: {
-      title: "Login",
-    },
-  });
+  res.render("pages/login", {});
 });
 
 app.get("/login/email", [], (req, res) => {
   res.render("pages/login_email", {
-    page: {
-      title: "Login",
-    },
     errors: {},
   });
 });
@@ -238,9 +224,6 @@ app.post(
         return acc;
       }, {});
       return res.render("pages/login_email", {
-        page: {
-          title: "Login",
-        },
         errors: formattedErrors,
       });
     }
@@ -249,7 +232,7 @@ app.post(
     // We use a try and catch loop in case anything fails, that way it doesn't crash the server
     try {
       // Hash for security, also uses a secret
-      const username = sanitize(req.body.username);
+      const username = sanitize(req.body.username).toLowerCase().trim();
       const password = sanitize(req.body.password);
 
       // Try to find user
@@ -262,9 +245,6 @@ app.post(
         res.redirect("/");
       } else {
         return res.render("pages/login_email", {
-          page: {
-            title: "Login",
-          },
           errors: { invalid: "Invalid username or password!" },
         });
       }
@@ -272,9 +252,6 @@ app.post(
       // 500 handling
       console.log(e);
       return res.render("pages/login_email", {
-        page: {
-          title: "Login",
-        },
         errors: { server_error: "An unknown error occurred!" },
       });
     }
@@ -295,52 +272,56 @@ app.get("/logout", (req, res) => {
 });
 
 app.get("/practice", async (req, res, next) => {
+  if (!req.session.loggedIn) {
+    return res.redirect("/login");
+  }
   try {
-    const categories = ["socmint", "geoint", "sigint", "misc"]
-    var challenges = {
-      
-    }
-    for (var i=0;i<categories.length;i++) {
-      var challenge_group = await Challenge.find({category: categories[i].toUpperCase()}).sort({score: -1, title: 1}).select('title solvedBy description score solveCount');
-      challenges[categories[i]] = challenge_group
+    const categories = ["socmint", "geoint", "sigint", "misc"];
+    var challenges = {};
+    for (var i = 0; i < categories.length; i++) {
+      var challenge_group = await Challenge.find({
+        category: categories[i].toUpperCase(),
+      })
+        .sort({ score: -1, title: 1 })
+        .select("title solvedBy description score solveCount difficulty");
+      challenges[categories[i]] = challenge_group;
     }
     res.render("pages/practice", {
-      page: {
-        title: "Practice",
-      },
-      challenges: challenges
+      challenges: challenges,
     });
   } catch (err) {
     console.log(err);
     next(500);
   }
 });
+
+app.get("/learn", (req,res,next) => {
+  next(501);
+});
+app.get("/compete", (req,res,next) => {
+  next(501);
+});
+app.get("/about", (req,res,next) => {
+  next(501);
+});
+app.get("/privacy-policy", (req,res,next) => {
+  next(501);
+});
+app.get("/contact", (req,res,next) => {
+  next(501);
+});
+
 // Handle 404
 app.use((req, res, next) => {
   next(404);
 });
 
 // Finally built this, yay!
-
 app.use((err, req, res, next) => {
-  const status = err || 500;
-  const page = `
-  <!DOCTYPE html>
-  <html>
-  <head>
-    <link
-      rel="icon"
-      href="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/favicon.ico?v=1720468815926"
-    />
-    <title>Oh no! ${status}!</title>
-  </head>
-  <body>
-    <img src="https://http.cat/${status}" />
-  </body>
-</html>
-  `;
-  res.status(status);
-  res.send(page);
+  res.render("pages/error", {
+    err: err,
+    title: err,
+  });
 });
 
 // Go Go Go!
