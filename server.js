@@ -285,7 +285,7 @@ app.get("/profile", (req, res) => {
   if (!req.session.loggedIn) {
     res.redirect("/login");
   } else {
-    res.sendFile(path.join(__dirname, "public/", "profile.html"));
+    res.sendFile(path.join(__dirname, "public", "profile.html"));
   }
 });
 

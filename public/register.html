@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/favicon.ico?v=1720468815926"
+    />
+    <title>Register - OSINT Monkey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              // font_name: ['"official font family name"': "font-name"]
+              barlow: ['"barlow"', "sans-serif"],
+              roboto: ['"roboto mono"', "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-[#E7F7FC] font-roboto">
+    <div class="flex justify-center items-center h-full w-full">
+      <div
+        class="h-fit w-fit flex flex-col rounded-xl bg-[#80D3F0] p-6 shadow-2xl"
+      >
+        <h1 class="flex text-5xl text-slate-800 font-bold">Hey there!</h1>
+        <p class="flex text-3xl text-slate-800 mt-3">Nice to meet you!</p>
+        <div class="gap-3 flex flex-col mt-6">
+          <a
+            href="/register/email"
+            class="items-center flex w-full h-fit bg-[#007EA7] shadow-xl transition duration-300 hover:bg-[#00A7E1] rounded-md p-3 justify-start text-lg text-slate-800"
+          >
+            <img
+              src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/mail-svgrepo-com.svg?v=1720554308748"
+              class="flex aspect-square h-6 mr-6"
+            />
+            Register with Email</a
+          >
+          <a
+            href="/register/google"
+            class="items-center flex w-full h-fit bg-[#007EA7] shadow-xl transition duration-300 hover:bg-[#00A7E1] rounded-md p-3 justify-start text-lg text-slate-800"
+          >
+            <img
+              src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/google-color-svgrepo-com.svg?v=1720553907949"
+              class="flex aspect-square h-6 mr-6"
+            />
+            Register with Google</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
