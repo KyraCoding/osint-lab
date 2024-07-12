@@ -5,60 +5,45 @@
     <!-- Navbar -->
     <%- include('../partials/header') %>
     <!-- Main content -->
-    <div class="flex flex-col mt-14 p-12 mx-auto gap-14 text-slate-800 grow">
+    <div class="flex flex-col mt-14 p-12 mx-auto gap-8 text-slate-800 grow">
       <% Object.keys(challenges).forEach((key) => { %>
         <div class="mb-12">
           <h2 class="text-4xl font-bold mb-6"><%= key.toUpperCase() %></h2>
+          <div class="grid grid-cols-3 gap-4 justify-between">
+            <% challenges[key].forEach((challenge) => { %>
+              <div class="flex flex-col justify-between overflow-auto bg-[#003459] hover:bg-[#007EA7] ease-in duration-150 h-40 cursor-pointer p-4 rounded-lg shadow-md text-[#E7F7FC]">
+                <div class="flex justify-between gap-2">
+                    <h3 class="flex text-xl font-semibold"><%= challenge.title %></h3>
+                    <%
+                       var color = "text-[#37E100]"
+                       switch (challenge.difficulty) {
+                         case "beginner":
+                           color = "text-[#00A7E1]"
+                           break
+                         case "easy":
+                           color = "text-[#37E100]"
+                           break
+                         case "medium":
+                           color = "text-[#E13A00]"                          
+                           break
+                         case "hard":
+                           color = "text-[#AA00E1]"
+                           break
+                         default:
+                           break
+                       }
+                    %>
+                    <h3 class="flex text-xl font-semibold <%= color %>"><%= challenge.difficulty %></h3>
+                </div>
+                <div class="flex justify-between gap-2">
+                    <p class="text-gray-700 text-white"><%= challenge.solveCount %> solves</p>
+                    <p class="text-gray-700 text-white"><%= challenge.score %> points</p>
+                </div>
+              </div>
+            <% }) %>
+          </div>
         </div>
       <% }) %>
-      <!-- SOCMINT Section -->
-      <!--
-      <div class="mb-12">
-          <h2 class="text-4xl font-bold mb-6">SOCMINT</h2>
-          <div class="grid grid-cols-3 gap-4 justify-between">
-            <div class="flex flex-col justify-between overflow-auto bg-[#003459] hover:bg-[#007EA7] ease-in duration-150 h-40 cursor-pointer p-4 rounded-lg shadow-md text-[#E7F7FC]">
-                <div class="flex justify-between gap-2">
-                    <h3 class="flex text-xl font-semibold">Problem 1 asdfasdfasdfasdfa sdfsdfsffsdfsdsd</h3>
-                    <h3 class="flex text-xl font-semibold text-[#00FF00]">Easy</h3>
-                </div>
-                <div class="flex justify-between gap-2">
-                    <p class="text-gray-700 text-white">100 solves</p>
-                    <p class="text-gray-700 text-white">100 points</p>
-                </div>
-            </div>
-            <div class="overflow-auto bg-[#003459] hover:bg-[#007EA7] ease-in duration-300 h-40 cursor-pointer p-4 rounded-lg shadow-md text-[#E7F7FC]">
-                <div class="flex justify-between mb-10">
-                    <h3 class="text-xl font-semibold mb-2">Problem 2</h3>
-                    <h3 class="text-xl font-semibold mb-2 text-[#FFFF00]">Medium</h3>
-                </div>
-                <div class="flex justify-between">
-                    <p class="text-gray-700 text-white">100 solves</p>
-                    <p class="text-gray-700 text-white">100 points</p>
-                </div>
-            </div>
-            <div class="overflow-auto bg-[#003459] hover:bg-[#007EA7] ease-in duration-300 h-40 cursor-pointer p-4 rounded-lg shadow-md text-[#E7F7FC]">
-                <div class="flex justify-between mb-10">
-                    <h3 class="text-xl font-semibold mb-2">Problem 3</h3>
-                    <h3 class="text-xl font-semibold mb-2 text-[#FF0000]">Hard</h3>
-                </div>
-                <div class="flex justify-between">
-                    <p class="text-gray-700 text-white">100 solves</p>
-                    <p class="text-gray-700 text-white">100 points</p>
-                </div>
-            </div>
-            <div class="overflow-auto bg-[#003459] hover:bg-[#007EA7] ease-in duration-300 h-40 cursor-pointer p-4 rounded-lg shadow-md text-[#E7F7FC]">
-                <div class="flex justify-between mb-10">
-                    <h3 class="text-xl font-semibold mb-2">Problem 4</h3>
-                    <h3 class="text-xl font-semibold mb-2 text-[#00FF00]">Easy</h3>
-                </div>
-                <div class="flex justify-between">
-                    <p class="text-gray-700 text-white">100 solves</p>
-                    <p class="text-gray-700 text-white">100 points</p>
-                </div>
-            </div>
-          </div>
-      </div>
-      -->
     </div>
     <!-- Footer -->
     <%- include('../partials/footer') %>
