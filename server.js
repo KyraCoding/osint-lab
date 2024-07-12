@@ -283,7 +283,7 @@ app.get("/practice", async (req, res, next) => {
         category: categories[i].toUpperCase(),
       })
         .sort({ score: -1, title: 1 })
-        .select("title solvedBy description score solveCount difficulty");
+        .select("title solvedBy description score solveCount difficulty author");
       challenges[categories[i]] = challenge_group;
     }
     res.render("pages/practice", {
@@ -327,5 +327,5 @@ app.use((err, req, res, next) => {
 // Go Go Go!
 app.listen(process.env.PORT, () => {
   const currentDate = new Date();
-  console.log(`Server successfully started at ${currentDate}!`);
+  console.log(`Server successfully started on ${currentDate}!`);
 });

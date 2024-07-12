@@ -10,28 +10,29 @@
           <h2 class="text-4xl font-bold mb-6"><%= key.toUpperCase() %></h2>
           <div class="grid grid-cols-3 gap-4 justify-between">
             <% challenges[key].forEach((challenge) => { %>
-              <div onclick="overlay(this)" data-raw_data ="<%= challenge %>" class="flex flex-col justify-between overflow-auto bg-[#003459] hover:bg-[#007EA7] ease-in duration-150 h-40 cursor-pointer p-4 rounded-lg shadow-md text-[#E7F7FC]">
+            <%
+                 var color = "text-[#37E100]"
+                 switch (challenge.difficulty) {
+                   case "beginner":
+                     color = "text-[#00A7E1]"
+                     break
+                   case "easy":
+                     color = "text-[#37E100]"
+                     break
+                   case "medium":
+                     color = "text-[#E13A00]"                          
+                     break
+                   case "hard":
+                     color = "text-[#AA00E1]"
+                     break
+                   default:
+                     break
+                 }
+              %>
+              <div onclick="overlay(this)" data-raw_data ="<%= JSON.stringify(challenge) %>" class="flex flex-col justify-between overflow-auto bg-[#003459] hover:bg-[#007EA7] ease-in duration-150 h-40 cursor-pointer p-4 rounded-lg shadow-md text-[#E7F7FC]">
                 <div class="flex justify-between gap-2">
                     <h3 class="flex text-xl font-semibold"><%= challenge.title %></h3>
-                    <%
-                       var color = "text-[#37E100]"
-                       switch (challenge.difficulty) {
-                         case "beginner":
-                           color = "text-[#00A7E1]"
-                           break
-                         case "easy":
-                           color = "text-[#37E100]"
-                           break
-                         case "medium":
-                           color = "text-[#E13A00]"                          
-                           break
-                         case "hard":
-                           color = "text-[#AA00E1]"
-                           break
-                         default:
-                           break
-                       }
-                    %>
+                    
                     <h3 class="flex text-xl font-semibold <%= color %>"><%= challenge.difficulty %></h3>
                 </div>
                 <div class="flex justify-between gap-2">
@@ -50,7 +51,7 @@
         <!-- Title -->
         <div class="flex flex-col h-fit w-full pb-3 border-b border-[#003459] gap-3">
           <div class="flex flex-row w-full justify-between">
-            <h1 class="flex text-slate-800 text-4xl font-bold">
+            <h1 id="challenge_div_title" class="flex text-slate-800 text-4xl font-bold">
               Title Goes Here
             </h1>
             <h1 id="challenge_div_close" class="flex text-slate-800 text-4xl font-bold hover:text-black transition ease-in duration-150 cursor-pointer">
@@ -60,10 +61,10 @@
 
           <!-- Tags -->
           <div class="flex flex-row h-fit w-full gap-3">
-            <div class="flex text-slate-800 text-lg font-semibold bg-[#37E100] p-1 justify-center items-center rounded-md cursor-pointer">
+            <div id="challenge_div_difficulty" class="flex text-[#E7F7FC] text-lg font-semibold bg-[#37E100] p-1 justify-center items-center rounded-md cursor-pointer">
               Easy
             </div>
-            <div class="flex text-slate-800 text-lg font-semibold bg-indigo-800 p-1 justify-center items-center rounded-md cursor-pointer">
+            <div id="challenge_div_category" data-current_color="bg-[#003459]" class="flex  text-lg bg-[#003459] text-[#E7F7FC] font-semibold  p-1 justify-center items-center rounded-md cursor-pointer">
               SOCMINT
             </div>
           </div>
@@ -71,13 +72,13 @@
 
         <!-- Description -->
         <div class="flex flex-col h-fit w-full gap-2 mt-2">
-          <p class="flex text-lg">
+          <p class="flex text-lg" id="challenge_div_author">
             Author: Author Name
           </p>
-          <p class="flex text-2xl font-bold">
+          <p  class="flex text-2xl font-bold">
             Description: 
           </p>
-          <p class="text-xl break-words">
+          <p id="challenge_div_description" class="text-xl break-words">
             "Whether we wanted it or not, we've stepped into a war with the Cabal on Mars. So let's get to taking out their command, one by one. Valus Ta'aurc. From what I can gather he commands the Siege Dancers from an Imperial Land Tank outside of Rubicon. He's well protected, but with the right team, we can punch through those defenses, take this beast out, and break their grip on Freehold."
             
             Active: Jax enters Evasion for 2 seconds: a defensive stance that causes him to dodge all incoming non- urret basic attacks and take 25% reduced damage from all area of effect abilities sourced from champions. Counter Strike can be recast after 1 second, and does so automatically after the duration.
@@ -85,7 +86,7 @@
         </div>
         
         <!-- Submit flag -->
-        <div class="flex flex-row h-fit w-full gap-3 mt-3 ">
+        <div class="flex flex-row h-fit w-full gap-3 mt-6 ">
           <input class="flex flex-grow rounded h-12 p-3" type="text" placeholder="Flag is in format: flag{}">
           <input class=" flex rounded h-12 p-3 bg-[#003459] hover:shadow-2xl hover:-translate-y-0.5 hover:scale-105 transition duration-300 ease-in-out text-[#E7F7FC] cursor-pointer" type="submit">
         </div>
