@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 function toTitleCase(str) {
   return str.replace(
     /\w\S*/g,
-    text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+    (text) => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
   );
 }
 
@@ -88,7 +88,7 @@ app.use(function (req, res, next) {
   res.locals.loggedIn = req.session.loggedIn || false;
   res.locals.title =
     req.path.split("/")[1] != ""
-      ? toTitleCase(req.path.split("/")[1].replace(/-/g, ' '))
+      ? toTitleCase(req.path.split("/")[1].replace(/-/g, " "))
       : "Home";
   next();
 });
@@ -277,15 +277,23 @@ app.get("/practice", async (req, res, next) => {
   }
   try {
     const categories = ["socmint", "geoint", "sigint", "misc"];
+    const difficulties = ["beginner", "easy", "medium", "hard"];
     var challenges = {};
     for (var i = 0; i < categories.length; i++) {
       var challenge_group = await Challenge.find({
         category: categories[i].toUpperCase(),
       })
-        .sort({ score: -1, title: 1 })
-        .select("title solvedBy description score solveCount difficulty author");
+        .sort({ difficulty: 1, score: 1 })
+        .select(
+          "title solvedBy description score solveCount difficulty author"
+        )
+        .lean();
+      challenge_group.forEach((obj) => {
+        obj.difficulty = difficulties[obj.difficulty]
+      });
       challenges[categories[i]] = challenge_group;
     }
+
     res.render("pages/practice", {
       challenges: challenges,
     });
@@ -295,19 +303,28 @@ app.get("/practice", async (req, res, next) => {
   }
 });
 
-app.get("/learn", (req,res,next) => {
+app.post("/verify/flag",[
+    body("id").isLength({ min: 1 }).withMessage("?"),
+    body("flag").isLength({ min: 1 }).withMessage("Did you misclick the submit button?"),
+    body("flag").matches("flag\{.*?\}").withMessage("Flag must be in format flag{}!")
+  
+  ], (req, res) => {
+  
+})
+
+app.get("/learn", (req, res, next) => {
   next(501);
 });
-app.get("/compete", (req,res,next) => {
+app.get("/compete", (req, res, next) => {
   next(501);
 });
-app.get("/about", (req,res,next) => {
+app.get("/about", (req, res, next) => {
   next(501);
 });
-app.get("/privacy-policy", (req,res,next) => {
+app.get("/privacy-policy", (req, res, next) => {
   next(501);
 });
-app.get("/contact", (req,res,next) => {
+app.get("/contact", (req, res, next) => {
   next(501);
 });
 
