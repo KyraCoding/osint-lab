@@ -12,8 +12,8 @@ const __dirname = path.dirname(__filename);
 import mongoose from "mongoose";
 
 // Mongoose schema models
-import auth_user from "./model/auth_user.js";
-import challenge from "./model/challenge.js";
+import Auth_user from "./model/Auth_user.js";
+import Challenge from "./model/Challenge.js";
 
 // Authentication and Security
 import { createHash } from "crypto";
@@ -53,70 +53,6 @@ const session_db = new MongoStore({
   // Currently set to 14 days
   expires: 1000 * 60 * 60 * 24 * 14,
 });
-
-// Add test data
-const challengesData = [
-  {
-    category: "SOCMINT",
-    flag: "flag_socmint_1",
-    description: "SOCMINT Challenge 1 description",
-    title: "challenge_1"
-  },
-  {
-    category: "SOCMINT",
-    flag: "flag_socmint_2",
-    description: "SOCMINT Challenge 2 description",
-    title: "challenge_2"
-  },
-  {
-    category: "GEOINT",
-    flag: "flag_geoint_1",
-    description: "GEOINT Challenge 1 description",
-    title: "challenge_3"
-  },
-  {
-    category: "GEOINT",
-    flag: "flag_geoint_2",
-    description: "GEOINT Challenge 2 description",
-    title: "challenge_4"
-  },
-  {
-    category: "SIGINT",
-    flag: "flag_sigint_1",
-    description: "SIGINT Challenge 1 description",
-    title: "challenge_5"
-  },
-  {
-    category: "SIGINT",
-    flag: "flag_sigint_2",
-    description: "SIGINT Challenge 2 description",
-    title: "challenge_6"
-  },
-  {
-    category: "MISC",
-    flag: "flag_misc_1",
-    description: "MISC Challenge 1 description",
-    title: "challenge_7"
-  },
-  {
-    category: "MISC",
-    flag: "flag_misc_2",
-    description: "MISC Challenge 2 description",
-    title: "challenge_8"
-  },
-];
-
-// Function to insert challenges into MongoDB
-async function insertChallenges() {
-  try {
-    await challenge.deleteMany({}); // Clear existing challenges
-    const insertedChallenges = await challenge.insertMany(challengesData);
-    console.log(`${insertedChallenges.length} challenges inserted.`);
-  } catch (err) {
-    console.error("Error inserting challenges:", err);
-  }
-}
-insertChallenges()
 
 // Wonder what this could be 🤔
 app.use(function (req, res, next) {
@@ -197,7 +133,7 @@ app.post(
       .isEmail()
       .withMessage("Invalid email address!")
       .custom(async (value) => {
-        const user = await auth_user.findOne({ email: value });
+        const user = await Auth_user.findOne({ email: value });
         if (user) {
           return Promise.reject("Email is taken!");
         }
@@ -210,7 +146,7 @@ app.post(
         "Username can only contain lowercase letters, numbers or underscores!"
       )
       .custom(async (value) => {
-        const user = await auth_user.findOne({ username: value });
+        const user = await Auth_user.findOne({ username: value });
         if (user) {
           return Promise.reject("Username is taken!");
         }
@@ -244,7 +180,7 @@ app.post(
       const email = sanitize(req.body.email);
 
       // Create auth_user schema
-      const newUser = new auth_user({
+      const newUser = new Auth_user({
         email,
         username,
         password,
@@ -317,7 +253,7 @@ app.post(
       const password = sanitize(req.body.password);
 
       // Try to find user
-      const user = await auth_user.findOne({ username });
+      const user = await Auth_user.findOne({ username });
 
       // Make sure password is correct and user exists
       if (user && (await user.comparePassword(password))) {
@@ -358,15 +294,26 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-app.get("/practice", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "challenges.html"));
-});
-app.get("/practice_beta", (req, res) => {
-  res.render("pages/practice", {
-    page: {
-      title: "Practice",
-    },
-  });
+app.get("/practice", async (req, res, next) => {
+  try {
+    const categories = ["socmint", "geoint", "sigint", "misc"]
+    var challenges = {
+      
+    }
+    for (var i=0;i<categories.length;i++) {
+      var challenge_group = await Challenge.find({category: categories[i].toUpperCase()}).sort({score: -1, title: 1}).select('title solvedBy description score solveCount');
+      challenges[categories[i]] = challenge_group
+    }
+    res.render("pages/practice", {
+      page: {
+        title: "Practice",
+      },
+      challenges: challenges
+    });
+  } catch (err) {
+    console.log(err);
+    next(500);
+  }
 });
 // Handle 404
 app.use((req, res, next) => {
@@ -398,5 +345,6 @@ app.use((err, req, res, next) => {
 
 // Go Go Go!
 app.listen(process.env.PORT, () => {
-  console.log(`Server is up!`);
+  const currentDate = new Date();
+  console.log(`Server successfully started at ${currentDate}!`);
 });

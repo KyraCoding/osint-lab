@@ -5,7 +5,7 @@ const challenge_schema = new Schema(
   {
     title: {type: String, required: true},
     category: { type: String, required: true },
-    solvedBy: [{ type: Schema.Types.ObjectId, ref: "user" }],
+    solvedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
     flag: { type: String, required: true },
     description: { type: String, required: true },
     score: { type: Number, default: 500 },
@@ -17,5 +17,5 @@ const challenge_schema = new Schema(
 // Indexes for sorting and listing
 challenge_schema.index({ category: 1, score: -1, solveCount: -1 });
 
-const challenge = model("challenge", challenge_schema);
-export default challenge;
+const Challenge = model("Challenge", challenge_schema);
+export default Challenge;
