@@ -13,6 +13,7 @@ import mongoose from "mongoose";
 
 // Mongoose schema models
 import auth_user from "./model/auth_user.js";
+import challenge from "./model/challenge.js";
 
 // Authentication and Security
 import { createHash } from "crypto";
@@ -41,7 +42,7 @@ mongoose.connect(
 );
 
 // Connect to database for storing sessions
-const store = new MongoStore({
+const session_db = new MongoStore({
   uri:
     "mongodb+srv://" +
     process.env.DATABASE_USERNAME +
@@ -49,10 +50,73 @@ const store = new MongoStore({
     process.env.DATABASE_PASSWORD +
     "@radiata.0g6mder.mongodb.net/tanuki?retryWrites=true&w=majority&appName=radiata",
   collection: "sessions",
-
   // Currently set to 14 days
   expires: 1000 * 60 * 60 * 24 * 14,
 });
+
+// Add test data
+const challengesData = [
+  {
+    category: "SOCMINT",
+    flag: "flag_socmint_1",
+    description: "SOCMINT Challenge 1 description",
+    title: "challenge_1"
+  },
+  {
+    category: "SOCMINT",
+    flag: "flag_socmint_2",
+    description: "SOCMINT Challenge 2 description",
+    title: "challenge_2"
+  },
+  {
+    category: "GEOINT",
+    flag: "flag_geoint_1",
+    description: "GEOINT Challenge 1 description",
+    title: "challenge_3"
+  },
+  {
+    category: "GEOINT",
+    flag: "flag_geoint_2",
+    description: "GEOINT Challenge 2 description",
+    title: "challenge_4"
+  },
+  {
+    category: "SIGINT",
+    flag: "flag_sigint_1",
+    description: "SIGINT Challenge 1 description",
+    title: "challenge_5"
+  },
+  {
+    category: "SIGINT",
+    flag: "flag_sigint_2",
+    description: "SIGINT Challenge 2 description",
+    title: "challenge_6"
+  },
+  {
+    category: "MISC",
+    flag: "flag_misc_1",
+    description: "MISC Challenge 1 description",
+    title: "challenge_7"
+  },
+  {
+    category: "MISC",
+    flag: "flag_misc_2",
+    description: "MISC Challenge 2 description",
+    title: "challenge_8"
+  },
+];
+
+// Function to insert challenges into MongoDB
+async function insertChallenges() {
+  try {
+    await challenge.deleteMany({}); // Clear existing challenges
+    const insertedChallenges = await challenge.insertMany(challengesData);
+    console.log(`${insertedChallenges.length} challenges inserted.`);
+  } catch (err) {
+    console.error("Error inserting challenges:", err);
+  }
+}
+insertChallenges()
 
 // Wonder what this could be 🤔
 app.use(function (req, res, next) {
@@ -70,7 +134,7 @@ app.use(
     httpOnly: true, // NO CLIENT COOKIE READING?
     secure: true, // NO HTTP HAHA
     sameSite: "strict", // NO CSRF HAHAHA
-    store: store, // SAVE TO DATABASE WOOOOO
+    store: session_db, // SAVE TO DATABASE WOOOOO
   })
 );
 
@@ -79,9 +143,9 @@ app.set("view engine", "ejs");
 
 // Set up login state
 app.use(function (req, res, next) {
-  res.locals.loggedIn = req.session.loggedIn || false
-  next()
-})
+  res.locals.loggedIn = req.session.loggedIn || false;
+  next();
+});
 
 // Anything in this folder is being served
 app.use(express.static(path.join(__dirname, "views/assets")));
@@ -94,7 +158,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.render("pages/home", {
     page: {
-      title: "Home"
+      title: "Home",
     },
   });
 });
@@ -111,7 +175,7 @@ app.get("/register", (req, res) => {
   res.render("pages/register", {
     page: {
       title: "Register",
-    }
+    },
   });
 });
 
@@ -141,9 +205,9 @@ app.post(
     body("username")
       .isLength({ min: 1 })
       .withMessage("Username is required!")
-      .matches(/^[a-z_]+$/)
+      .matches(/^[a-z0-9_]+$/)
       .withMessage(
-        "Username can only contain lowercase letters and underscores!"
+        "Username can only contain lowercase letters, numbers or underscores!"
       )
       .custom(async (value) => {
         const user = await auth_user.findOne({ username: value });
@@ -211,7 +275,7 @@ app.get("/login", (req, res) => {
   res.render("pages/login", {
     page: {
       title: "Login",
-    }
+    },
   });
 });
 
@@ -297,13 +361,13 @@ app.get("/logout", (req, res) => {
 app.get("/practice", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "challenges.html"));
 });
-app.get("/practice_beta", (req,res) => {
+app.get("/practice_beta", (req, res) => {
   res.render("pages/practice", {
     page: {
-      title: "Practice"
+      title: "Practice",
     },
   });
-})
+});
 // Handle 404
 app.use((req, res, next) => {
   next(404);
