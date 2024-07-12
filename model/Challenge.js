@@ -10,7 +10,7 @@ const challenge_schema = new Schema(
     description: { type: String, required: true },
     score: { type: Number, default: 500 },
     solveCount: { type: Number, default: 0 },
-    difficulty: {type: String, required: true},
+    difficulty: {type: Number, default: 1},
     author: {type: String, required: true}
   },
   { timestamps: true }
