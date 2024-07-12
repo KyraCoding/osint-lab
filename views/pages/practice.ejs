@@ -45,10 +45,10 @@
       <% }) %>
     </div>
     <!-- Overlay -->
-    <div id="overlay" class="overflow-y-auto hidden flex fixed w-full h-full top-0 bottom-0 left-0 right-0 bg-slate-800/50 opacity-100 z-50 items-center justify-center p-6">
-      <div id="challenge_div" class="flex flex-col min-h-96 h-max w-1/2 px-3 bg-[#007EA7] rounded-md shadow-2xl text-slate-800">
+    <div id="overlay" class="overflow-auto hidden fixed w-full h-full top-0 left-0 bg-slate-800/50 opacity-100 z-50 flex items-center justify-center p-6">
+      <div id="challenge_div" class="flex flex-col min-h-96 h-auto max-h-full w-1/2 p-6 bg-[#007EA7] rounded-md shadow-2xl text-slate-800 overflow-y-auto">
         <!-- Title -->
-        <div class="flex flex-col h-fit w-full p-3 border-b border-[#003459] gap-3">
+        <div class="flex flex-col h-fit w-full pb-3 border-b border-[#003459] gap-3">
           <div class="flex flex-row w-full justify-between">
             <h1 class="flex text-slate-800 text-4xl font-bold">
               Title Goes Here
@@ -57,18 +57,18 @@
               X
             </h1>
           </div>
-          
+
           <!-- Tags -->
-        <div class="flex h-fit w-full gap-3">
-          <div class="flex text-slate-800 text-lg font-semibold bg-[#37E100] p-1 justify-center items-center rounded-md cursor-pointer">
-            Easy
-          </div>
-          <div class="flex text-slate-800 text-lg font-semibold bg-indigo-800 p-1 justify-center items-center rounded-md cursor-pointer">
-            SOCMINT
+          <div class="flex flex-row h-fit w-full gap-3">
+            <div class="flex text-slate-800 text-lg font-semibold bg-[#37E100] p-1 justify-center items-center rounded-md cursor-pointer">
+              Easy
+            </div>
+            <div class="flex text-slate-800 text-lg font-semibold bg-indigo-800 p-1 justify-center items-center rounded-md cursor-pointer">
+              SOCMINT
+            </div>
           </div>
         </div>
-        </div>
-        
+
         <!-- Description -->
         <div class="flex flex-col h-fit w-full gap-2 mt-2">
           <p class="flex text-lg">
@@ -77,12 +77,21 @@
           <p class="flex text-2xl font-bold">
             Description: 
           </p>
-          <p class="flex text-xl break-words ">
-            blaghblaghblaghblaghblaghblaghblaghblaghblaghblag hblaghblaghblaghblaghblaghblaghhblaghblaghblaghblaghblaghblaghhblaghblaghblaghblaghblaghblagh
+          <p class="text-xl break-words">
+            "Whether we wanted it or not, we've stepped into a war with the Cabal on Mars. So let's get to taking out their command, one by one. Valus Ta'aurc. From what I can gather he commands the Siege Dancers from an Imperial Land Tank outside of Rubicon. He's well protected, but with the right team, we can punch through those defenses, take this beast out, and break their grip on Freehold."
+            
+            Active: Jax enters Evasion for 2 seconds: a defensive stance that causes him to dodge all incoming non- urret basic attacks and take 25% reduced damage from all area of effect abilities sourced from champions. Counter Strike can be recast after 1 second, and does so automatically after the duration.
           </p>
+        </div>
+        
+        <!-- Submit flag -->
+        <div class="flex flex-row h-fit w-full gap-3 mt-3 ">
+          <input class="flex flex-grow rounded h-12 p-3" type="text" placeholder="Flag is in format: flag{}">
+          <input class=" flex rounded h-12 p-3 bg-[#003459] hover:shadow-2xl hover:-translate-y-0.5 hover:scale-105 transition duration-300 ease-in-out text-[#E7F7FC] cursor-pointer" type="submit">
         </div>
       </div>
     </div>
+
     <!-- Footer -->
     <%- include('../partials/footer') %>
     <script src="practice.js"></script>
