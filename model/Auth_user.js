@@ -35,5 +35,5 @@ auth_user_schema.methods.comparePassword = async function (candidatePassword) {
   }
 };
 
-const auth_user = model("auth_user", auth_user_schema);
-export default auth_user;
+const Auth_user = model("Auth_user", auth_user_schema);
+export default Auth_user;
