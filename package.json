@@ -1,5 +1,5 @@
 {
-  "name": "glitch-hello-node",
+  "name": "OSINT-Labs",
   "version": "0.1.0",
   "description": "A simple Node app built on fastify, instantly up and running. Built to be remixed on Glitch.com.",
   "main": "server.js",
@@ -14,7 +14,8 @@
     "express-validator": "^7.1.0",
     "mongoose": "^8.5.0",
     "bcrypt": "^5.1.1",
-    "connect-mongodb-session": "^5.0.0"
+    "connect-mongodb-session": "^5.0.0",
+    "country-list-js": "^3.1.8"
   },
   "type": "module",
   "engines": {
