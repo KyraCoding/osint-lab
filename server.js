@@ -22,6 +22,7 @@ import mongoose from "mongoose";
 import Auth_user from "./model/Auth_user.js";
 import Challenge from "./model/Challenge.js";
 import User from "./model/User.js";
+import Website from "./model/Website.js";
 
 // Authentication and Security
 import { createHash } from "crypto";
@@ -300,6 +301,10 @@ app.get("/practice", async (req, res, next) => {
     return res.redirect("/login");
   }
   try {
+    const auth_user = await Auth_user.findOne({
+      _id: req.session.user_id,
+    });
+    const user = await User.findOne({ _id: auth_user.pubUser });
     const categories = ["socmint", "geoint", "sigint", "misc"];
     const difficulties = ["beginner", "easy", "medium", "hard"];
     var challenges = {};
@@ -308,16 +313,20 @@ app.get("/practice", async (req, res, next) => {
         category: categories[i].toUpperCase(),
       })
         .sort({ difficulty: 1, score: 1 })
-        .lean({ virtuals: true })
-      
-      // Awww did you want this?
-      delete challenge_group.flag
-      delete challenge_group.decay
-      delete challenge_group.minValue
-      delete challenge_group.maxValue
-      
+        .lean({ virtuals: true });
+
       challenge_group.forEach((obj) => {
         obj.difficulty = difficulties[obj.difficulty];
+        // Awww did you want this?
+        delete obj.flag;
+        delete obj.decay;
+        delete obj.minValue;
+        delete obj.maxValue;
+        if (obj.solvedBy.some(userId => userId.equals(user._id))) {
+          obj.solved = true
+        } else {
+          obj.solved = false
+        }
       });
       challenges[categories[i]] = challenge_group;
     }
@@ -416,7 +425,7 @@ app.post(
           } else {
             challenge.solvedBy.push(user._id);
             await challenge.save();
-            
+
             return res.send(
               JSON.stringify({
                 msg: "Flag correct!",
