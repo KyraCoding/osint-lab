@@ -15,7 +15,8 @@
     "mongoose": "^8.5.0",
     "bcrypt": "^5.1.1",
     "connect-mongodb-session": "^5.0.0",
-    "country-list-js": "^3.1.8"
+    "country-list-js": "^3.1.8",
+    "mongoose-lean-virtuals": "^0.9.1"
   },
   "type": "module",
   "engines": {
