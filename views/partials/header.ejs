@@ -8,22 +8,22 @@
       </a>
 
       <!-- Links -->
-      <div class="flex flex-row items-center space-x-6 ml-auto text-xl">
+      <div class="flex flex-row items-center space-x-6 ml-auto text-lg">
         <a href="/" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Home</a>
         <a href="/learn" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Learn</a>
         <a href="/practice" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Practice</a>
-        <a href="/compete" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Compete</a>
+        <!-- <a href="/compete" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Compete</a> -->
         <a href="/about" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">About</a>
       </div>
 
       <!-- Auth -->
       <% if (!loggedIn) { %>
-      <div class="flex flex-row items-center space-x-6 ml-auto text-xl">
+      <div class="flex flex-row items-center space-x-6 ml-auto text-lg">
         <a href="/register" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Sign Up</a>
         <a href="/login" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Login</a>
       </div>
       <% } else { %>
-        <div class="flex flex-row items-center space-x-6 ml-auto text-xl">
+        <div class="flex flex-row items-center space-x-6 ml-auto text-lg">
         <a href="/profile" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Profile</a>
         <a href="/logout" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Logout</a>
       </div>

@@ -1,12 +1,15 @@
 <html>
   <%- include('../partials/head') %>
-  <!-- Note to aryan: switch to font-barlow if you want barlow font-->
   <body class="font-roboto bg-[#E7F7FC]">
     <!-- Navbar -->
     <%- include('../partials/header') %>
-
+    <!-- BIG NAME -->
+    <div class="text-center mt-40 mb-20">
+      <h1 class="text-9xl font-bold">OSINT Academy</h1>
+      <p class="text-4xl font-bold text-blue-500 tracking-widest mt-2">PREMIER OSINT RESOURCES</p>
+    </div>
     <!-- Splash -->
-    <div class="flex flex-row p-4 m-40 mt-20 mb-10 justify-center">
+    <div class="flex flex-row p-4 m-40 mt-20 mb-0 justify-center">
       <div class="w-1/2 p-4">
         <h2 class="text-4xl font-bold text-[#003459]">High-quality OSINT practice</h2>
         <p class="text-xl mt-4">
@@ -21,7 +24,7 @@
         </p>
       </div>
       <div class="w-1/2 p-4 flex justify-center items-center">
-        <img src="assets/osint.jpg" class="w-240 h-240 rounded-xl object-contain">
+        <img src="https://cdn.glitch.global/f4140a6a-6312-408f-9f19-f09b33a6efad/osint.png" class="max-w-xl rounded-xl object-contain">
       </div>
     </div>
 
@@ -36,57 +39,61 @@
       </div>
       <div class="grid gap-8 lg:grid-cols-2">
         <div class="p-6 bg-white rounded-lg shadow-lg">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <img class="h-12 w-12" src="assets/icon1.png" alt="Icon">
+          <div class="flex">
+            <div class="flex-shrink-0 text-3xl text-blue-600">
+              <i class="fa-solid fa-rocket"></i>
             </div>
             <div class="ml-4">
-              <h4 class="text-lg leading-6 font-medium text-gray-900">Lorem Ipsum</h4>
+              <h4 class="text-lg leading-6 font-medium text-gray-900">Our Goal</h4>
               <p class="mt-2 text-base text-gray-700">
-                I really wanted to write something here, but the Euros are on and I have low attention span, so I'll do it later. I hope Mbappe wins! 
-                At this point, I don't know what to say, but I need filler text. This is still more filler text. And more filler text.
+                Our goal is to provide open-source intelligence resources for anyone wishing to learn and practice their skills.
+                Inspired by the lack of resources online, we took things into our own hands and built a platform from scratch in 
+                order to combat this critical problem.
               </p>
             </div>
           </div>
         </div>
         <div class="p-6 bg-white rounded-lg shadow-lg">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <img class="h-12 w-12" src="assets/icon2.png" alt="Icon">
+          <div class="flex">
+            <div class="flex-shrink-0 text-3xl text-emerald-600">
+              <i class="fa-solid fa-trophy"></i>
             </div>
             <div class="ml-4">
-              <h4 class="text-lg leading-6 font-medium text-gray-900">Lorem Ipsum</h4>
+              <h4 class="text-lg leading-6 font-medium text-gray-900">Compete with Others</h4>
               <p class="mt-2 text-base text-gray-700">
-                I really wanted to write something here, but the Euros are on and I have low attention span, so I'll do it later. I hope Mbappe wins! 
-                At this point, I don't know what to say, but I need filler text. This is still more filler text. And more filler text.
+                We provide practice problems in the form of CTF (capture-the-flag) challenges. Competitors solve problems in 
+                various categories e.g. SOCMINT, GEOINT, etc. and receive points for solved challenges. These points are then 
+                used to determine rankings on a global leaderboard!
               </p>
             </div>
           </div>
         </div>
         <div class="p-6 bg-white rounded-lg shadow-lg">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <img class="h-12 w-12" src="assets/icon3.png" alt="Icon">
+          <div class="flex">
+            <div class="flex-shrink-0 text-3xl text-pink-600">
+              <i class="fa-solid fa-brain"></i>
             </div>
             <div class="ml-4">
-              <h4 class="text-lg leading-6 font-medium text-gray-900">Lorem Ipsum</h4>
+              <h4 class="text-lg leading-6 font-medium text-gray-900">Learn Techniques</h4>
               <p class="mt-2 text-base text-gray-700">
-                I really wanted to write something here, but the Euros are on and I have low attention span, so I'll do it later. I hope Mbappe wins! 
-                At this point, I don't know what to say, but I need filler text. This is still more filler text. And more filler text.
+                Along with practice problems, we provide educational modules consisting of guides, lectures, and videos for you to learn 
+                topics from scratch. For every practice problem, we have a module covering a corresponding topic.
+
+                <i>Coming Soon</i>
               </p>
             </div>
           </div>
         </div>
         <div class="p-6 bg-white rounded-lg shadow-lg">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <img class="h-12 w-12" src="assets/icon4.png" alt="Icon">
+          <div class="flex">
+            <div class="flex-shrink-0 text-3xl text-yellow-500">
+              <i class="fa-solid fa-bolt-lightning"></i>
             </div>
             <div class="ml-4">
-              <h4 class="text-lg leading-6 font-medium text-gray-900">Lorem Ipsum</h4>
+              <h4 class="text-lg leading-6 font-medium text-gray-900">Beginner-Friendly</h4>
               <p class="mt-2 text-base text-gray-700">
-                I really wanted to write something here, but the Euros are on and I have low attention span, so I'll do it later. I hope Mbappe wins! 
-                At this point, I don't know what to say, but I need filler text. This is still more filler text. And more filler text.
+                No matter what your skill level is, we promise to have challenges for you! Regardless of whether you're just getting started with OSINT 
+                or have years of experience under your belt, there are challenges for everyone.
               </p>
             </div>
           </div>
@@ -96,20 +103,20 @@
   </div>
 
   <!-- Stats -->
-  <div class="flex justify-around py-8 mb-5">
+  <!--<div class="flex justify-around py-8 mb-5">
     <div class="text-center">
-      <div class="text-5xl font-bold">600k+</div>
+      <div class="text-5xl font-bold">Number Here</div>
       <div class="text-lg mt-2">Page Views</div>
     </div>
     <div class="text-center">
-      <div class="text-5xl font-bold">30k+</div>
+      <div class="text-5xl font-bold">Number Here</div>
       <div class="text-lg mt-2">Registered Users</div>
     </div>
     <div class="text-center">
-      <div class="text-5xl font-bold">50+</div>
+      <div class="text-5xl font-bold">Number Here</div>
       <div class="text-lg mt-2">Practice Challenges</div>
     </div>
-  </div>
+  </div>-->
   
   <!-- Footer -->
   <%- include('../partials/footer') %>

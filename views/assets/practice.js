@@ -1,7 +1,7 @@
 function overlay(element) {
   document.getElementById("overlay").classList.remove("hidden");
   document.getElementById("overlay").classList.add("animate-fadein");
-  document.body.classList.add("overflow-hidden");
+  //document.body.classList.add("overflow-hidden");
   document.getElementById("challenge_div").scrollTop = 0;
 
   const data = JSON.parse(element.dataset.raw_data);

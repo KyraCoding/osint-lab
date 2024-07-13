@@ -284,7 +284,7 @@ app.get("/practice", async (req, res, next) => {
         category: categories[i].toUpperCase(),
       })
         .sort({ difficulty: 1, score: 1 })
-        .select("title solvedBy description score solveCount difficulty author")
+        .select("title solvedBy description score solveCount difficulty author category")
         .lean();
       challenge_group.forEach((obj) => {
         obj.difficulty = difficulties[obj.difficulty];
