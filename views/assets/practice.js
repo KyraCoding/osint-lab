@@ -3,12 +3,16 @@ function overlay(element) {
   document.getElementById("overlay").classList.add("animate-fadein");
   //document.body.classList.add("overflow-hidden");
   document.getElementById("challenge_div").scrollTop = 0;
+  const linkRegex = /\[([^\]]+)\]\([^\)]+\)/g;
 
   const data = JSON.parse(element.dataset.raw_data);
   Object.keys(data).forEach((attr) => {
     if (document.getElementById("challenge_div_" + attr)) {
       if (attr == "author") {
         data[attr] = "Author: " + data[attr];
+      }
+      if (attr == "description") {
+        data[attr] = "<md-block>" + data[attr] + "</md-block>"
       }
       document.getElementById("challenge_div_" + attr).innerHTML = data[attr];
     }

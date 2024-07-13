@@ -6,6 +6,10 @@ const auth_user_schema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
+  verified: {type: Boolean, required: true, default: false},
+  banned: {type: Boolean, default: false},
+  admin: {type: Number, default: 0},
+  pubUser: { type: Schema.Types.ObjectId, ref: "User" }
 });
 
 // Hash password, with salt

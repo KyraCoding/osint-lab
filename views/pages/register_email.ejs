@@ -3,9 +3,9 @@
     <body class="bg-[#E7F7FC] font-roboto">
     <div class="flex justify-center items-center h-full w-full">
       <div class="h-fit w-fit flex flex-col rounded-xl bg-[#80D3F0] p-6 shadow-2xl">
-        <h1 class="flex text-5xl text-slate-800 font-bold" >Hey there!</h1>
+        <h1 class="flex text-5xl text-slate-800 font-bold" >Welcome!</h1>
         <p class="flex text-3xl text-slate-800">Let's get you set up!</p>
-        <form action="/register/email" method="POST" class="flex flex-col gap-3 mt-3">
+        <form action="/register/email" method="POST" class="flex flex-col gap-3 mt-3 mb-0">
           <% if (errors.server_error ) { %>
             <label class="text-rose-600"><%= errors.server_error %></label>
           <% } %>  
@@ -55,9 +55,7 @@
           </select>
           <input type="submit" class=" cursor-pointer	 place-self-center	p-3 rounded rounded w-fit mt-3 bg-[#007EA7] duration-300 hover:bg-[#00A7E1]" >
           <a href="/login" class="cursor-pointer	tracking-wide text-slate-800 transition duration-300 border-b-2 border-slate-800 hover:border-[#00A7E1] w-fit ">Already have an account? Login here!</a>
-          
         </form>
-        
       </div>
     </div>
   </body>
