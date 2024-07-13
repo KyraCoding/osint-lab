@@ -22,11 +22,18 @@
             },
             animation: {
               fadein: 'fadein 0.2s ease-in-out',
+              longerfadein: 'fadein 0.5s ease-in-out',
+              fadeout: 'fadeout 0.2s ease-in-out',
+              longerfadeout: 'fadeout 0.5s ease-in-out'
             },
             keyframes: theme => ({
               fadein: {
                 '0%': { opacity: 0 },
                 '100%': { opacity: 1 },
+              },
+              fadeout: {
+                '0%': { opacity: 1 },
+                '100%': { opacity: 0 },
               },
             }),
           },
