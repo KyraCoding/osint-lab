@@ -315,6 +315,7 @@ app.post(
       .withMessage("Flag must be in format flag{}!"),
   ],
   async (req, res, next) => {
+    console.log(sanitize(req.body))
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.send(
