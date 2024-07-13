@@ -11,7 +11,10 @@ const challenge_schema = new Schema(
     score: { type: Number, default: 500 },
     solveCount: { type: Number, default: 0 },
     difficulty: {type: Number, default: 1},
-    author: {type: String, required: true}
+    author: {type: String, required: true},
+    disabled: {type: Boolean, default: false},
+    maxValue: {type: Number, default: 500},
+    minValue: {type: Number, default: 100}
   },
   { timestamps: true }
 );

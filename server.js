@@ -59,7 +59,7 @@ const session_db = new MongoStore({
     "@radiata.0g6mder.mongodb.net/tanuki?retryWrites=true&w=majority&appName=radiata",
   collection: "sessions",
   // Currently set to 14 days
-  expires: 1000 * 60 * 60 * 24 * 14,
+  expires: 1000 * 60 * 60 * 24 * 3,
 });
 
 // Wonder what this could be 🤔
@@ -159,15 +159,14 @@ app.post(
     body("country")
       .isLength({ min: 1 })
       .withMessage("Please select a country!")
-      .custom((value) => {
-        const country = country_list.findByName(value)
+      .custom(async (value) => {
+        const country = country_list.findByName(value);
         if (!country) {
           return Promise.reject("Invalid country!");
         }
       }),
   ],
   async (req, res, next) => {
-    console.log(req.body);
     // Let's hope this was empty
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -176,6 +175,7 @@ app.post(
         return acc;
       }, {});
       return res.render("pages/register_email", {
+        countries: country_list.names().sort(),
         errors: formattedErrors,
         prev_values: req.body,
       });
@@ -189,22 +189,24 @@ app.post(
       const email = sanitize(req.body.email).trim();
       const country = sanitize(req.body.country).trim();
 
+      // Create new public-facing user
+      const newPubUser = new User({
+        username,
+        country,
+      });
+      await newPubUser.save();
+      
       // Create auth_user schema
       const authUser = new Auth_user({
         email,
         username,
         password,
+        pubUser: newPubUser._id
       });
       await authUser.save();
-      
-      // Create new public-facing user
-      const newPubUser = new User({
-        username,
-        country
-      });
-      await newPubUser.save();
 
       // Add session token
+      req.session.user_id = authUser._id
       req.session.loggedIn = true;
 
       // User added!
@@ -263,6 +265,7 @@ app.post(
       if (user && (await user.comparePassword(password))) {
         // Add session token
         req.session.loggedIn = true;
+        req.session.user_id = user._id
         res.redirect("/");
       } else {
         return res.render("pages/login_email", {
@@ -360,6 +363,15 @@ app.post(
         );
       }
       if (flag === challenge.flag) {
+        
+        var value = Math.min(
+          Math.ceil(((challenge.minValue - challenge.maxValue) / 10 ** 2) *
+            challenge.solveCount ** 2 +
+            challenge.maxValue),
+          challenge.minValue
+        );
+        
+
         return res.send(
           JSON.stringify({
             msg: "Flag correct!",
@@ -394,8 +406,6 @@ app.post(
       console.log(err);
       next(500);
     }
-
-    res.send(JSON.stringify({ success: true }));
   }
 );
 

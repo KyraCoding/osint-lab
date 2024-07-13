@@ -1,6 +1,7 @@
 body {
   scrollbar-gutter: stable
 }
+
 ::-webkit-scrollbar {
     width: 12px;
 }
@@ -15,4 +16,21 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #007EA7;
+}
+
+/*might delete later*/
+a {
+    @apply underline underline-offset-4 decoration-1 decoration-primary;
+
+    &:hover {
+        @apply no-underline bg-tertiary/20;
+    }
+
+    &:visited {
+        @apply text-primary;
+    }
+
+    &[target="_blank"]:after {
+        @apply content-externalLink inline-block ml-1 mt-1;
+    }
 }
