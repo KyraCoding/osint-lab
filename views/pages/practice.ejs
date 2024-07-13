@@ -27,8 +27,12 @@
                    default:
                      break
                  }
+                 var opacity = "opacity-100"
+                 if (challenge.solved) {
+                  opacity = "opacity-50"
+                 }
               %>
-              <div onclick="overlay(this)" data-raw_data ="<%= JSON.stringify(challenge) %>" class="flex flex-col justify-between overflow-auto bg-[#003459] hover:bg-[#007EA7] ease-in duration-150 h-40 cursor-pointer p-4 rounded-lg shadow-md text-[#E7F7FC]">
+              <div onclick="overlay(this)" data-raw_data ="<%= JSON.stringify(challenge) %>" class="flex flex-col justify-between overflow-auto bg-[#003459] hover:bg-[#007EA7] ease-in duration-150 h-40 cursor-pointer p-4 rounded-lg shadow-md text-[#E7F7FC] <%= opacity %>">
                 <div class="flex justify-between gap-2">
                     <h3 class="flex text-xl font-semibold"><%= challenge.title %></h3>
                     
