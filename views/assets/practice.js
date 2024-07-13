@@ -79,8 +79,8 @@ function closeOverlay() {
     .classList.remove("pointer-events-none");
   document.getElementById("challenge_div_blocker").classList.add("hidden");
   timeouts.forEach((timeout) => {
-    clearTimeout(timeout)
-  })
+    clearTimeout(timeout);
+  });
   timeouts = [];
 }
 document.getElementById("overlay").addEventListener("click", function () {
@@ -91,7 +91,6 @@ document
   .addEventListener("click", function () {
     closeOverlay();
   });
-
 
 document
   .getElementById("challenge_div_submit")
@@ -121,6 +120,38 @@ document
       .getElementById("challenge_div_response")
       .classList.add("animate-longerfadein");
     document.getElementById("challenge_div_response").innerHTML = answer.msg;
+
+  
+    // Cool animation?
+    var topTarget = document
+      .getElementById("challenge_div_response")
+      .getBoundingClientRect().top;
+    var leftTarget = document
+      .getElementById("challenge_div_response")
+      .getBoundingClientRect().left;
+
+    var topCurrent = document
+      .getElementById("challenge_div_solveda")
+      .getBoundingClientRect().top;
+    var leftCurrent = document
+      .getElementById("challenge_div_solveda")
+      .getBoundingClientRect().left;
+    var moveLeft =
+      leftTarget -
+      leftCurrent;
+    var moveTop =
+      topTarget -
+      topCurrent;
+    console.log(moveLeft, moveTop);
+  console.log(document
+      .getElementById("challenge_div_solveda")
+      .getBoundingClientRect())
+  console.log(document
+      .getElementById("challenge_div_response")
+      .getBoundingClientRect())
+    document.getElementById(
+      "challenge_div_solveda"
+    ).style.transform = `translate(${Math.round(moveLeft)}px, ${Math.round(moveTop)}px)`;
 
     if (answer.success) {
       document
