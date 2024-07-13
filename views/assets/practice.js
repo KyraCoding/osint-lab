@@ -12,7 +12,7 @@ function overlay(element) {
         data[attr] = "Author: " + data[attr];
       }
       if (attr == "description") {
-        data[attr] = "<md-block>" + data[attr] + "</md-block>"
+        data[attr] = "<md-block>" + data[attr] + "</md-block>";
       }
       document.getElementById("challenge_div_" + attr).innerHTML = data[attr];
     }
@@ -56,6 +56,28 @@ document.getElementById("overlay").addEventListener("click", function () {
   document.getElementById("overlay").classList.remove("animate-fadein");
   document.getElementById("overlay").classList.add("hidden");
   document.body.classList.remove("overflow-hidden");
+  document
+    .getElementById("challenge_div_response")
+    .classList.remove("bg-rose-400");
+  document
+    .getElementById("challenge_div_response")
+    .classList.remove("bg-emerald-400");
+  document.getElementById("challenge_div_response").classList.add("hidden");
+  document
+    .getElementById("challenge_div_response")
+    .classList.remove("animate-longerfadeout");
+
+  document.getElementById("challenge_div_submit").disabled = false;
+  document
+    .getElementById("challenge_div_submit")
+    .classList.remove("opacity-50");
+  document
+    .getElementById("challenge_div_submit")
+    .classList.remove("cursor-not-allowed");
+  document
+    .getElementById("challenge_div_submit")
+    .classList.remove("pointer-events-none");
+  document.getElementById("challenge_div_blocker").classList.add("hidden");
 });
 document
   .getElementById("challenge_div_close")
@@ -63,6 +85,28 @@ document
     document.getElementById("overlay").classList.remove("animate-fadein");
     document.getElementById("overlay").classList.add("hidden");
     document.body.classList.remove("overflow-hidden");
+    document
+      .getElementById("challenge_div_response")
+      .classList.remove("bg-rose-400");
+    document
+      .getElementById("challenge_div_response")
+      .classList.remove("bg-emerald-400");
+    document.getElementById("challenge_div_response").classList.add("hidden");
+    document
+      .getElementById("challenge_div_response")
+      .classList.remove("animate-longerfadeout");
+
+    document.getElementById("challenge_div_submit").disabled = false;
+    document
+      .getElementById("challenge_div_submit")
+      .classList.remove("opacity-50");
+    document
+      .getElementById("challenge_div_submit")
+      .classList.remove("cursor-not-allowed");
+    document
+      .getElementById("challenge_div_submit")
+      .classList.remove("pointer-events-none");
+    document.getElementById("challenge_div_blocker").classList.add("hidden");
   });
 
 document
@@ -102,26 +146,21 @@ document
       document
         .getElementById("challenge_div_response")
         .classList.add("bg-rose-400");
-
-      // Ratelimit!
-      document.getElementById("challenge_div_submit").disabled = true;
-      document
-        .getElementById("challenge_div_submit")
-        .classList.add("opacity-50");
-      document
-        .getElementById("challenge_div_submit")
-        .classList.add("cursor-not-allowed");
-      document
-        .getElementById("challenge_div_submit")
-        .classList.add("pointer-events-none");
-
-      document
-        .getElementById("challenge_div_blocker")
-        .classList.remove("hidden");
-      document
-        .getElementById("challenge_div_ratelimitbar")
-        .classList.add("animate-slidetoleft");
     }
+    // Ratelimit!
+    document.getElementById("challenge_div_submit").disabled = true;
+    document.getElementById("challenge_div_submit").classList.add("opacity-50");
+    document
+      .getElementById("challenge_div_submit")
+      .classList.add("cursor-not-allowed");
+    document
+      .getElementById("challenge_div_submit")
+      .classList.add("pointer-events-none");
+
+    document.getElementById("challenge_div_blocker").classList.remove("hidden");
+    document
+      .getElementById("challenge_div_ratelimitbar")
+      .classList.add("animate-slidetoleft");
 
     setTimeout(function () {
       document
