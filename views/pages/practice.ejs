@@ -60,6 +60,9 @@
 
           <!-- Tags -->
           <div class="flex flex-row h-fit w-full gap-3">
+            <div id="challenge_div_solved" class="hidden flex bg-emerald-400 text-lg text-[#E7F7FC] font-semibold  p-1 justify-center items-center rounded-md cursor-pointer">
+              Solved!
+            </div>
             <div id="challenge_div_difficulty" class="flex text-[#E7F7FC] text-lg font-semibold bg-[#37E100] p-1 justify-center items-center rounded-md cursor-pointer">
               Easy
             </div>
@@ -88,15 +91,15 @@
         <div class="flex flex-row h-fit w-full gap-3 mt-6 ">
           <div class="relative z-20 w-full">
             <input id="challenge_div_input" class="flex flex-grow rounded h-12 w-full p-3" type="text" placeholder="Flag is in format: flag{}"> 
-            <div id="challenge_div_blocker" class="absolute inset-0 flex justify-start items-center z-30 cursor-not-allowed	">
-              <div id="challenge_div_ratelimitbar" class="flex shrink-0 h-12 w-1/2 bg-rose-400/50 rounded"></div>
-          </div>
+            <div id="challenge_div_blocker" class="hidden absolute inset-0 flex justify-start items-center z-30 cursor-not-allowed	">
+              <div id="challenge_div_ratelimitbar" class="flex shrink-0 h-12 w-full bg-rose-400/50 rounded"></div>
+            </div>
           </div>
           <input id="challenge_div_submit" data-challenge_id="" class=" flex rounded h-12 p-3 bg-[#003459] hover:shadow-2xl hover:-translate-y-0.5 hover:scale-105 transition duration-300 ease-in-out text-[#E7F7FC] cursor-pointer" type="submit">
         </div>
         
         <!-- cool status :3 -->
-        <div id="challenge_div_response" class=" hidden flex shrink-0 h-12 w-full mt-6 rounded justify-center items-center text-2xl font-semibold">
+        <div id="challenge_div_response" class="animate-pulse hidden flex shrink-0 h-12 w-full mt-6 rounded justify-center items-center text-2xl font-semibold">
           Wrong flag...
         </div>
         
