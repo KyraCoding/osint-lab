@@ -308,16 +308,19 @@ app.get("/practice", async (req, res, next) => {
         category: categories[i].toUpperCase(),
       })
         .sort({ difficulty: 1, score: 1 })
-        .select(
-          "title solvedBy description score solveCount difficulty author category"
-        )
-        .lean();
+        .lean({ virtuals: true })
+      
+      // Awww did you want this?
+      delete challenge_group.flag
+      delete challenge_group.decay
+      delete challenge_group.minValue
+      delete challenge_group.maxValue
+      
       challenge_group.forEach((obj) => {
         obj.difficulty = difficulties[obj.difficulty];
       });
       challenges[categories[i]] = challenge_group;
     }
-    console.log(challenges)
     res.render("pages/practice", {
       challenges: challenges,
     });
