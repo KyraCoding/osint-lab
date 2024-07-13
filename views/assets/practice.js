@@ -65,6 +65,7 @@ document
   .getElementById("challenge_div_submit")
   .addEventListener("click", async function () {
     const flag = document.getElementById("challenge_div_input").value;
+    document.getElementById("challenge_div_input").value = "";
     const id = document.getElementById("challenge_div_submit").dataset
       .challenge_id;
     console.log(id);
@@ -79,6 +80,8 @@ document
       }),
     });
     const answer = await response.json();
+
+    // Unhide response div
     document
       .getElementById("challenge_div_response")
       .classList.remove("hidden");
@@ -86,6 +89,7 @@ document
       .getElementById("challenge_div_response")
       .classList.add("animate-longerfadein");
     document.getElementById("challenge_div_response").innerHTML = answer.msg;
+
     if (answer.success) {
       document
         .getElementById("challenge_div_response")
@@ -94,7 +98,27 @@ document
       document
         .getElementById("challenge_div_response")
         .classList.add("bg-rose-400");
+
+      // Ratelimit!
+      document.getElementById("challenge_div_submit").disabled = true;
+      document
+        .getElementById("challenge_div_submit")
+        .classList.add("opacity-50");
+      document
+        .getElementById("challenge_div_submit")
+        .classList.add("cursor-not-allowed");
+      document
+        .getElementById("challenge_div_submit")
+        .classList.add("pointer-events-none");
+
+      document
+        .getElementById("challenge_div_blocker")
+        .classList.remove("hidden");
+      document
+        .getElementById("challenge_div_ratelimitbar")
+        .classList.add("animate-slidetoleft");
     }
+
     setTimeout(function () {
       document
         .getElementById("challenge_div_response")
@@ -113,8 +137,22 @@ document
           .getElementById("challenge_div_response")
           .classList.add("hidden");
         document
-        .getElementById("challenge_div_response")
-        .classList.remove("animate-longerfadeout");
+          .getElementById("challenge_div_response")
+          .classList.remove("animate-longerfadeout");
+
+        document.getElementById("challenge_div_submit").disabled = false;
+        document
+          .getElementById("challenge_div_submit")
+          .classList.remove("opacity-50");
+        document
+          .getElementById("challenge_div_submit")
+          .classList.remove("cursor-not-allowed");
+        document
+          .getElementById("challenge_div_submit")
+          .classList.remove("pointer-events-none");
+        document
+          .getElementById("challenge_div_blocker")
+          .classList.add("hidden");
       }, 500);
     }, 5000);
   });

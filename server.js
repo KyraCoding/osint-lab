@@ -284,7 +284,9 @@ app.get("/practice", async (req, res, next) => {
         category: categories[i].toUpperCase(),
       })
         .sort({ difficulty: 1, score: 1 })
-        .select("title solvedBy description score solveCount difficulty author category")
+        .select(
+          "title solvedBy description score solveCount difficulty author category"
+        )
         .lean();
       challenge_group.forEach((obj) => {
         obj.difficulty = difficulties[obj.difficulty];
@@ -315,7 +317,7 @@ app.post(
       .withMessage("Flag must be in format flag{}!"),
   ],
   async (req, res, next) => {
-    console.log(sanitize(req.body))
+    console.log(sanitize(req.body));
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.send(
@@ -345,9 +347,18 @@ app.post(
           })
         );
       } else {
+        var funny_errors = [
+          "Hint: You got the first 5 characters correct!",
+          "At least the last character is correct...",
+          "Nope! Try again...",
+          "Wanna come back to this later?",
+          "Keep trying! You'll get it!",
+          "Search, search agin!",
+          "Nobody ever said it would be easy..."
+        ];
         return res.send(
           JSON.stringify({
-            msg: "Flag incorrect...",
+            msg: funny_errors[Math.floor(Math.random()*funny_errors.length)],
             success: false,
           })
         );
