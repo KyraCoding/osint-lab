@@ -195,18 +195,18 @@ app.post(
         country,
       });
       await newPubUser.save();
-      
+
       // Create auth_user schema
       const authUser = new Auth_user({
         email,
         username,
         password,
-        pubUser: newPubUser._id
+        pubUser: newPubUser._id,
       });
       await authUser.save();
 
       // Add session token
-      req.session.user_id = authUser._id
+      req.session.user_id = authUser._id;
       req.session.loggedIn = true;
 
       // User added!
@@ -265,7 +265,7 @@ app.post(
       if (user && (await user.comparePassword(password))) {
         // Add session token
         req.session.loggedIn = true;
-        req.session.user_id = user._id
+        req.session.user_id = user._id;
         res.redirect("/");
       } else {
         return res.render("pages/login_email", {
@@ -317,7 +317,7 @@ app.get("/practice", async (req, res, next) => {
       });
       challenges[categories[i]] = challenge_group;
     }
-
+    console.log(challenges)
     res.render("pages/practice", {
       challenges: challenges,
     });
@@ -341,6 +341,28 @@ app.post(
       .withMessage("Flag must be in format flag{}!"),
   ],
   async (req, res, next) => {
+    if (!req.session.loggedIn) {
+      res.send(
+        JSON.stringify({
+          msg: "You aren't logged in!",
+          success: false,
+        })
+      );
+    }
+    if (!req.session.ratelimit) {
+      req.session.ratelimit = Date.now() + 5000;
+    } else if (req.session.ratelimit > Date.now()) {
+      req.session.ratelimit = Date.now() + 5000;
+      return res.send(
+        JSON.stringify({
+          msg: "Slow down! Wait 5 seconds!",
+          success: false,
+        })
+      );
+    } else {
+      req.session.ratelimit = Date.now() + 5000;
+    }
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.send(
@@ -363,21 +385,45 @@ app.post(
         );
       }
       if (flag === challenge.flag) {
-        
-        var value = Math.min(
-          Math.ceil(((challenge.minValue - challenge.maxValue) / 10 ** 2) *
-            challenge.solveCount ** 2 +
-            challenge.maxValue),
-          challenge.minValue
-        );
-        
-
-        return res.send(
-          JSON.stringify({
-            msg: "Flag correct!",
-            success: true,
-          })
-        );
+        try {
+          const auth_user = await Auth_user.findOne({
+            _id: req.session.user_id,
+          });
+          const user = await User.findOne({ _id: auth_user.pubUser });
+          if (challenge.solvedBy.indexOf(user._id) > -1) {
+            var funny_errors = [
+              "You can't P100 this challenge!",
+              "Looking for more eidolons?",
+              "Exotic catalyst hasn't dropped yet!",
+              "Feeling a bit of deja vu?",
+              "Do you just like this animation?",
+              "...Didn't we do this already?",
+              "You solved it! Again!",
+              "Are you here for the funny messages?",
+              "Shouldn't you be doing other challenges?",
+            ];
+            return res.send(
+              JSON.stringify({
+                msg: funny_errors[
+                  Math.floor(Math.random() * funny_errors.length)
+                ],
+                success: true,
+              })
+            );
+          } else {
+            challenge.solvedBy.push(user._id);
+            await challenge.save();
+            
+            return res.send(
+              JSON.stringify({
+                msg: "Flag correct!",
+                success: true,
+              })
+            );
+          }
+        } catch (err) {
+          console.log(err);
+        }
       } else {
         var funny_errors = [
           "You got the first 5 characters correct!",
