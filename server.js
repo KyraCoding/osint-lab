@@ -5,6 +5,7 @@ const app = express();
 // General Utility
 import { fileURLToPath } from "url";
 import path from "path";
+import country_list from "country-list-js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 function toTitleCase(str) {
@@ -20,6 +21,7 @@ import mongoose from "mongoose";
 // Mongoose schema models
 import Auth_user from "./model/Auth_user.js";
 import Challenge from "./model/Challenge.js";
+import User from "./model/User.js";
 
 // Authentication and Security
 import { createHash } from "crypto";
@@ -119,6 +121,7 @@ app.get("/register", (req, res) => {
 
 app.get("/register/email", (req, res) => {
   res.render("pages/register_email", {
+    countries: country_list.names().sort(),
     prev_values: {},
     errors: {},
   });
@@ -153,8 +156,18 @@ app.post(
     body("password")
       .isLength({ min: 5 })
       .withMessage("Password must be at least 5 characters long!"),
+    body("country")
+      .isLength({ min: 1 })
+      .withMessage("Please select a country!")
+      .custom((value) => {
+        const country = country_list.findByName(value)
+        if (!country) {
+          return Promise.reject("Invalid country!");
+        }
+      }),
   ],
   async (req, res, next) => {
+    console.log(req.body);
     // Let's hope this was empty
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -174,14 +187,22 @@ app.post(
       const username = sanitize(req.body.username).trim();
       const password = sanitize(req.body.password);
       const email = sanitize(req.body.email).trim();
+      const country = sanitize(req.body.country).trim();
 
       // Create auth_user schema
-      const newUser = new Auth_user({
+      const authUser = new Auth_user({
         email,
         username,
         password,
       });
-      await newUser.save();
+      await authUser.save();
+      
+      // Create new public-facing user
+      const newPubUser = new User({
+        username,
+        country
+      });
+      await newPubUser.save();
 
       // Add session token
       req.session.loggedIn = true;
@@ -317,7 +338,6 @@ app.post(
       .withMessage("Flag must be in format flag{}!"),
   ],
   async (req, res, next) => {
-    console.log(sanitize(req.body));
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.send(
@@ -348,17 +368,24 @@ app.post(
         );
       } else {
         var funny_errors = [
-          "Hint: You got the first 5 characters correct!",
-          "At least the last character is correct...",
+          "You got the first 5 characters correct!",
+          "At least the last character is correct!",
           "Nope! Try again...",
           "Wanna come back to this later?",
           "Keep trying! You'll get it!",
-          "Search, search agin!",
-          "Nobody ever said it would be easy..."
+          "Search, search again!",
+          "Nobody ever said it would be easy...",
+          "Take a sip of water, it might help!",
+          "Don't forget to think outside the box!",
+          "Don't forget to take breaks!",
+          "No, that's not right...",
+          "Hmm... that's not correct...",
+          "It's just a setback! Keep going!",
+          "That's wrong :<",
         ];
         return res.send(
           JSON.stringify({
-            msg: funny_errors[Math.floor(Math.random()*funny_errors.length)],
+            msg: funny_errors[Math.floor(Math.random() * funny_errors.length)],
             success: false,
           })
         );
