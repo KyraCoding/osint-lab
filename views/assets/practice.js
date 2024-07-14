@@ -14,6 +14,9 @@ function overlay(element) {
       if (attr == "description") {
         data[attr] = "<md-block>" + data[attr] + "</md-block>";
       }
+      if (attr == "solved") {
+        return
+      }
       document.getElementById("challenge_div_" + attr).innerHTML = data[attr];
     }
     document.getElementById("challenge_div_submit").dataset.challenge_id =
@@ -111,7 +114,6 @@ document
       }),
     });
     const answer = await response.json();
-
     // Unhide response div
     document
       .getElementById("challenge_div_response")
@@ -120,38 +122,8 @@ document
       .getElementById("challenge_div_response")
       .classList.add("animate-longerfadein");
     document.getElementById("challenge_div_response").innerHTML = answer.msg;
-
-  
-    // Cool animation?
-    var topTarget = document
-      .getElementById("challenge_div_response")
-      .getBoundingClientRect().top;
-    var leftTarget = document
-      .getElementById("challenge_div_response")
-      .getBoundingClientRect().left;
-
-    var topCurrent = document
-      .getElementById("challenge_div_solveda")
-      .getBoundingClientRect().top;
-    var leftCurrent = document
-      .getElementById("challenge_div_solveda")
-      .getBoundingClientRect().left;
-    var moveLeft =
-      leftTarget -
-      leftCurrent;
-    var moveTop =
-      topTarget -
-      topCurrent;
-    console.log(moveLeft, moveTop);
-  console.log(document
-      .getElementById("challenge_div_solveda")
-      .getBoundingClientRect())
-  console.log(document
-      .getElementById("challenge_div_response")
-      .getBoundingClientRect())
-    document.getElementById(
-      "challenge_div_solveda"
-    ).style.transform = `translate(${Math.round(moveLeft)}px, ${Math.round(moveTop)}px)`;
+    
+    document.getElementById("challenge_div").scrollTop = document.getElementById("challenge_div").scrollHeight;
 
     if (answer.success) {
       document
@@ -185,6 +157,30 @@ document
         document
           .getElementById("challenge_div_response")
           .classList.add("animate-longerfadeout");
+
+        // Cool animation?
+        document
+          .getElementById("challenge_div_difficulty")
+          .classList.add("hidden");
+        document
+          .getElementById("challenge_div_category")
+          .classList.add("hidden");
+        
+        var target = document.getElementById("challenge_div_response");
+        var current = document.getElementById("challenge_div_solved");
+        current.classList.remove("hidden");
+        var topTarget = target.getBoundingClientRect().top;
+        var leftTarget = target.getBoundingClientRect().left;
+        var topCurrent = current.getBoundingClientRect().top;
+        var leftCurrent = current.getBoundingClientRect().left;
+        var moveLeft = leftTarget - leftCurrent;
+        var moveTop = topTarget - topCurrent;
+        current.style.transform = `translate(${Math.round(
+          moveLeft
+        )}px, ${Math.round(moveTop)}px)`;
+        current.classList.add("w-full")
+        
+        
         timeouts.push(
           setTimeout(function () {
             document
@@ -195,7 +191,7 @@ document
               .classList.remove("bg-emerald-400");
             document
               .getElementById("challenge_div_response")
-              .classList.add("hidden");
+              .classList.add("opacity-0");
             document
               .getElementById("challenge_div_response")
               .classList.remove("animate-longerfadeout");
