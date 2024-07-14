@@ -1,4 +1,6 @@
+var current_challenge;
 function overlay(element) {
+  current_challenge = element;
   document.getElementById("overlay").classList.remove("hidden");
   document.getElementById("overlay").classList.add("animate-fadein");
   //document.body.classList.add("overflow-hidden");
@@ -15,7 +17,17 @@ function overlay(element) {
         data[attr] = "<md-block>" + data[attr] + "</md-block>";
       }
       if (attr == "solved") {
-        return;
+        if (data[attr]) {
+          document
+            .getElementById("challenge_div_solved")
+            .classList.remove("hidden");
+          return;
+        } else {
+          document
+            .getElementById("challenge_div_solved")
+            .classList.add("hidden");
+          return;
+        }
       }
       document.getElementById("challenge_div_" + attr).innerHTML = data[attr];
     }
@@ -90,6 +102,18 @@ function closeOverlay() {
     .getElementById("challenge_div_category")
     .classList.remove("animate-longerfadein");
   document
+    .getElementById("challenge_div_difficulty")
+    .classList.remove("animate-longerfadeout");
+  document
+    .getElementById("challenge_div_category")
+    .classList.remove("animate-longerfadeout");
+  document
+    .getElementById("challenge_div_difficulty")
+    .classList.add("opacity-100");
+  document
+    .getElementById("challenge_div_category")
+    .classList.add("opacity-100");
+  document
     .getElementById("challenge_div_response")
     .classList.remove("opacity-0");
   document.getElementById("challenge_div_category").classList.remove("hidden");
@@ -148,6 +172,12 @@ document
         .getElementById("challenge_div_response")
         .classList.add("bg-rose-400");
     }
+    if (answer.celebrate) {
+      current_challenge.classList.add("opacity-50");
+      var data = JSON.parse(current_challenge.dataset.raw_data);
+      data.solved = true;
+      current_challenge.dataset.raw_data = JSON.stringify(data);
+    }
     // Ratelimit!
     document.getElementById("challenge_div_submit").disabled = true;
     document.getElementById("challenge_div_submit").classList.add("opacity-50");
@@ -162,7 +192,18 @@ document
     document
       .getElementById("challenge_div_ratelimitbar")
       .classList.add("animate-slidetoleft");
-
+    if (answer.celebrate) {
+      timeouts.push(
+        setTimeout(function () {
+          document
+            .getElementById("challenge_div_difficulty")
+            .classList.add("animate-longerfadeout");
+          document
+            .getElementById("challenge_div_category")
+            .classList.add("animate-longerfadeout");
+        }, 4500)
+      );
+    }
     timeouts.push(
       setTimeout(function () {
         document
@@ -174,6 +215,12 @@ document
             .classList.add("animate-longerfadeout");
         } else {
           document
+            .getElementById("challenge_div_difficulty")
+            .classList.remove("animate-longerfadeout");
+          document
+            .getElementById("challenge_div_category")
+            .classList.remove("animate-longerfadeout");
+          document
             .getElementById("challenge_div_response")
             .classList.add("opacity-0");
           document
@@ -182,7 +229,6 @@ document
           document
             .getElementById("challenge_div_category")
             .classList.add("hidden");
-
           var target = document.getElementById("challenge_div_response");
           var current = document.getElementById("challenge_div_solved");
           current.classList.remove("hidden");
@@ -198,11 +244,11 @@ document
           )}px, ${Math.round(moveTop)}px)`;
           current.classList.add("w-full");
           // Blink and you'll miss it
-          current.style.transitionDuration = "0.001s";
+          current.style.transitionDuration = "0.001ms";
           current.addEventListener(
             "transitionend",
             function () {
-              current.style.transitionDuration = "3s";
+              current.style.transitionDuration = "1.5s";
               current.style.transitionTimingFunction = "linear";
               current.style.transform = `translate(0px,0px)`;
               current.style.width = initialWidth;
@@ -220,13 +266,23 @@ document
                   document
                     .getElementById("challenge_div_category")
                     .classList.add("animate-longerfadein");
+                  timeouts.push(
+                    setTimeout(function () {
+                      document
+                        .getElementById("challenge_div_difficulty")
+                        .classList.add("opacity-100");
+                      document
+                        .getElementById("challenge_div_category")
+                        .classList.add("opacity-100");
+                    }, 500)
+                  );
                   document
                     .getElementById("challenge_div_response")
                     .classList.remove("opacity-0");
                   document
                     .getElementById("challenge_div_response")
                     .classList.add("hidden");
-                }, 3000)
+                }, 1500)
               );
             },
             { once: true }
