@@ -358,6 +358,7 @@ app.post(
         JSON.stringify({
           msg: "You aren't logged in!",
           success: false,
+          celebrate: false
         })
       );
     }
@@ -369,6 +370,7 @@ app.post(
         JSON.stringify({
           msg: "Slow down! Wait 5 seconds!",
           success: false,
+          celebrate: false
         })
       );
     } else {
@@ -381,6 +383,7 @@ app.post(
         JSON.stringify({
           msg: Object.values(errors.errors)[0].msg,
           success: false,
+          celebrate: false
         })
       );
     }
@@ -393,6 +396,7 @@ app.post(
           JSON.stringify({
             msg: "No such challenge found...",
             success: false,
+            celebrate: false
           })
         );
       }
@@ -420,6 +424,7 @@ app.post(
                   Math.floor(Math.random() * funny_errors.length)
                 ],
                 success: true,
+                celebrate: false
               })
             );
           } else {
@@ -430,6 +435,7 @@ app.post(
               JSON.stringify({
                 msg: "Solved!",
                 success: true,
+                celebrate: true
               })
             );
           }
@@ -457,6 +463,7 @@ app.post(
           JSON.stringify({
             msg: funny_errors[Math.floor(Math.random() * funny_errors.length)],
             success: false,
+            celebrate: false
           })
         );
       }
