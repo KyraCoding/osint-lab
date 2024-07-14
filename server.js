@@ -428,7 +428,7 @@ app.post(
 
             return res.send(
               JSON.stringify({
-                msg: "Flag correct!",
+                msg: "Solved!",
                 success: true,
               })
             );
