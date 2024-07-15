@@ -1,0 +1,183 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/favicon.ico?v=1720468815926"
+    />
+    <title>Leaderboard - OSINT Monkey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              // font_name: ['"official font family name"': "font-name"]
+              barlow: ['"barlow"', "sans-serif"],
+              roboto: ['"roboto mono"', "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-[#E7F7FC] font-roboto">
+    <!-- Header -->
+    <div class="navbar flex flex-row w-full h-14 bg-[#00E7E1] p-2 px-4 gap-16 shadow-md fixed top-0 left-0 right-0 z-10">
+      <!-- Icon -->
+      <a href="/" class="flex h-full items-center aspect-square">
+        <img
+          class="flex h-full aspect-square"
+          src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880"
+        />
+      </a>
+    
+      <!-- Links -->
+      <div class="flex flex-row items-center space-x-6 ml-auto text-lg">
+        <a href="/" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Home</a>
+        <a href="/learn" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Learn</a>
+        <a href="/practice" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Practice</a>
+        <a href="/about" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">About</a>
+      </div>
+    
+      <!-- Auth (replace this section with server-side logic for dynamic content) -->
+      <div class="flex flex-row items-center space-x-6 ml-auto text-lg">
+        <a href="/profile" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Profile</a>
+        <a href="/logout" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Logout</a>
+      </div>
+    </div>
+
+    <!-- Main Body -->
+    <div class="mt-[10vh] mx-auto w-[50vw] min-h-[10vh] rounded-lg flex flex-col items-center">
+        <form class="w-[50vw] mx-auto">
+            <div class="flex">
+                <select id="category-select" class="z-10 inline-flex items-center py-[0.25vh] px-[0.25vh] font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg">
+                    <option value="all-categories">All categories</option>
+                    <option value="mockups">SOCMINT</option>
+                    <option value="templates">GEOINT</option>
+                    <option value="design">SIGINT</option>
+                    <option value="logos">MISC</option>
+                </select>
+                <div class="relative w-full">
+                    <input type="search" id="search-dropdown" class="block p-[1vh] w-full z-20  text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300" placeholder="Search for your name"/>
+                    <button type="submit" class="absolute top-0 end-0 p-[1vh] font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700">search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="mb-[2vh] mx-auto bg-gray-200 w-[50vw] min-h-screen rounded-lg flex flex-col items-center">
+        <!-- Custom First Place -->
+        <div class="w-[90%] h-[10vh] mx-auto mt-[2vh] flex items-center">
+            <div class="flex flex-col items-start w-fit mx-[1vh]">
+                <img src="goldCrown.png" class="w-[2vw] h-auto object-cover mx-auto">
+                <img src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880" class="w-[3vw] h-auto object-cover rounded-full border-[0.5vh] border-[#d4af37]">
+            </div>
+            <div class="w-full h-full flex flex-row justify-between items-center p-[1vw]">
+                <h1 class="text-2xl">Profile Name</h1>
+                <h1 class="text-2xl">1000 Points</h1>
+            </div>
+        </div>
+        <hr class="border-t-2 border-gray-400 w-[90%] mt-[0.25vh]">
+        <!-- Custom Second Place -->
+        <div class="w-[90%] h-[10vh] mx-auto mt-[2vh] flex items-center">
+            <div class="flex flex-col items-start w-fit mx-[1vh]">
+                <img src="silverCrown.png" class="w-[2vw] h-auto object-cover mx-auto">
+                <img src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880" class="w-[3vw] h-auto object-cover rounded-full border-[0.5vh] border-[#c0c0c0]">
+            </div>
+            <div class="w-full h-full flex flex-row justify-between items-center p-[1vw]">
+                <h1 class="text-2xl">Profile Name</h1>
+                <h1 class="text-2xl">1000 Points</h1>
+            </div>
+        </div>
+        <hr class="border-t-2 border-gray-400 w-[90%] mt-[0.25vh]">
+        <!-- Custom Third Place -->
+        <div class="w-[90%] h-[10vh] mx-auto mt-[2vh] flex items-center">
+            <div class="flex flex-col items-start w-fit mx-[1vh]">
+                <img src="bronzeCrown.png" class="w-[2vw] h-auto object-cover mx-auto">
+                <img src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880" class="w-[3vw] h-auto object-cover rounded-full border-[0.5vh] border-[#964B00]">
+            </div>
+            <div class="w-full h-full flex flex-row justify-between items-center p-[1vw]">
+                <h1 class="text-2xl">Profile Name</h1>
+                <h1 class="text-2xl">1000 Points</h1>
+            </div>
+        </div>
+        <!-- Rest of Leaderboard -->
+        <hr class="border-t-2 border-gray-400 w-[90%] mt-[0.25vh]">
+        <div class="w-[90%] h-[10vh] mx-auto mt-[2vh] flex items-center">
+            <div class="flex flex-col items-start w-fit mx-[1vh]">
+                <img src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880" class="w-[3vw] h-auto object-cover rounded-full border-[0.5vh] border-black">
+            </div>
+            <div class="w-full h-full flex flex-row justify-between items-center p-[1vw]">
+                <h1 class="text-2xl">Profile Name</h1>
+                <h1 class="text-2xl">1000 Points</h1>
+            </div>
+        </div>
+        <hr class="border-t-2 border-gray-400 w-[90%] mt-[0.25vh]">
+        <div class="w-[90%] h-[10vh] mx-auto mt-[2vh] flex items-center">
+            <div class="flex flex-col items-start w-fit mx-[1vh]">
+                <img src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880" class="w-[3vw] h-auto object-cover rounded-full border-[0.5vh] border-black">
+            </div>
+            <div class="w-full h-full flex flex-row justify-between items-center p-[1vw]">
+                <h1 class="text-2xl">Profile Name</h1>
+                <h1 class="text-2xl">1000 Points</h1>
+            </div>
+        </div>
+        <hr class="border-t-2 border-gray-400 w-[90%] mt-[0.25vh]">
+        <div class="w-[90%] h-[10vh] mx-auto mt-[2vh] flex items-center">
+            <div class="flex flex-col items-start w-fit mx-[1vh]">
+                <img src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880" class="w-[3vw] h-auto object-cover rounded-full border-[0.5vh] border-black">
+            </div>
+            <div class="w-full h-full flex flex-row justify-between items-center p-[1vw]">
+                <h1 class="text-2xl">Profile Name</h1>
+                <h1 class="text-2xl">1000 Points</h1>
+            </div>
+        </div>
+        <hr class="border-t-2 border-gray-400 w-[90%] mt-[0.25vh]">
+        <div class="w-[90%] h-[10vh] mx-auto mt-[2vh] flex items-center">
+            <div class="flex flex-col items-start w-fit mx-[1vh]">
+                <img src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880" class="w-[3vw] h-auto object-cover rounded-full border-[0.5vh] border-black">
+            </div>
+            <div class="w-full h-full flex flex-row justify-between items-center p-[1vw]">
+                <h1 class="text-2xl">Profile Name</h1>
+                <h1 class="text-2xl">1000 Points</h1>
+            </div>
+        </div>
+        <hr class="border-t-2 border-gray-400 w-[90%] mt-[0.25vh]">
+        <div class="w-[90%] h-[10vh] mx-auto mt-[2vh] flex items-center">
+            <div class="flex flex-col items-start w-fit mx-[1vh]">
+                <img src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880" class="w-[3vw] h-auto object-cover rounded-full border-[0.5vh] border-black">
+            </div>
+            <div class="w-full h-full flex flex-row justify-between items-center p-[1vw]">
+                <h1 class="text-2xl">Profile Name</h1>
+                <h1 class="text-2xl">1000 Points</h1>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="bg-[#00E7E1] bg-gray-800 w-full sticky top-[100vh]">
+      <div class="w-full h-auto p-4 flex items-center justify-between">
+      <span class=" text-gray-400 text-center text-gray-400">© OSINT Monkey 2024</span>
+      <ul class="flex flex-wrap items-center mt-3  font-medium text-gray-400 text-gray-400 sm:mt-0">
+          <li>
+              <a href="/about" class="hover:underline me-4 me-6">About</a>
+          </li>
+          <li>
+              <a href="/privacy-policy" class="hover:underline me-4 me-6">Privacy Policy</a>
+          </li>
+          <li>
+              <a href="/contact" class="hover:underline">Contact</a>
+          </li>
+      </ul>
+      </div>
+    </div>
+  </body>
+</html>
