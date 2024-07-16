@@ -30,13 +30,206 @@
     </script>
   </head>
   <body class="bg-[#E7F7FC] font-roboto">
-    <div class="flex flex-col justify-center items-center h-full w-full">
-      <h1>
-        This is your profile!
-      </h1>
-      <p class="animate-pulse">
-        More coming soon...
-      </p>
+    <!-- Header -->
+    <div class="navbar flex flex-row w-full h-14 bg-[#00E7E1] p-2 px-4 gap-16 shadow-md fixed top-0 left-0 right-0 z-10">
+      <!-- Icon -->
+      <a href="/" class="flex h-full items-center aspect-square">
+        <img
+          class="flex h-full aspect-square"
+          src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880"
+        />
+      </a>
+    
+      <!-- Links -->
+      <div class="flex flex-row items-center space-x-6 ml-auto text-lg">
+        <a href="/" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Home</a>
+        <a href="/learn" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Learn</a>
+        <a href="/practice" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Practice</a>
+        <a href="/about" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">About</a>
+      </div>
+    
+      <!-- Auth (replace this section with server-side logic for dynamic content) -->
+      <div class="flex flex-row items-center space-x-6 ml-auto text-lg">
+        <a href="/profile" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Profile</a>
+        <a href="/logout" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Logout</a>
+      </div>
+    </div>
+
+    <!-- Main Body -->
+    <div class="mt-20 mb-6 mx-auto bg-gray-200 w-[90%] min-h-screen rounded-lg flex flex-wrap justify-center gap-5 p-5">
+      <div class="bg-gray-100 w-[20%] min-h-[90%] rounded-lg flex flex-col items-center p-5 justify-between">
+        <img
+          class="rounded-full border-4 border-black object-cover"
+          src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880"
+          alt="Logo"
+        />
+        <div class="flex flex-col items-center">
+          <hr class="border-t-2 border-gray-400 w-[90%] my-10">
+          <h1 class="text-2xl font-bold">My Name</h1>
+          <h3 class="text-sm mx-3 text-center">Lorem ipsum lorem upseimfgsahfbLorem ipsum lorem upseimfgsahfbLorem ipsum lorem upseimfgsahfb</h3>
+          <hr class="border-t-2 border-gray-400 w-[90%] my-10">
+        </div>
+        <div class="bg-gray-300 w-full p-3 rounded-lg">
+          <h1 class="text-xl">Rank 10</h1>
+          <h1 class="text-xl">Other info</h1>
+          <h1 class="text-xl">Other info</h1>
+          <h1 class="text-xl">Other info</h1>
+          <h1 class="text-xl">Other info</h1>
+          <h1 class="text-xl">Other info</h1>
+          <h1 class="text-xl">Other info</h1>
+          <h1 class="text-xl">Other info</h1>
+          <h1 class="text-xl">Other info</h1>
+        </div>
+      </div>
+      <div class="bg-gray-100 w-[78%] rounded-lg flex flex-col justify-start p-5 flex-row">
+        <div class="flex flex-row justify-between h-fit mb-5">
+          <div class="bg-gray-200 rounded-lg w-[33%] flex flex-col justify-between">
+            <img src="piechart.png" alt="visual-data" class="p-3">
+            <div class="w-[90%] flex flex-col justify-center mx-auto mb-3">
+              <div class="bg-gray-300 p-4 m-2 rounded-lg flex flex-row items-center">
+                <div class="flex-1 text-left">Beginner</div>
+                <div class="h-full w-px bg-gray-400 mx-4"></div>
+                <div class="flex-1 text-right">5/18</div>
+              </div>
+              <div class="bg-gray-300 p-4 m-2 rounded-lg flex flex-row items-center">
+                <div class="flex-1 text-left">Easy</div>
+                <div class="h-full w-px bg-gray-400 mx-4"></div>
+                <div class="flex-1 text-right">2/8</div>
+              </div>
+              <div class="bg-gray-300 p-4 m-2 rounded-lg flex flex-row items-center">
+                <div class="flex-1 text-left">Medium</div>
+                <div class="h-full w-px bg-gray-400 mx-4"></div>
+                <div class="flex-1 text-right">1/6</div>
+              </div>
+              <div class="bg-gray-300 p-4 m-2 rounded-lg flex flex-row items-center">
+                <div class="flex-1 text-left">Hard</div>
+                <div class="h-full w-px bg-gray-400 mx-4"></div>
+                <div class="flex-1 text-right">0/5</div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-200 w-[65%] rounded-lg flex flex-col">
+            <h1 class="text-4xl font-bold text-center my-5">Solves</h1>
+            <hr class="border-t-2 border-gray-400 w-[90%] mb-5 mx-auto">
+            <div class="h-[60vh] overflow-y-scroll w-[85%] mx-auto rounded-xl flex flex-col mb-5">
+              <div class="bg-gray-100 rounded-xl flex flex-col mb-4">
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>Challenge Name</h1>
+                  <h1>0/0/0000</h1>
+                </div>
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>500 points</h1>
+                  <h1>Easy</h1>
+                </div>
+              </div>
+              <div class="bg-gray-100 rounded-xl flex flex-col mb-4">
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>Challenge Name</h1>
+                  <h1>0/0/0000</h1>
+                </div>
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>500 points</h1>
+                  <h1>Easy</h1>
+                </div>
+              </div>
+              <div class="bg-gray-100 rounded-xl flex flex-col mb-4">
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>Challenge Name</h1>
+                  <h1>0/0/0000</h1>
+                </div>
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>500 points</h1>
+                  <h1>Easy</h1>
+                </div>
+              </div>
+              <div class="bg-gray-100 rounded-xl flex flex-col mb-4">
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>Challenge Name</h1>
+                  <h1>0/0/0000</h1>
+                </div>
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>500 points</h1>
+                  <h1>Easy</h1>
+                </div>
+              </div>
+              <div class="bg-gray-100 rounded-xl flex flex-col mb-4">
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>Challenge Name</h1>
+                  <h1>0/0/0000</h1>
+                </div>
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>500 points</h1>
+                  <h1>Easy</h1>
+                </div>
+              </div>
+              <div class="bg-gray-100 rounded-xl flex flex-col mb-4">
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>Challenge Name</h1>
+                  <h1>0/0/0000</h1>
+                </div>
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>500 points</h1>
+                  <h1>Easy</h1>
+                </div>
+              </div>
+              <div class="bg-gray-100 rounded-xl flex flex-col mb-4">
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>Challenge Name</h1>
+                  <h1>0/0/0000</h1>
+                </div>
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>500 points</h1>
+                  <h1>Easy</h1>
+                </div>
+              </div>
+              <div class="bg-gray-100 rounded-xl flex flex-col mb-4">
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>Challenge Name</h1>
+                  <h1>0/0/0000</h1>
+                </div>
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>500 points</h1>
+                  <h1>Easy</h1>
+                </div>
+              </div>
+              <div class="bg-gray-100 rounded-xl flex flex-col mb-4">
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>Challenge Name</h1>
+                  <h1>0/0/0000</h1>
+                </div>
+                <div class="text-xl flex justify-between px-5 py-2">
+                  <h1>500 points</h1>
+                  <h1>Easy</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-200 w-full h-[20%] mt-auto rounded-lg flex items-center justify-center">
+          <img src="calendar.png" alt="" class="h-[95%]">
+        </div>
+      </div>
+    </div>
+    
+    
+
+
+    <!-- Footer -->
+    <div class="bg-[#00E7E1] bg-gray-800 w-full sticky top-[100vh]">
+      <div class="w-full h-auto p-4 flex items-center justify-between">
+      <span class="text-sm text-gray-400 text-center text-gray-400">© OSINT Monkey 2024</span>
+      <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-400 text-gray-400 sm:mt-0">
+          <li>
+              <a href="/about" class="hover:underline me-4 me-6">About</a>
+          </li>
+          <li>
+              <a href="/privacy-policy" class="hover:underline me-4 me-6">Privacy Policy</a>
+          </li>
+          <li>
+              <a href="/contact" class="hover:underline">Contact</a>
+          </li>
+      </ul>
+      </div>
     </div>
   </body>
 </html>
