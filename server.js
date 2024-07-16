@@ -1,8 +1,8 @@
 // Used for hosting
-import express from "express";
+import express, { Router } from "express";
 import serverless from "serverless-http";
 const app = express();
-const router = express.Router();
+const router = Router();
 
 // General Utility
 import { fileURLToPath } from "url";
@@ -506,9 +506,5 @@ app.use((err, req, res, next) => {
 });
 
 // Go Go Go!
-app.use("/.netlify/functions/app", router);
+app.use("/", router);
 export const handler = serverless(app);
-app.listen(process.env.PORT, () => {
-  const currentDate = new Date();
-  console.log(`Server successfully started on ${currentDate}!`);
-});
