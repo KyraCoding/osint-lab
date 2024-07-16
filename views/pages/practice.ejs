@@ -1,117 +1,117 @@
-  <%- include('../partials/head') %>
-  <body class="font-roboto bg-[#E7F7FC]">
-    <!-- Navbar -->
-    <%- include('../partials/header') %>
-    <!-- Main content -->
-    <div class="flex flex-col mt-14 p-12 mx-auto gap-8 text-slate-800 grow">
-      <% Object.keys(challenges).forEach((key) => { %>
-        <div class="mb-12" data-category="<%= key.toUpperCase() %>">
-          <h2 class="text-4xl font-bold mb-6"><%= key.toUpperCase() %></h2>
-          <div class="grid grid-cols-3 gap-4 justify-between">
-            <% challenges[key].forEach((challenge) => { %>
-            <%
-                 var color = "text-[#37E100]"
-                 switch (challenge.difficulty) {
-                   case "beginner":
-                     color = "text-[#00A7E1]"
-                     break
-                   case "easy":
-                     color = "text-[#37E100]"
-                     break
-                   case "medium":
-                     color = "text-[#E13A00]"                          
-                     break
-                   case "hard":
-                     color = "text-[#AA00E1]"
-                     break
-                   default:
-                     break
-                 }
-                 var opacity = "opacity-100"
-                 if (challenge.solved) {
-                  opacity = "opacity-50"
-                 }
-              %>
-              <div onclick="overlay(this)" data-raw_data ="<%= JSON.stringify(challenge) %>" class="flex flex-col justify-between overflow-auto bg-[#003459] hover:bg-[#007EA7] ease-in duration-150 h-40 cursor-pointer p-4 rounded-lg shadow-md text-[#E7F7FC] <%= opacity %>">
-                <div class="flex justify-between gap-2">
-                    <h3 class="flex text-xl font-semibold"><%= challenge.title %></h3>
-                    
-                    <h3 class="flex text-xl font-semibold <%= color %>"><%= challenge.difficulty %></h3>
-                </div>
-                <div class="flex justify-between gap-2">
-                    <p class="text-gray-700 text-white"><%= challenge.solveCount == 1 ? challenge.solveCount + " solve" : challenge.solveCount + " solves" %></p>
-                    <p class="text-gray-700 text-white"><%= challenge.score %> points</p>
-                </div>
+<%- include('../partials/head') %>
+<body class="font-roboto bg-[#E7F7FC]">
+  <!-- Navbar -->
+  <%- include('../partials/header') %>
+  <!-- Main content -->
+  <div class="flex flex-col mt-14 p-12 mx-auto gap-8 text-slate-800 grow">
+    <% Object.keys(challenges).forEach((key) => { %>
+      <div class="mb-12" data-category="<%= key.toUpperCase() %>">
+        <h2 class="text-4xl font-bold mb-6"><%= key.toUpperCase() %></h2>
+        <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <% challenges[key].forEach((challenge) => { %>
+          <%
+               var color = "text-[#37E100]"
+               switch (challenge.difficulty) {
+                 case "beginner":
+                   color = "text-[#00A7E1]"
+                   break
+                 case "easy":
+                   color = "text-[#37E100]"
+                   break
+                 case "medium":
+                   color = "text-[#E13A00]"                          
+                   break
+                 case "hard":
+                   color = "text-[#AA00E1]"
+                   break
+                 default:
+                   break
+               }
+               var opacity = "opacity-100"
+               if (challenge.solved) {
+                opacity = "opacity-50"
+               }
+            %>
+            <div onclick="overlay(this)" data-raw_data ="<%= JSON.stringify(challenge) %>" class="flex flex-col justify-between overflow-auto bg-[#003459] hover:bg-[#007EA7] ease-in duration-150 h-40 cursor-pointer p-4 rounded-lg shadow-md text-[#E7F7FC] <%= opacity %>">
+              <div class="flex justify-between gap-2">
+                  <h3 class="flex text-xl font-semibold"><%= challenge.title %></h3>
+                  
+                  <h3 class="flex text-xl font-semibold <%= color %>"><%= challenge.difficulty %></h3>
               </div>
-            <% }) %>
-          </div>
-        </div>
-      <% }) %>
-    </div>
-    <!-- Overlay -->
-    <div id="overlay" class="overflow-auto hidden fixed w-full h-full top-0 left-0 bg-slate-800/50 opacity-100 z-20 flex items-center justify-center p-6">
-      <div id="challenge_div" class="flex flex-col min-h-96 h-auto max-h-full w-1/2 p-6 bg-[#007EA7] rounded-md shadow-2xl text-slate-800 overflow-y-auto">
-        <!-- Title -->
-        <div class="flex flex-col h-fit w-full pb-3 border-b border-[#003459] gap-3">
-          <div class="flex flex-row w-full justify-between">
-            <h1 id="challenge_div_title" class="flex text-slate-800 text-4xl font-bold">
-              Title Goes Here
-            </h1>
-            <h1 id="challenge_div_close" class="flex text-slate-800 text-4xl font-bold hover:text-black transition ease-in duration-150 cursor-pointer">
-              X
-            </h1>
-          </div>
-
-          <!-- Tags -->
-          <div class="flex flex-row h-12 w-full gap-3">
-            <div id="challenge_div_solved" class="hidden flex bg-emerald-400 text-lg text-[#E7F7FC] font-semibold p-3 justify-center items-center rounded-md cursor-pointer">
-              Solved!
+              <div class="flex justify-between gap-2">
+                  <p class="text-gray-700 text-white"><%= challenge.solveCount == 1 ? challenge.solveCount + " solve" : challenge.solveCount + " solves" %></p>
+                  <p class="text-gray-700 text-white"><%= challenge.score %> points</p>
+              </div>
             </div>
-            <div id="challenge_div_difficulty" class=" flex grow-0 text-[#E7F7FC] text-lg font-semibold bg-[#37E100] p-3 justify-center items-center rounded-md cursor-pointer">
-              Easy
-            </div>
-            <div id="challenge_div_category" data-current_color=" bg-[#003459]" class="flex  text-lg bg-[#003459] text-[#E7F7FC] font-semibold  p-3 justify-center items-center rounded-md cursor-pointer">
-              SOCMINT
-            </div>
-          </div>
+          <% }) %>
         </div>
-
-        <!-- Description -->
-        <div class="flex flex-col h-fit w-full gap-2 mt-2">
-          <p class="flex text-lg" id="challenge_div_author">
-            Author: Author Name
-          </p>
-          <p  class="flex text-2xl font-bold">
-            Description: 
-          </p>
-          <p id="challenge_div_description" class="text-xl break-words">
-            "Whether we wanted it or not, we've stepped into a war with the Cabal on Mars. So let's get to taking out their command, one by one. Valus Ta'aurc. From what I can gather he commands the Siege Dancers from an Imperial Land Tank outside of Rubicon. He's well protected, but with the right team, we can punch through those defenses, take this beast out, and break their grip on Freehold."
-            
-            Active: Jax enters Evasion for 2 seconds: a defensive stance that causes him to dodge all incoming non- urret basic attacks and take 25% reduced damage from all area of effect abilities sourced from champions. Counter Strike can be recast after 1 second, and does so automatically after the duration.
-          </p>
-        </div>
-        
-        <!-- Submit flag -->
-        <div id="animation_width_benchmark" class="flex flex-row h-fit w-full gap-3 mt-6 ">
-          <div class="relative z-20 w-full">
-            <input id="challenge_div_input" class="flex flex-grow rounded h-12 w-full p-3" type="text" placeholder="Flag is in format: flag{}"> 
-            <div id="challenge_div_blocker" class="hidden absolute inset-0 flex justify-start items-center z-30 cursor-not-allowed	">
-              <div id="challenge_div_ratelimitbar" class="flex shrink-0 h-12 w-full bg-rose-400/50 rounded"></div>
-            </div>
-          </div>
-          <input id="challenge_div_submit" data-challenge_id="" class=" flex rounded h-12 p-3 bg-[#003459] hover:shadow-2xl hover:-translate-y-0.5 hover:scale-105 transition duration-300 ease-in-out text-[#E7F7FC] cursor-pointer" type="submit">
-        </div>
-        
-        <!-- cool status :3 -->
-        <div id="challenge_div_response" class="hidden flex shrink-0 h-12 w-full mt-6 rounded justify-center items-center text-2xl font-semibold">
-          Wrong flag...
-        </div>
-        
       </div>
-    </div>
+    <% }) %>
+  </div>
+  <!-- Overlay -->
+  <div id="overlay" class="overflow-auto hidden fixed w-full h-full top-0 left-0 bg-slate-800/50 opacity-100 z-20 flex items-center justify-center p-6">
+    <div id="challenge_div" class="flex flex-col min-h-96 max-h-full w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/5 p-6 bg-[#007EA7] rounded-md shadow-2xl text-slate-800 overflow-y-auto">
+      <!-- Title -->
+      <div class="flex flex-col w-full pb-3 border-b border-[#003459] gap-3">
+        <div class="flex flex-row w-full justify-between items-center">
+          <h1 id="challenge_div_title" class="text-3xl sm:text-4xl font-bold">
+            Title Goes Here
+          </h1>
+          <h1 id="challenge_div_close" class="text-3xl sm:text-4xl font-bold hover:text-black transition ease-in duration-150 cursor-pointer">
+            X
+          </h1>
+        </div>
 
-    <!-- Footer -->
-    <%- include('../partials/footer') %>
-    <script src="practice.js"></script>
-  </body>
+        <!-- Tags -->
+        <div class="flex flex-row h-12 gap-3 overflow-auto">
+          <div id="challenge_div_solved" class="hidden flex bg-emerald-400 text-lg text-[#E7F7FC] font-semibold p-3 justify-center items-center rounded-md cursor-pointer">
+            Solved!
+          </div>
+          <div id="challenge_div_difficulty" class="flex text-[#E7F7FC] text-lg font-semibold bg-[#37E100] p-3 justify-center items-center rounded-md cursor-pointer">
+            Easy
+          </div>
+          <div id="challenge_div_category" class="flex text-lg bg-[#003459] text-[#E7F7FC] font-semibold p-3 justify-center items-center rounded-md cursor-pointer">
+            SOCMINT
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="flex flex-col gap-2 mt-2">
+        <p class="text-base sm:text-lg" id="challenge_div_author">
+          Author: Author Name
+        </p>
+        <p class="text-lg sm:text-xl font-bold">
+          Description:
+        </p>
+        <p id="challenge_div_description" class="text-base sm:text-lg break-words">
+          "Whether we wanted it or not, we've stepped into a war with the Cabal on Mars. So let's get to taking out their command, one by one. Valus Ta'aurc. From what I can gather he commands the Siege Dancers from an Imperial Land Tank outside of Rubicon. He's well protected, but with the right team, we can punch through those defenses, take this beast out, and break their grip on Freehold."
+
+          Active: Jax enters Evasion for 2 seconds: a defensive stance that causes him to dodge all incoming non-turret basic attacks and take 25% reduced damage from all area of effect abilities sourced from champions. Counter Strike can be recast after 1 second, and does so automatically after the duration.
+        </p>
+      </div>
+
+      <!-- Submit flag -->
+      <div class="flex flex-row gap-3 mt-6">
+        <div class="relative flex-grow">
+          <input id="challenge_div_input" class="rounded h-12 w-full p-3 text-base sm:text-lg" type="text" placeholder="Flag is in format: flag{}"> 
+          <div id="challenge_div_blocker" class="hidden absolute inset-0 flex justify-start items-center z-30 cursor-not-allowed">
+            <div id="challenge_div_ratelimitbar" class="h-12 w-full opacity-50 rounded"></div>
+          </div>
+        </div>
+        <input id="challenge_div_submit" data-challenge_id="" class="rounded h-12 p-3 bg-[#003459] hover:shadow-2xl hover:-translate-y-0.5 hover:scale-105 transition duration-300 ease-in-out text-[#E7F7FC] cursor-pointer" type="submit">
+      </div>
+
+      <!-- Response -->
+      <div id="challenge_div_response" class="hidden flex h-12 w-full mt-6 rounded justify-center items-center text-lg font-semibold">
+        Wrong flag...
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+  <script src="practice.js"></script>
+</body>
 </html>

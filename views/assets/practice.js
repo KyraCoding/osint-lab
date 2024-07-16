@@ -118,6 +118,12 @@ function closeOverlay() {
     .classList.remove("opacity-0");
   document.getElementById("challenge_div_category").classList.remove("hidden");
   document.getElementById("challenge_div_blocker").classList.add("hidden");
+  document
+    .getElementById("challenge_div_ratelimitbar")
+    .classList.remove("bg-rose-400");
+  document
+    .getElementById("challenge_div_ratelimitbar")
+    .classList.remove("bg-emerald-400");
   timeouts.forEach((timeout) => {
     clearTimeout(timeout);
   });
@@ -167,9 +173,15 @@ document
       document
         .getElementById("challenge_div_response")
         .classList.add("bg-emerald-400");
+      document
+        .getElementById("challenge_div_ratelimitbar")
+        .classList.add("bg-emerald-400");
     } else {
       document
         .getElementById("challenge_div_response")
+        .classList.add("bg-rose-400");
+      document
+        .getElementById("challenge_div_ratelimitbar")
         .classList.add("bg-rose-400");
     }
     if (answer.celebrate) {
@@ -298,6 +310,12 @@ document
                 .getElementById("challenge_div_response")
                 .classList.add("hidden");
             }
+            document
+              .getElementById("challenge_div_ratelimitbar")
+              .classList.remove("bg-rose-400");
+            document
+              .getElementById("challenge_div_ratelimitbar")
+              .classList.remove("bg-emerald-400");
             document
               .getElementById("challenge_div_response")
               .classList.remove("animate-longerfadeout");
