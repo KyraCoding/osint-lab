@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "node server.js"
+    "build": "netlify deploy --prod"
   },
   "dependencies": {
     "express": "^4.19.2",
@@ -17,7 +17,8 @@
     "bcrypt": "^5.1.1",
     "connect-mongodb-session": "^5.0.0",
     "country-list-js": "^3.1.8",
-    "mongoose-lean-virtuals": "^0.9.1"
+    "mongoose-lean-virtuals": "^0.9.1",
+    "serverless-http": "^3.2.0"
   },
   "type": "module",
   "engines": {
