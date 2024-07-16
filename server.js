@@ -1,8 +1,6 @@
 // Used for hosting
-import express, { Router } from "express";
-import serverless from "serverless-http";
+import express from "express";
 const app = express();
-const router = Router();
 
 // General Utility
 import { fileURLToPath } from "url";
@@ -99,7 +97,7 @@ app.use(express.json()); // support json encoded bodies
 app.use(express.urlencoded({ extended: true }));
 
 // Host root
-router.get("/", (req, res) => {
+app.get("/", (req, res) => {
   res.render("pages/home", {});
 });
 
@@ -111,11 +109,11 @@ app.get("/beta", (req, res) => {
 */
 
 // Host register page
-router.get("/register", (req, res) => {
+app.get("/register", (req, res) => {
   res.render("pages/register", {});
 });
 
-router.get("/register/email", (req, res) => {
+app.get("/register/email", (req, res) => {
   res.render("pages/register_email", {
     countries: country_list.names().sort(),
     prev_values: {},
@@ -124,7 +122,7 @@ router.get("/register/email", (req, res) => {
 });
 
 // Post request handling for registering a user
-router.post(
+app.post(
   "/register/email",
   [
     body("email")
@@ -219,17 +217,17 @@ router.post(
   }
 );
 
-router.get("/login", (req, res) => {
+app.get("/login", (req, res) => {
   res.render("pages/login", {});
 });
 
-router.get("/login/email", [], (req, res) => {
+app.get("/login/email", [], (req, res) => {
   res.render("pages/login_email", {
     errors: {},
   });
 });
 
-router.post(
+app.post(
   "/login/email",
   [
     body("username").isLength({ min: 1 }).withMessage("Username is required!"),
@@ -278,7 +276,7 @@ router.post(
   }
 );
 
-router.get("/profile", (req, res) => {
+app.get("/profile", (req, res) => {
   if (!req.session.loggedIn) {
     res.redirect("/login");
   } else {
@@ -286,12 +284,12 @@ router.get("/profile", (req, res) => {
   }
 });
 
-router.get("/logout", (req, res) => {
+app.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
 
-router.get("/practice", async (req, res, next) => {
+app.get("/practice", async (req, res, next) => {
   if (!req.session.loggedIn) {
     return res.redirect("/login");
   }
@@ -341,7 +339,7 @@ router.get("/practice", async (req, res, next) => {
   }
 });
 
-router.post(
+app.post(
   "/verify/flag",
   [
     body("id")
@@ -476,19 +474,19 @@ router.post(
   }
 );
 
-router.get("/learn", (req, res, next) => {
+app.get("/learn", (req, res, next) => {
   next(501);
 });
-router.get("/compete", (req, res, next) => {
+app.get("/compete", (req, res, next) => {
   next(501);
 });
-router.get("/about", (req, res, next) => {
+app.get("/about", (req, res, next) => {
   next(501);
 });
-router.get("/privacy-policy", (req, res, next) => {
+app.get("/privacy-policy", (req, res, next) => {
   next(501);
 });
-router.get("/contact", (req, res, next) => {
+app.get("/contact", (req, res, next) => {
   next(501);
 });
 
@@ -506,5 +504,7 @@ app.use((err, req, res, next) => {
 });
 
 // Go Go Go!
-app.use("/", router);
-export const handler = serverless(app);
+app.listen(process.env.PORT, () => {
+  const currentDate = new Date();
+  console.log(`Server successfully started on ${currentDate}!`);
+});
