@@ -1,6 +1,8 @@
 // Used for hosting
 import express from "express";
+import serverless from "serverless-http";
 const app = express();
+const router = express.Router();
 
 // General Utility
 import { fileURLToPath } from "url";
@@ -97,7 +99,7 @@ app.use(express.json()); // support json encoded bodies
 app.use(express.urlencoded({ extended: true }));
 
 // Host root
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
   res.render("pages/home", {});
 });
 
@@ -109,11 +111,11 @@ app.get("/beta", (req, res) => {
 */
 
 // Host register page
-app.get("/register", (req, res) => {
+router.get("/register", (req, res) => {
   res.render("pages/register", {});
 });
 
-app.get("/register/email", (req, res) => {
+router.get("/register/email", (req, res) => {
   res.render("pages/register_email", {
     countries: country_list.names().sort(),
     prev_values: {},
@@ -122,7 +124,7 @@ app.get("/register/email", (req, res) => {
 });
 
 // Post request handling for registering a user
-app.post(
+router.post(
   "/register/email",
   [
     body("email")
@@ -217,17 +219,17 @@ app.post(
   }
 );
 
-app.get("/login", (req, res) => {
+router.get("/login", (req, res) => {
   res.render("pages/login", {});
 });
 
-app.get("/login/email", [], (req, res) => {
+router.get("/login/email", [], (req, res) => {
   res.render("pages/login_email", {
     errors: {},
   });
 });
 
-app.post(
+router.post(
   "/login/email",
   [
     body("username").isLength({ min: 1 }).withMessage("Username is required!"),
@@ -276,7 +278,7 @@ app.post(
   }
 );
 
-app.get("/profile", (req, res) => {
+router.get("/profile", (req, res) => {
   if (!req.session.loggedIn) {
     res.redirect("/login");
   } else {
@@ -284,12 +286,12 @@ app.get("/profile", (req, res) => {
   }
 });
 
-app.get("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
 
-app.get("/practice", async (req, res, next) => {
+router.get("/practice", async (req, res, next) => {
   if (!req.session.loggedIn) {
     return res.redirect("/login");
   }
@@ -339,7 +341,7 @@ app.get("/practice", async (req, res, next) => {
   }
 });
 
-app.post(
+router.post(
   "/verify/flag",
   [
     body("id")
@@ -474,19 +476,19 @@ app.post(
   }
 );
 
-app.get("/learn", (req, res, next) => {
+router.get("/learn", (req, res, next) => {
   next(501);
 });
-app.get("/compete", (req, res, next) => {
+router.get("/compete", (req, res, next) => {
   next(501);
 });
-app.get("/about", (req, res, next) => {
+router.get("/about", (req, res, next) => {
   next(501);
 });
-app.get("/privacy-policy", (req, res, next) => {
+router.get("/privacy-policy", (req, res, next) => {
   next(501);
 });
-app.get("/contact", (req, res, next) => {
+router.get("/contact", (req, res, next) => {
   next(501);
 });
 
@@ -504,6 +506,8 @@ app.use((err, req, res, next) => {
 });
 
 // Go Go Go!
+app.use("/.netlify/functions/app", router);
+export const handler = serverless(app);
 app.listen(process.env.PORT, () => {
   const currentDate = new Date();
   console.log(`Server successfully started on ${currentDate}!`);
