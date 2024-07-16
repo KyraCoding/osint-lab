@@ -3,7 +3,7 @@
   <body class="bg-[#E7F7FC] font-roboto">
     <div class="flex justify-center items-center h-full w-full">
       <div
-        class="h-fit w-fit flex flex-col rounded-xl bg-[#80D3F0] p-6 shadow-2xl"
+        class="h-fit w-fit max-w-sm md:max-w-none flex flex-col rounded-xl bg-[#80D3F0] p-6 shadow-2xl"
       >
         <h1 class="flex text-5xl text-slate-800 font-bold">Hey there!</h1>
         <p class="flex text-3xl text-slate-800 mt-3">Nice to meet you!</p>
@@ -30,9 +30,11 @@
             Register with Google</a
           >
           -->
-          <a href="/login" class="tracking-wide text-slate-800 transition duration-300 border-b-2 border-slate-800 hover:border-[#00A7E1] w-fit">Already have an account? Login here!</a>
+          <a href="/login" class="cursor-pointer tracking-wide text-slate-800 transition duration-300 border-b-2 border-slate-800 hover:border-[#00A7E1] w-fit">
+            <span class="hidden sm:inline">Already have an account? Login here!</span>
+            <span class="sm:hidden">Got an account? Login here!</span>
+          </a>
         </div>
-        
       </div>
     </div>
   </body>

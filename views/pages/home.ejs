@@ -3,41 +3,42 @@
   <body class="font-roboto bg-[#E7F7FC]">
     <!-- Navbar -->
     <%- include('../partials/header') %>
-    <!-- BIG NAME -->
-    <div class="text-center mt-40 mb-20">
-      <h1 class="text-9xl font-bold">OSINT Lab</h1>
-      <p class="text-4xl font-bold text-blue-500 tracking-widest mt-2">PREMIER OSINT RESOURCES</p>
+  <!-- BIG NAME -->
+  <div class="text-center mt-32 sm:mt-40 mb-10 sm:mb-20">
+    <h1 class="text-5xl sm:text-9xl font-bold">OSINT Lab</h1>
+    <p class="text-2xl sm:text-4xl font-bold text-blue-500 tracking-widest m-8 mt-2 sm:mb-2">PREMIER OSINT RESOURCES</p>
+  </div>
+      
+  <!-- Splash -->
+  <div class="flex flex-col sm:flex-row p-4 sm:m-20 mt-5 sm:mt-20 mb-0 justify-center">
+    <div class="w-full md:w-3/4 lg:w-1/2 p-4">
+      <h2 class="text-2xl sm:text-4xl font-bold text-[#003459]">High-quality OSINT practice</h2>
+      <p class="text-lg sm:text-xl mt-4">
+        Expose yourself to a variety of OSINT (open-source intelligence) techniques through fun challenges! In a capture-the-flag format, players will 
+        learn about a variety of intelligences, including:
+        <ul class="list-disc ml-5 sm:ml-10 text-md sm:text-lg mt-2">
+          <li class="secondary-font">🌎 Geospatial Intelligence</li>
+          <li class="secondary-font">📞 Social Media Intelligence</li>
+          <li class="secondary-font">🖥️ Signals Intelligence</li>
+          <li class="secondary-font">...and more!</li>
+        </ul>
+      </p>
     </div>
-    <!-- Splash -->
-    <div class="flex flex-row p-4 m-40 mt-20 mb-0 justify-center">
-      <div class="w-1/2 p-4">
-        <h2 class="text-4xl font-bold text-[#003459]">High-quality OSINT practice</h2>
-        <p class="text-xl mt-4">
-          Expose yourself to a variety of OSINT (open-source intelligence) techniques through fun challenges! In a capture-the-flag format, players will 
-          learn about a variety of intelligences, including:
-          <ul class="list-disc ml-10 text-lg mt-2">
-            <li class="secondary-font">🌎 Geospatial Intelligence</li>
-            <li class="secondary-font">📞 Social Media Intelligence</li>
-            <li class="secondary-font">🖥️ Signals Intelligence</li>
-            <li class="secondary-font">...and more!</li>
-          </ul>
-        </p>
-      </div>
-      <div class="w-1/2 p-4 flex justify-center items-center">
-        <img src="https://cdn.glitch.global/f4140a6a-6312-408f-9f19-f09b33a6efad/osint.png" class="max-w-xl rounded-xl object-contain">
-      </div>
+    <div class="w-full xl:w-1/2 p-4 flex justify-center items-center hidden xl:flex ml-16">
+      <img src="https://cdn.glitch.global/f4140a6a-6312-408f-9f19-f09b33a6efad/osint.png" class="max-w-full lg:max-w-xl rounded-xl object-contain">
     </div>
+  </div>
 
   <!-- Values -->
-  <div class="py-12 mb-10">
+  <div class="py-12 mb-0">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
+      <div class="text-center mb-6 sm:mb-12">
         <h3 class="mt-2 text-3xl leading-8 font-bold tracking-tight text-gray-900 sm:text-4xl">Helping you learn open-source intelligence</h3>
-        <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+        <p class="mt-4 mx-4 sm:mx-0 max-w-2xl text-xl text-gray-500 lg:mx-auto">
           OSINT Lab exists thanks to a group of dedicated, enthusiastic students who hope to inspire growing talent to pursue a career in cybersecurity.
         </p>
       </div>
-      <div class="grid gap-8 lg:grid-cols-2">
+      <div class="grid gap-4 sm:gap-8 lg:grid-cols-2 mb-10 sm:mb-20">
         <div class="p-6 bg-white rounded-lg shadow-lg">
           <div class="flex">
             <div class="flex-shrink-0 text-3xl text-blue-600">
@@ -101,6 +102,7 @@
       </div>
     </div>
   </div>
+
 
   <!-- Stats -->
   <!--<div class="flex justify-around py-8 mb-5">

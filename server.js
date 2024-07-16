@@ -34,13 +34,6 @@ const MongoStore = MongoDBStore(session);
 import sanitize from "mongo-sanitize";
 import { body, validationResult } from "express-validator";
 
-// Hash Function
-function hash(input) {
-  return createHash("sha256", process.env.HASH_SECRET)
-    .update(input)
-    .digest("base64");
-}
-
 // Use mongoose
 mongoose.connect(
   "mongodb+srv://" +
@@ -304,7 +297,14 @@ app.get("/practice", async (req, res, next) => {
     const auth_user = await Auth_user.findOne({
       _id: req.session.user_id,
     });
+    
+    if (!auth_user) {  
+      return res.redirect("/login")
+    }
     const user = await User.findOne({ _id: auth_user.pubUser });
+    if (!user) {
+      return res.redirect("/login")
+    }
     const categories = ["socmint", "geoint", "sigint", "misc"];
     const difficulties = ["beginner", "easy", "medium", "hard"];
     var challenges = {};
@@ -389,7 +389,7 @@ app.post(
     }
     try {
       const _id = sanitize(req.body.id);
-      const flag = sanitize(req.body.flag).trim();
+      const flag = sanitize(req.body.flag.trim().toLowerCase());
       const challenge = await Challenge.findOne({ _id });
       if (!challenge) {
         return res.send(
