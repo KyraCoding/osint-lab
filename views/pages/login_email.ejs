@@ -2,7 +2,7 @@
   <%- include('../partials/head') %>
   <body class="bg-[#E7F7FC] font-roboto">
     <div class="flex justify-center items-center h-full w-full">
-      <div class="h-fit w-fit flex flex-col rounded-xl bg-[#80D3F0]  shadow-2xl p-6">
+      <div class="h-fit w-fit max-w-sm md:max-w-none flex flex-col rounded-xl bg-[#80D3F0]  shadow-2xl p-6">
         <h1 class="flex text-5xl text-slate-800 font-bold">Welcome back!</h1>
         <p class="flex text-3xl text-slate-800">Let's get your username!</p>
         <form action="/login/email" method="POST" class="flex flex-col gap-3 mt-3 mb-0">
@@ -37,9 +37,11 @@
             class="cursor-pointer	place-self-center p-3 rounded  bg-[#007EA7] transition duration-300 hover:bg-[#00A7E1] rounded w-fit mt-3"
           />
         <!--<a class="cursor-pointer	tracking-wide text-slate-800 transition duration-300 border-b-2 border-slate-800 hover:border-[#00A7E1] w-fit" onclick="alert('aryan was here')">Forgot password?</a>-->
-        <a href="/register" class="cursor-pointer	tracking-wide text-slate-800 transition duration-300 border-b-2 border-slate-800 hover:border-[#00A7E1] w-fit">Don't have an account? Register here!</a>
-        </form>
-        
+          <a href="/register" class="cursor-pointer tracking-wide text-slate-800 transition duration-300 border-b-2 border-slate-800 hover:border-[#00A7E1] w-fit">
+            <span class="hidden sm:inline">Don't have an account? Register here!</span>
+            <span class="sm:hidden">No account? Register here!</span>
+          </a>
+          </form>
       </div>
     </div>
   </body>
