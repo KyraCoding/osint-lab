@@ -1,0 +1,107 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/favicon.ico?v=1720468815926"
+    />
+    <title>About Us - OSINT Monkey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              // font_name: ['"official font family name"': "font-name"]
+              barlow: ['"barlow"', "sans-serif"],
+              roboto: ['"roboto mono"', "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-[#E7F7FC] font-roboto">
+    <!-- Header -->
+    <div class="navbar flex flex-row w-full h-14 bg-[#00E7E1] p-2 px-4 gap-16 shadow-md fixed top-0 left-0 right-0 z-10">
+      <!-- Icon -->
+      <a href="/" class="flex h-full items-center aspect-square">
+        <img
+          class="flex h-full aspect-square"
+          src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880"
+        />
+      </a>
+    
+      <!-- Links -->
+      <div class="flex flex-row items-center space-x-6 ml-auto text-lg">
+        <a href="/" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Home</a>
+        <a href="/learn" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Learn</a>
+        <a href="/practice" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Practice</a>
+        <a href="/about" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">About</a>
+      </div>
+    
+      <!-- Auth (replace this section with server-side logic for dynamic content) -->
+      <div class="flex flex-row items-center space-x-6 ml-auto text-lg">
+        <a href="/profile" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Profile</a>
+        <a href="/logout" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Logout</a>
+      </div>
+    </div>
+
+    <!-- Main Body -->
+    <div class="flex flex-col items-center">
+        <h3 class="text-2xl font-bold mt-[10vh]">Our Mission</h3>
+        <h1 class="text-4xl font-bold mt-[2vh] w-[60vw] text-center">Making OSINT practice easier for everyone</h1>
+        <h2 class="text-xl mt-[2vh] w-[50vw] text-center">Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</h2>
+        <div class="mt-[5vh] w-[85vw] h-[65vh] flex flex-row justify-between">
+            <div class="flex flex-col items-start my-auto">
+                <h1 class="text-4xl font-bold text-center text-blue-900">What We Offer</h1>
+                <p class="text-lg mt-[2vh] w-[40vw]">OSINT Lab offers users a large quantity challenges ranging from difficulty levels of beginner, easy, medium, and hard, that cover 4 of the major OSINT topics:</p>
+                <ul class="list-disc ml-[3vw] my-[1vh] w-[35vw]">
+                    <li>SOCMINT - Analysis of data from social media platforms to gather information and insights.</li>
+                    <li>GEOINT - Gathering and analyzing data related to geographical locations and features.</li>
+                    <li>SIGINT - Interception and analysis of electronic signals and communications.</li>
+                    <li>MISC - Various other sources and methods of intelligence gathering not covered by the main categories.</li>
+                </ul>
+            </div>
+            <img src="unity.jpg" alt="" class="h-[70%] w-auto rounded-lg border-4 border-white my-auto">
+        </div>
+        <div class="w-[85vw] h-[65vh] flex flex-row justify-between">
+            <img src="secureData.jpg" alt="" class="h-[70%] w-auto rounded-lg border-4 border-white my-auto">
+            <div class="flex flex-col items-start my-auto">
+                <h1 class="text-4xl font-bold text-center text-blue-900">User Data</h1>
+                <p class="text-lg mt-[2vh] w-[40vw]">We ensure that all user data is securely stored and all account passwords are properly hashed. We only ask for your country in order to plan our future outreach and no data will ever be sold or exchanged with any third parties.</p>
+            </div>
+        </div>
+        <div class="mb-[5vh] w-fit h-fit flex flex-col items-center bg-white rounded-xl p-[2vw] shadow-lg">
+            <h1 class="text-4xl font-bold text-center text-blue-900">Future Plans</h1>
+            <h1 class="text-lg mt-[2vh] w-[60vw] text-center">Simply practicing OSINT isn't enough to help everyone get better. In the future, we're planning on adding a learning page that offers beginners tutorials/guides for starting on OSINT as well as more advanced lessons for those more experienced who are looking to hone their skills even further. Additionally, we will also add a profile page that will allow users to customize their display and help connect with others, improving each user's overall OSINTing experience</h1>
+        </div>
+    </div>
+    <!-- In the future, we will also be able to provide users with a learning system that will help beginners familiarize themselves with the OSINT category in Capture the Flag (CTF) cybersecurity competitions or help more experienced users improve their OSINT skills. -->
+    <!-- Footer -->
+    <div class="bg-[#00E7E1] bg-gray-800 w-full sticky top-[100vh]">
+      <div class="w-full h-auto p-4 flex items-center justify-between">
+      <span class=" text-gray-400 text-center text-gray-400">© OSINT Monkey 2024</span>
+      <ul class="flex flex-wrap items-center mt-3  font-medium text-gray-400 text-gray-400 sm:mt-0">
+          <li>
+              <a href="/about" class="hover:underline me-4 me-6">About</a>
+          </li>
+          <li>
+              <a href="/privacy-policy" class="hover:underline me-4 me-6">Privacy Policy</a>
+          </li>
+          <li>
+              <a href="/contact" class="hover:underline">Contact</a>
+          </li>
+      </ul>
+      </div>
+    </div>
+  </body>
+</html>
