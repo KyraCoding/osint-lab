@@ -67,7 +67,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET, // SHHHH KEEP IT SECRET
     name: "session token", // I MEAN IN CASE YOU COULDNT READ
-    saveUninitialized: false, // SAVE EVEN IF NOTHING CHANGED (I THINK)
+    saveUninitialized: false, // ONLY SAVE IF SOMETHING IS ADDED
     resave: true, // THEY TOLD ME TO TURN THIS ON
     httpOnly: true, // NO CLIENT COOKIE READING?
     secure: true, // NO HTTP HAHA
@@ -198,7 +198,9 @@ app.post(
         pubUser: newPubUser._id,
       });
       await authUser.save();
-
+      // Remove prior sessions
+      req.session.destroy();
+      
       // Add session token
       req.session.user_id = authUser._id;
       req.session.loggedIn = true;
@@ -261,6 +263,8 @@ app.post(
 
       // Make sure password is correct and user exists
       if (user && (await user.comparePassword(password))) {
+        // Remove prior session token if existant
+        req.session.destroy();
         // Add session token
         req.session.loggedIn = true;
         req.session.user_id = user._id;
@@ -327,7 +331,7 @@ app.get("/practice", async (req, res, next) => {
       delete challenge.decay;
       delete challenge.minValue;
       delete challenge.maxValue;
-      challenge.solved = user._id.toString().includes(challenge.solvedBy.toString())
+      challenge.solved = challenge.solvedBy.toString().includes(user._id.toString())
       challenge.difficulty = difficulties[challenge.difficulty]
       returned_challenges[challenge.category.toLowerCase()].push(challenge);
     });
@@ -391,7 +395,7 @@ app.post(
     }
     try {
       const _id = sanitize(req.body.id);
-      const flag = sanitize(req.body.flag.trim().toLowerCase());
+      const flag = sanitize(req.body.flag.trim());
       const challenge = await Challenge.findOne({ _id });
       if (!challenge) {
         return res.send(
@@ -402,7 +406,7 @@ app.post(
           })
         );
       }
-      if (flag === challenge.flag.toLowerCase()) {
+      if (flag.toLowerCase() === challenge.flag.toLowerCase()) {
         try {
           const auth_user = await Auth_user.findOne({
             _id: req.session.user_id,
