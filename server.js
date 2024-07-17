@@ -62,7 +62,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.set('trust proxy', 1)
+app.set("trust proxy", 1);
 // Set up sessions
 app.use(
   session({
@@ -327,8 +327,10 @@ app.get("/practice", async (req, res, next) => {
       delete challenge.decay;
       delete challenge.minValue;
       delete challenge.maxValue;
-      challenge.solved = challenge.solvedBy.toString().includes(user._id.toString())
-      challenge.difficulty = difficulties[challenge.difficulty]
+      challenge.solved = challenge.solvedBy
+        .toString()
+        .includes(user._id.toString());
+      challenge.difficulty = difficulties[challenge.difficulty];
       returned_challenges[challenge.category.toLowerCase()].push(challenge);
     });
 
@@ -428,6 +430,8 @@ app.post(
                 ],
                 success: true,
                 celebrate: false,
+                solveCount: challenge.solveCount,
+                score: challenge.score,
               })
             );
           } else {
@@ -439,6 +443,8 @@ app.post(
                 msg: "Solved!",
                 success: true,
                 celebrate: true,
+                solveCount: challenge.solveCount,
+                score: challenge.score,
               })
             );
           }
@@ -467,6 +473,8 @@ app.post(
             msg: funny_errors[Math.floor(Math.random() * funny_errors.length)],
             success: false,
             celebrate: false,
+            solveCount: challenge.solveCount,
+            score: challenge.score,
           })
         );
       }

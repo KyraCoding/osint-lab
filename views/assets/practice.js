@@ -16,6 +16,12 @@ function overlay(element) {
       if (attr == "description") {
         data[attr] = "<md-block>" + data[attr] + "</md-block>";
       }
+      if (attr == "solveCount") {
+        data[attr] += data[attr] == 1 ? " solve" : " solves"
+      }
+      if (attr == "score") {
+        data[attr] += data[attr] == 1 ? " point" : " points"
+      }
       if (attr == "solved") {
         if (data[attr]) {
           document
