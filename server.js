@@ -53,7 +53,7 @@ const session_db = new MongoStore({
     "@radiata.0g6mder.mongodb.net/tanuki?retryWrites=true&w=majority&appName=radiata",
   collection: "sessions",
   // Currently set to 14 days
-  expires: 1000 * 60 * 60 * 24 * 3,
+  expires: 1000 * 60 * 60 * 24 * 1,
 });
 
 // Wonder what this could be 🤔
@@ -221,6 +221,10 @@ app.get("/login", (req, res) => {
   res.render("pages/login", {});
 });
 
+app.get("/about", (req, res) => {
+  res.render("pages/about", {});
+});
+
 app.get("/login/email", [], (req, res) => {
   res.render("pages/login_email", {
     errors: {},
@@ -308,8 +312,9 @@ app.get("/practice", async (req, res, next) => {
     const categories = ["socmint", "geoint", "sigint", "misc"];
     const difficulties = ["beginner", "easy", "medium", "hard"];
     var challenges = {};
+    var dbChallenges = await Challenge.find({});
     for (var i = 0; i < categories.length; i++) {
-      var challenge_group = await Challenge.find({
+      var challenge_group = await dbChallenges.find({
         category: categories[i].toUpperCase(),
       })
         .sort({ difficulty: 1, score: 1 })
@@ -400,7 +405,7 @@ app.post(
           })
         );
       }
-      if (flag === challenge.flag) {
+      if (flag === challenge.flag.toLowerCase()) {
         try {
           const auth_user = await Auth_user.findOne({
             _id: req.session.user_id,

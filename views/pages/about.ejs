@@ -1,0 +1,61 @@
+<html>
+  <%- include('../partials/head') %>
+  <body class="font-roboto bg-[#E7F7FC]">
+  <%- include('../partials/header') %>
+  <!-- Main Body -->
+    <div class="flex flex-col items-center">
+        <h3 class="text-6xl text-[#003459] font-bold mt-[10vh]">Our Mission</h3>
+        <h1 class="text-4xl font-bold mt-[2vh] w-[60vw] text-center">Making OSINT practice easier</h1>
+        <h2 class="text-lg mt-[2vh] w-[50vw] text-center">
+          OSINT Lab was started by a group of students. We competed in CTFs every weekend and always trained on category-specific websites, but could never find any good OSINT resources that covered all the core concepts. So we took things into our own hands and made OSINT Lab.
+        </h2>
+        <div class="mt-[5vh] w-[85vw] h-[65vh] flex flex-row justify-between">
+            <div class="flex flex-col items-start my-auto">
+                <h1 class="text-4xl font-bold text-center text-[#003459]">What We Offer</h1>
+                <p class="text-lg mt-[2vh] w-[40vw]">OSINT Lab offers challenges that cover 4 major OSINT topics:</p>
+                <ul class="list-disc ml-[3vw] my-[1vh] w-[35vw]">
+                    <li>SOCMINT - Analysis of data from social media platforms to gather information and insights.</li>
+                    <li>GEOINT - Gathering and analyzing data related to geographical locations and features.</li>
+                    <li>SIGINT - Interception and analysis of electronic signals and communications.</li>
+                    <li>MISC - Various other sources and methods of intelligence gathering not covered by the main categories.</li>
+                </ul>
+                <p class="text-lg mt-[2vh] w-[40vw]">These challenges come in various difficulties -- namely beginner, easy, medium, and hard.</p>
+            </div>
+            <img src="https://cdn.glitch.global/f4140a6a-6312-408f-9f19-f09b33a6efad/unity.png?v=1721163616477" alt="" class="h-[70%] w-auto rounded-lg border-4 border-white my-auto">
+        </div>
+        <div class="w-[85vw] h-[65vh] flex flex-row justify-between">
+            <img src="https://cdn.glitch.global/f4140a6a-6312-408f-9f19-f09b33a6efad/secureData.png?v=1721163592265" alt="" class="h-[70%] w-auto rounded-lg border-4 border-white my-auto">
+            <div class="flex flex-col items-start my-auto">
+                <h1 class="text-4xl font-bold text-center text-[#003459]">User Data</h1>
+                <p class="text-lg mt-[2vh] w-[40vw]">All user data is securely stored and passwords will always be hashed. The only sensitive data we request is your country, and that too, only to optimize our outreach efforts. Your data will never be sold to any third parties.</p>
+            </div>
+        </div>
+        <div class="mb-[5vh] w-fit h-fit flex flex-col items-center bg-white rounded-xl p-[2vw] shadow-lg">
+            <h1 class="text-4xl font-bold text-center text-[#003459]">Future Plans</h1>
+            <h1 class="text-lg mt-[2vh] w-[60vw] text-center">Practicing OSINT isn't enough to help everyone get better, and we know that. Fear not -- our dev team is currently building the Learn feature! The Learn feature offers tutorials, guides, and lectures for learning OSINT, containing everything from basic topics for beginners to more advanced lessons for seasoned veterans. Other cool things you can look forward to: global leaderboards, user profiles, challenge filters, and more!</h1>
+        </div>
+
+        <!-- FAQ Section -->
+         <h1 class="text-4xl font-bold text-center">FAQ</h1>
+        <div class="grid grid-cols-2 gap-4 mt-8 mb-8">
+          <div class="w-[30vw] bg-white py-[3vh] shadow-lg rounded-lg text-center flex flex-col items-center">
+            <h3 class="text-xl font-bold justify-start mb-2">What is OSINT?</h3>
+            <p class="text-sm px-[2vh]">Open-source intelligence (OSINT) is the process of gathering info via public resources in order to accomplish tasks.</p>
+          </div>
+          <div class="w-[30vw] bg-white py-[3vh] shadow-lg rounded-lg text-center flex flex-col">
+            <h3 class="text-xl font-bold justify-start mb-2">What can OSINT be used for?</h3>
+            <p class="text-sm px-[2vh]">OSINT is a wide discipline with many use cases, most frequently used to find things, people, or valuable information online.</p>
+          </div>
+          <div class="w-[30vw] bg-white py-[3vh] shadow-lg rounded-lg text-center flex flex-col">
+            <h3 class="text-xl font-bold justify-start mb-2">How can I get better at OSINT?</h3>
+            <p class="text-sm px-[2vh]">Solve challenges, read writeups, and repeat! There's no secret sauce. If you do this long enough, you'll eventually get good.</p>
+          </div>
+          <div class="w-[30vw] bg-white py-[3vh] shadow-lg rounded-lg text-center flex flex-col">
+            <h3 class="text-xl font-bold justify-start mb-2">What should we do if we get stuck?</h3>
+            <p class="text-sm px-[2vh]">Good question! We encourage group-solving or asking for hints if you're stuck, just don't cheat -- you gain nothing from it.</p>
+          </div>
+        </div>
+    </div>
+  <%- include('../partials/footer') %>
+  </body>
+</html>

@@ -12,7 +12,7 @@ const challenge_schema = new Schema(
     solvedBy: [{ type: Schema.Types.ObjectId, ref: "User" }],
     flag: { type: String, required: true },
     description: { type: String, required: true },
-    difficulty: { type: Number, default: 1 },
+    difficulty: { type: Number, default: 1, required:true },
     author: { type: String, required: true },
     disabled: { type: Boolean, default: false },
     maxValue: { type: Number, default: 500 },
