@@ -163,6 +163,22 @@ document
       }),
     });
     const answer = await response.json();
+    var data = JSON.parse(current_challenge.dataset.raw_data);
+    if (answer.solveCount) {
+      document.getElementById("challenge_div_solveCount").innerHTML = answer.solveCount + (answer.solveCount == 1 ? " solve" : " solves")
+      current_challenge.children[1].children[0].innerHTML = answer.solveCount + (answer.solveCount == 1 ? " solve" : " solves")
+      data.solveCount = answer.solveCount
+    }
+    if (answer.score) {
+      document.getElementById("challenge_div_score").innerHTML = answer.score + (answer.score == 1 ? " point" : " points")
+      current_challenge.children[1].children[1].innerHTML = answer.score + (answer.score == 1 ? " point" : " points")
+      data.score = answer.score
+    }
+    
+    if (answer.celebrate) {
+      data.solved = true;
+    }
+    current_challenge.dataset.raw_data = JSON.stringify(data);
     // Unhide response div
     document
       .getElementById("challenge_div_response")
@@ -190,12 +206,8 @@ document
         .getElementById("challenge_div_ratelimitbar")
         .classList.add("bg-rose-400");
     }
-    if (answer.celebrate) {
-      current_challenge.classList.add("opacity-50");
-      var data = JSON.parse(current_challenge.dataset.raw_data);
-      data.solved = true;
-      current_challenge.dataset.raw_data = JSON.stringify(data);
-    }
+    
+    current_challenge.classList.add("opacity-50");
     // Ratelimit!
     document.getElementById("challenge_div_submit").disabled = true;
     document.getElementById("challenge_div_submit").classList.add("opacity-50");

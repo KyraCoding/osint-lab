@@ -63,7 +63,7 @@
         </div>
 
         <!-- Tags -->
-        <div class="flex flex-row h-12 gap-3 overflow-auto">
+        <div class="flex flex-row h-12 gap-3">
           <div id="challenge_div_solved" class="hidden flex bg-emerald-400 text-lg text-[#E7F7FC] font-semibold p-3 justify-center items-center rounded-md cursor-pointer">
             Solved!
           </div>
@@ -78,9 +78,14 @@
 
       <!-- Description -->
       <div class="flex flex-col gap-2 mt-2">
-        <p class="text-base sm:text-lg">
-          <span id="challenge_div_author">Author: Author Name</span><span id="challenge_div_solveCount">0</span> / <span id="challenge_div_score">0</span>
-        </p>  
+        <div class="flex flex-row text-base sm:text-lg justify-between">
+          <div>
+            <span id="challenge_div_author">Author: Author Name</span>
+          </div>
+          <div>
+            <span id="challenge_div_solveCount">0</span> / <span id="challenge_div_score">0</span>
+          </div>
+        </div>  
         <p class="text-lg sm:text-xl font-bold">
           Description:
         </p>
@@ -92,7 +97,7 @@
       </div>
 
       <!-- Submit flag -->
-      <div class="flex flex-row gap-3 mt-6">
+      <div class="flex flex-row h-12 gap-3 mt-6">
         <div class="relative flex-grow">
           <input id="challenge_div_input" class="rounded h-12 w-full p-3 text-base sm:text-lg" type="text" placeholder="Flag is in format: flag{}"> 
           <div id="challenge_div_blocker" class="hidden absolute inset-0 flex justify-start items-center z-30 cursor-not-allowed">
@@ -103,7 +108,7 @@
       </div>
 
       <!-- Response -->
-      <div id="challenge_div_response" class="hidden flex h-12 w-full mt-6 rounded justify-center items-center text-lg font-semibold">
+      <div id="challenge_div_response" class="hidden flex h-12 w-full mt-6 p-3 rounded justify-center items-center text-lg font-semibold">
         Wrong flag...
       </div>
 
