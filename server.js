@@ -62,6 +62,7 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.set('trust proxy', 1)
 // Set up sessions
 app.use(
   session({
@@ -198,9 +199,6 @@ app.post(
         pubUser: newPubUser._id,
       });
       await authUser.save();
-      // Remove prior sessions
-      req.session.destroy();
-      
       // Add session token
       req.session.user_id = authUser._id;
       req.session.loggedIn = true;
@@ -263,8 +261,6 @@ app.post(
 
       // Make sure password is correct and user exists
       if (user && (await user.comparePassword(password))) {
-        // Remove prior session token if existant
-        req.session.destroy();
         // Add session token
         req.session.loggedIn = true;
         req.session.user_id = user._id;

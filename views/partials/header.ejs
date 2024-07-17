@@ -1,55 +1,67 @@
 <div class="flex flex-row justify-center  items-center  w-full h-14 bg-[#00E7E1] p-2 px-4 gap-16 shadow-md fixed top-0 left-0 right-0 z-10">
-  <!-- Icon -->
-  <div class="flex w-1/4 h-full justify-start items-center">
-    <a href="/" class="flex h-full items-center aspect-square">
-      <img
-        class="flex h-full aspect-square"
-        src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880"
-      />
-    </a>
+  <!-- Desktop -->
+  <div class="hidden md:flex h-full w-full">
+    <!-- Icon -->
+    <div class="flex w-1/4 h-full justify-start items-center">
+      <a href="/" class="flex h-full items-center aspect-square">
+        <img
+          class="flex h-full aspect-square"
+          src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880"
+        />
+      </a>
+    </div>
+
+    <!-- Desktop Links --> 
+    <div class="flex w-1/2 flex-row items-center justify-center space-x-6 ml-auto text-lg overflow-auto">
+      <a href="/" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Home</a>
+      <a href="/learn" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Learn</a>
+      <a href="/practice" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Practice</a>
+      <!-- <a href="/compete" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Compete</a> -->
+      <a href="/about" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">About</a>
+    </div>
+
+    <!-- Auth for Desktop -->
+    <div class="flex w-1/4 justify-end items-center space-x-6 ml-auto text-lg overflow-auto">
+      <% if (!loggedIn) { %>
+
+        <a href="/register" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Sign Up</a>
+        <a href="/login" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Login</a>
+      <% } else { %>
+        <a href="/profile" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Profile</a>
+        <a href="/logout" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Logout</a>
+      <% } %>
+
+      <!-- Mobile Menu Button -->
+      <!--
+      
+      -->
+    </div>
   </div>
-
-  <!-- Desktop Links -->
-  
-  <div class="flex w-1/2 flex-row items-center justify-center space-x-6 ml-auto text-lg">
-    <a href="/" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Home</a>
-    <a href="/learn" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Learn</a>
-    <a href="/practice" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Practice</a>
-    <!-- <a href="/compete" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Compete</a> -->
-    <a href="/about" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">About</a>
-  </div>
-
-  <!-- Auth for Desktop -->
-  <div class="flex w-1/4 justify-end items-center space-x-6 ml-auto text-lg">
-    <% if (!loggedIn) { %>
-
-      <a href="/register" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Sign Up</a>
-      <a href="/login" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Login</a>
-    <% } else { %>
-      <a href="/profile" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Profile</a>
-      <a href="/logout" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Logout</a>
-    <% } %>
-    
-    <!-- Mobile Menu Button -->
-    <!--
-    <div class="md:hidden ml-auto flex items-center">
+  <!-- Mobile -->
+  <div class="flex md:hidden h-full w-full">
+    <!-- Icon -->
+    <div class="flex w-1/2 h-full justify-start items-center">
+      <a href="/" class="flex h-full items-center aspect-square">
+        <img
+          class="flex h-full aspect-square"
+          src="https://cdn.glitch.global/8a69a447-95b2-456d-95af-9d3addfebea8/osint-monkey?v=1720500449880"
+        />
+      </a>
+    </div>
+    <!-- Menu selector -->
+    <div class="ml-auto flex w-1/2 justify-end items-center">
       <button id="menu-btn" class="text-[#00171F] focus:outline-none">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
     </div>
-    -->
     <!-- Mobile Menu -->
-    <!--
-    <div id="menu" class="hidden md:hidden absolute top-14 right-0 w-full bg-[#00E7E1] shadow-md">
+    <div id="menu" class="hidden absolute top-14 right-0 w-full bg-[#00E7E1] shadow-md">
       <div class="flex flex-col space-y-4 p-4 text-lg">
         <a href="/" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Home</a>
         <a href="/learn" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Learn</a>
         <a href="/practice" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Practice</a>
-        -->
-        <!-- <a href="/compete" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">Compete</a> -->
-      <!--
         <a href="/about" class="tracking-wide text-[#00171F] transition duration-300 border-b-2 border-transparent hover:border-[#00171F]">About</a>
 
         <% if (!loggedIn) { %>
@@ -61,7 +73,6 @@
         <% } %>
       </div>
     </div> 
-    -->
   </div>
 </div>
 <script>
