@@ -301,42 +301,39 @@ app.get("/practice", async (req, res, next) => {
     const auth_user = await Auth_user.findOne({
       _id: req.session.user_id,
     });
-    
-    if (!auth_user) {  
-      return res.redirect("/login")
+
+    if (!auth_user) {
+      return res.redirect("/login");
     }
-    const user = await User.findOne({ _id: auth_user.pubUser });
+    const user = await User.findOne({ _id: auth_user.pubUser }).lean({
+      virtuals: true,
+    });
     if (!user) {
-      return res.redirect("/login")
+      return res.redirect("/login");
     }
     const categories = ["socmint", "geoint", "sigint", "misc"];
     const difficulties = ["beginner", "easy", "medium", "hard"];
-    var challenges = {};
-    var dbChallenges = await Challenge.find({});
-    for (var i = 0; i < categories.length; i++) {
-      var challenge_group = await dbChallenges.find({
-        category: categories[i].toUpperCase(),
-      })
-        .sort({ difficulty: 1, score: 1 })
-        .lean({ virtuals: true });
+    var returned_challenges = {};
+    const database_challenges = await Challenge.find({})
+      .sort({ difficulty: 1, score: 1 })
+      .lean({ virtuals: true });
+    categories.forEach((category) => {
+      returned_challenges[category] = [];
+    });
 
-      challenge_group.forEach((obj) => {
-        obj.difficulty = difficulties[obj.difficulty];
-        // Awww did you want this?
-        delete obj.flag;
-        delete obj.decay;
-        delete obj.minValue;
-        delete obj.maxValue;
-        if (obj.solvedBy.some(userId => userId.equals(user._id))) {
-          obj.solved = true
-        } else {
-          obj.solved = false
-        }
-      });
-      challenges[categories[i]] = challenge_group;
-    }
+    database_challenges.forEach((challenge) => {
+      // Awww did you want this?
+      delete challenge.flag;
+      delete challenge.decay;
+      delete challenge.minValue;
+      delete challenge.maxValue;
+      challenge.solved = user._id.toString().includes(challenge.solvedBy.toString())
+      challenge.difficulty = difficulties[challenge.difficulty]
+      returned_challenges[challenge.category.toLowerCase()].push(challenge);
+    });
+
     res.render("pages/practice", {
-      challenges: challenges,
+      challenges: returned_challenges,
     });
   } catch (err) {
     console.log(err);
@@ -363,7 +360,7 @@ app.post(
         JSON.stringify({
           msg: "You aren't logged in!",
           success: false,
-          celebrate: false
+          celebrate: false,
         })
       );
     }
@@ -375,7 +372,7 @@ app.post(
         JSON.stringify({
           msg: "Slow down! Wait 5 seconds!",
           success: false,
-          celebrate: false
+          celebrate: false,
         })
       );
     } else {
@@ -388,7 +385,7 @@ app.post(
         JSON.stringify({
           msg: Object.values(errors.errors)[0].msg,
           success: false,
-          celebrate: false
+          celebrate: false,
         })
       );
     }
@@ -401,7 +398,7 @@ app.post(
           JSON.stringify({
             msg: "No such challenge found...",
             success: false,
-            celebrate: false
+            celebrate: false,
           })
         );
       }
@@ -416,6 +413,7 @@ app.post(
               "You can't P100 this challenge!",
               "Looking for more eidolons?",
               "Exotic catalyst hasn't dropped yet!",
+              "This challenge isn't craftable!",
               "Feeling a bit of deja vu?",
               "Do you just like this animation?",
               "...Didn't we do this already?",
@@ -429,7 +427,7 @@ app.post(
                   Math.floor(Math.random() * funny_errors.length)
                 ],
                 success: true,
-                celebrate: false
+                celebrate: false,
               })
             );
           } else {
@@ -440,7 +438,7 @@ app.post(
               JSON.stringify({
                 msg: "Solved!",
                 success: true,
-                celebrate: true
+                celebrate: true,
               })
             );
           }
@@ -468,7 +466,7 @@ app.post(
           JSON.stringify({
             msg: funny_errors[Math.floor(Math.random() * funny_errors.length)],
             success: false,
-            celebrate: false
+            celebrate: false,
           })
         );
       }
@@ -500,12 +498,20 @@ app.use((req, res, next) => {
   next(404);
 });
 
-// Finally built this, yay!
+// Finally uilt this, yay!
 app.use((err, req, res, next) => {
-  res.render("pages/error", {
-    err: err,
-    title: err,
-  });
+  if (err instanceof Error) {
+    console.log(err);
+    return res.render("pages/error", {
+      err: 500,
+      title: "Page Render Error",
+    });
+  } else {
+    return res.render("pages/error", {
+      err: err,
+      title: err,
+    });
+  }
 });
 
 // Go Go Go!
