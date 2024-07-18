@@ -4,8 +4,8 @@
   "description": "A CTF website to practice OSINT challenges!",
   "main": "server.js",
   "scripts": {
-    "start": "npx tailwindcss -i main.css -o views/assets/main.css && node server.js",
-    "build": "npx tailwindcss -i main.css -o views/assets/main.css && node server.js"
+    "start": "npx tailwindcss -i main.css -o views/assets/main.css && node server.js"
+    
   },
   "dependencies": {
     "express": "^4.19.2",
