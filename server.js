@@ -221,10 +221,6 @@ app.get("/login", (req, res) => {
   res.render("pages/login", {});
 });
 
-app.get("/about", (req, res) => {
-  res.render("pages/about", {});
-});
-
 app.get("/login/email", [], (req, res) => {
   res.render("pages/login_email", {
     errors: {},
@@ -280,12 +276,8 @@ app.post(
   }
 );
 
-app.get("/profile", (req, res) => {
-  if (!req.session.loggedIn) {
-    res.redirect("/login");
-  } else {
-    res.sendFile(path.join(__dirname, "public", "profile.html"));
-  }
+app.get("/profile", (req, res, next) => {
+  next(404)
 });
 
 app.get("/logout", (req, res) => {
@@ -486,19 +478,19 @@ app.post(
 );
 
 app.get("/learn", (req, res, next) => {
-  next(501);
+  next(404);
 });
 app.get("/compete", (req, res, next) => {
-  next(501);
+  next(404);
 });
 app.get("/about", (req, res, next) => {
-  next(501);
+  next(404);
 });
 app.get("/privacy-policy", (req, res, next) => {
-  next(501);
+  next(404);
 });
 app.get("/contact", (req, res, next) => {
-  next(501);
+  next(404);
 });
 
 // Handle 404
