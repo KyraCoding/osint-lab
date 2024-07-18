@@ -476,7 +476,9 @@ app.post(
     }
   }
 );
-
+app.get("/leaderboard", (req, res, next) => {
+  res.sendFile(path.join(__dirname, "public", "leaderboard.html"));
+})
 app.get("/learn", (req, res, next) => {
   next(404);
 });

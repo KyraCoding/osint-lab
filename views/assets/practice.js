@@ -177,6 +177,7 @@ document
     
     if (answer.celebrate) {
       data.solved = true;
+      current_challenge.classList.add("opacity-50");
     }
     current_challenge.dataset.raw_data = JSON.stringify(data);
     // Unhide response div
@@ -207,7 +208,7 @@ document
         .classList.add("bg-rose-400");
     }
     
-    current_challenge.classList.add("opacity-50");
+    
     // Ratelimit!
     document.getElementById("challenge_div_submit").disabled = true;
     document.getElementById("challenge_div_submit").classList.add("opacity-50");

@@ -18,42 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     <title><%= title %> - OSINT Lab</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.tailwindcss.com?plugins=aspect-ratio"></script>
+    <link href="./main.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/aa00b5a664.js" crossorigin="anonymous"></script>
     <script type="module" src="https://md-block.verou.me/md-block.js"></script>
-    <link rel="stylesheet" href="style.css">
-     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              // font_name: ['"official font family name"': "font-name"]
-              roboto: ['"roboto mono"', "sans-serif"]
-            },
-            animation: {
-              fadein: 'fadein 0.2s ease-in-out',
-              longerfadein: 'fadein 0.5s ease-in-out',
-              fadeout: 'fadeout 0.2s ease-in-out',
-              longerfadeout: 'fadeout 0.5s ease-in-out',
-              slidetoleft: 'slidetoleft 5.5s linear'
-            },
-            keyframes: theme => ({
-              fadein: {
-                '0%': { opacity: 0 },
-                '100%': { opacity: 1 },
-              },
-              fadeout: {
-                '0%': { opacity: 1},
-                '100%': { opacity: 0 },
-              },
-              slidetoleft: {
-                '0%': { width: "100%" },
-                '100%': { width: "0%" },
-              },
-            }),
-          },
-        },
-      };
-    </script>
   </head>
