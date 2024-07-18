@@ -4,7 +4,8 @@
   "description": "A CTF website to practice OSINT challenges!",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "npx tailwindcss -i main.css -o views/assets/main.css && node server.js",
+    "build": "npx tailwindcss -i main.css -o views/assets/main.css && node server.js"
   },
   "dependencies": {
     "express": "^4.19.2",
@@ -16,7 +17,9 @@
     "bcrypt": "^5.1.1",
     "connect-mongodb-session": "^5.0.0",
     "country-list-js": "^3.1.8",
-    "mongoose-lean-virtuals": "^0.9.1"
+    "mongoose-lean-virtuals": "^0.9.1",
+    "tailwindcss": "^3.4.6",
+    "@tailwindcss/aspect-ratio": "^0.4.2"
   },
   "type": "module",
   "engines": {
@@ -31,6 +34,7 @@
     "express",
     "mongodb",
     "mongoose",
+    "tailwind",
     "ctf",
     "osint",
     "ejs"
