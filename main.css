@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 body {
-  scrollbar-gutter: stable
+  scrollbar-gutter: stable;
+  height: 100vh;
 }
 
 ::-webkit-scrollbar {
