@@ -62,6 +62,16 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Canonical?
+app.use(function (req, res, next) {
+  if (process.env.MODE && process.env.MODE === "production") {
+    res.setHeader("rel", "canonical");
+    next();
+  } else {
+    next();
+  }
+});
+
 app.set("trust proxy", 1);
 // Set up sessions
 app.use(
@@ -277,7 +287,7 @@ app.post(
 );
 
 app.get("/profile", (req, res, next) => {
-  next(404)
+  next(404);
 });
 
 app.get("/logout", (req, res) => {
@@ -478,7 +488,7 @@ app.post(
 );
 app.get("/leaderboard", (req, res, next) => {
   res.sendFile(path.join(__dirname, "public", "leaderboard.html"));
-})
+});
 app.get("/learn", (req, res, next) => {
   next(404);
 });
