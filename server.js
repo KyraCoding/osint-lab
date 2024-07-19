@@ -62,15 +62,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-// Canonical?
-app.use(function (req, res, next) {
-  if (process.env.MODE && process.env.MODE === "production") {
-    res.setHeader("rel", "canonical");
-    next();
-  } else {
-    next();
-  }
-});
 
 app.set("trust proxy", 1);
 // Set up sessions
@@ -92,6 +83,7 @@ app.set("view engine", "ejs");
 
 // Set up login state
 app.use(function (req, res, next) {
+  res.locals.reqPath = req.path
   res.locals.loggedIn = req.session.loggedIn || false;
   res.locals.title =
     req.path.split("/")[1] != ""
